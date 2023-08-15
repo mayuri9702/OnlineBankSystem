@@ -1,29 +1,13 @@
-.two-cards-layout {
-  display: flex;
-  height: 100vh;
+.card-group{
+  padding-top: 100px;
+  padding-left: 300px; 
+  padding-right: 300px;
+  border: none;
+
 }
 
-.left-card,
-.right-card {
-  flex: 1;
-  padding: 20px;
-  border: 1px solid #ccc;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-}
-
-.left-card {
-  background-color: #f0f0f0;
-}
-
-.right-card {
-  background-color: #fafafa;
-}
-
-img {
-  max-width: 100%;
-  height: auto;
-  margin-bottom: 10px;
+.card-image-top{
+  height: 200px; 
+  width:200px; 
+  border-radius: 50%;
 }
