@@ -1,7 +1,46 @@
-import React from 'react';
+import React,{useState} from 'react';
 import Navbar from './Navbar';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios'
 
 export const Register = () => {
+
+  const navigate = useNavigate()
+
+  const [accountNo, setAccountNo] = useState('')
+  const [password, setPassword] = useState("")
+  const [password2, setPassword2] = useState("")
+  const [transPassword, setTransPassword] = useState('')
+  const [transPassword2, setTransPassword2] = useState('')
+
+  async function save(event){
+    event.preventDefault();
+    try{
+      const response = await axios.post("http://localhost:8080/account/register",
+      {
+        account_number : accountNo,
+        login_password : password,
+        transaction_pin : transPassword
+      });
+      if(response.data=="added"){
+        alert("Successfully registered for internet banking!!")
+        navigate('/login')
+        setAccountNo('')
+        setPassword("")
+        setPassword2("")
+        setTransPassword("")
+        setTransPassword2("")
+      }
+    }
+    catch(err){
+      alert('Registration failed.')
+    }
+  }
+
+  function handleValidations(event){
+    event.preventDefault();
+  }
+
         return (
             <div>
               <Navbar></Navbar>
@@ -23,7 +62,8 @@ export const Register = () => {
                     <i class="fas fa-user fa-lg me-3 fa-fw"></i>
                     <div class="form-outline flex-fill mb-0">
                       <label class="form-label" for="accountNumber">Account Number</label>
-                      <input type="text" id="accountNumber" class="form-control" />
+                      <input type="text" id="accountNumber" class="form-control"
+                      value={accountNo} onChange={(event)=>{setAccountNo(event.target.value)}} />
                     </div>
                   </div>
 
@@ -31,7 +71,8 @@ export const Register = () => {
                     <i class="fas fa-envelope fa-lg me-3 fa-fw"></i>
                     <div class="form-outline flex-fill mb-0">
                       <label class="form-label" for="loginPassword">Set Login Password</label>
-                      <input type="password" id="loginPassword" class="form-control" />
+                      <input type="password" id="loginPassword" class="form-control"
+                      value={password} onChange={(event)=>{setPassword(event.target.value)}} />
                     </div>
                   </div>
 
@@ -39,7 +80,8 @@ export const Register = () => {
                     <i class="fas fa-lock fa-lg me-3 fa-fw"></i>
                     <div class="form-outline flex-fill mb-0">
                       <label class="form-label" for="cLoginPassword">Confirm Login Password</label>
-                      <input type="password" id="cLoginPassword" class="form-control" />
+                      <input type="password" id="cLoginPassword" class="form-control"
+                      value={password2} onChange={(event)=>{setPassword2(event.target.value)}} />
                     </div>
                   </div>
 
@@ -48,7 +90,8 @@ export const Register = () => {
                     <i class="fas fa-lock fa-lg me-3 fa-fw"></i>
                     <div class="form-outline flex-fill mb-0">
                       <label class="form-label" for="transPassword">Set Transaction Password</label>
-                      <input type="password" id="transPassword" class="form-control" />
+                      <input type="password" id="transPassword" class="form-control"
+                      value={transPassword} onChange={(event)=>{setTransPassword(event.target.value)}} />
                     </div>
                   </div>
 
@@ -56,7 +99,8 @@ export const Register = () => {
                     <i class="fas fa-lock fa-lg me-3 fa-fw"></i>
                     <div class="form-outline flex-fill mb-0">
                       <label class="form-label" for="cTransPassword">Confirm Transaction Password</label>
-                      <input type="password" id="cTransPassword" class="form-control" />
+                      <input type="password" id="cTransPassword" class="form-control"
+                      value={transPassword2} onChange={(event)=>{setTransPassword2(event.target.value)}} />
                     </div>
                   </div>
 
@@ -69,7 +113,7 @@ export const Register = () => {
                   </div>
 
                   <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
-                    <button type="button" class="btn btn-primary btn-lg">Submit</button>
+                    <button type="button" class="btn btn-primary btn-lg" onClick={save}>Submit</button>
                   </div>
 
                 </form>
