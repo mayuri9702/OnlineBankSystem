@@ -1,8 +1,12 @@
 import React from 'react';
 import './CreateAccount.css'
+import Navbar from './Navbar';
 
 export const CreateAccount = () => {
         return (
+          <div>
+            <Navbar></Navbar>
+          
             <section class="vh-100 bg-image"
             style ={ { backgroundImage: "url('https://i.pinimg.com/originals/5d/e0/8d/5de08de24459fedac3d28b10a039e2a6.jpg')" } }>
             <div class="mask d-flex align-items-center h-100 gradient-custom-3">
@@ -186,6 +190,7 @@ export const CreateAccount = () => {
               </div>
             </div>
           </section>
+          </div>
         );
     }
 

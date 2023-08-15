@@ -1,9 +1,12 @@
 import React from 'react';
+import Navbar from './Navbar';
 
 export const Register = () => {
         return (
+            <div>
+              <Navbar></Navbar>
             
-                <section class="vh-100" style={{backgroundcolor: "#eee"}}>
+  <section class="vh-100" style={{backgroundcolor: "#eee"}}>
   <div class="container h-100">
     <div class="row d-flex justify-content-center align-items-center h-100">
       <div class="col-lg-12 col-xl-11">
@@ -85,6 +88,7 @@ export const Register = () => {
     </div>
   </div>
 </section>
+</div>
         );
     }
 

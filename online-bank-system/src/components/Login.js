@@ -1,48 +1,52 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
+import Navbar from './Navbar';
+import "./Login.css"
 
 export const Login = () => {
         return (
             <div>
+                <Navbar></Navbar>
                 <section class="vh-100">
-  <div class="container py-5 h-100">
-    <div class="row d-flex align-items-center justify-content-center h-100">
-      <div class="col-md-7 col-lg-5 col-xl-5 offset-xl-1">
-
-      <div class="d-flex justify-content-around align-items-center mb-4">
-            <h1>Login to your Account</h1>
-          </div>
-
+  <div class="container-fluid h-custom">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col-md-9 col-lg-6 col-xl-5">
+        <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.webp"
+          class="img-fluid" alt="Sample image"/>
+      </div>
+      <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
         <form>
           <div class="form-outline mb-4">
-            <label class="form-label" for="accountNumber">Account Number</label>
-            <input type="text" id="accountNumber" class="form-control form-control-lg" />
+            <input type="text" id="userID" class="form-control form-control-lg"
+              placeholder="Enter a User ID" />
+            <label class="form-label" for="userID">User ID</label>
           </div>
 
-          <div class="form-outline mb-4">
+          <div class="form-outline mb-3">
+            <input type="password" id="password" class="form-control form-control-lg"
+              placeholder="Enter password" />
             <label class="form-label" for="password">Password</label>
-            <input type="password" id="password" class="form-control form-control-lg" />
           </div>
 
-          <div class="d-flex justify-content-around align-items-center mb-4">
-            <button type="submit" class="btn btn-primary btn-lg btn-block">Login</button>
-          </div>
-          </form>
-
-          <div class="d-flex justify-content-around align-items-center mb-4">
-            <Link to="/register">First Time User? Register</Link>
+          <div class="d-flex justify-content-between align-items-center">
+            <a href="/forgetPassword" class="text-decoration-none link-info">Forgot Password?</a>
           </div>
 
-          <div class="d-flex justify-content-around align-items-center mb-4">
-            <Link to="/forgetUserID">Forget User ID?</Link>
+          <br></br>
+
+          <div class="d-flex justify-content-between align-items-center">
+            <a href="/forgetUserID" class="text-decoration-none link-info">Forgot User ID?</a>
           </div>
 
-          <div class="d-flex justify-content-around align-items-center mb-4">
-            <Link to="/forgetPassword">Forget Password?</Link>
+          <div class="text-center text-lg-start mt-4 pt-2">
+            <button type="button" class="btn btn-primary btn-lg"
+              >Login</button>
           </div>
 
+        </form>
       </div>
     </div>
+
   </div>
 </section>
             </div>

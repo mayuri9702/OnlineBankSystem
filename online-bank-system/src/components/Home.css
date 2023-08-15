@@ -1,6 +1,29 @@
-div {
-    width: 300px;
-    border: 15px solid green;
-    padding: 50px;
-    margin: 20px;
-  }
+.two-cards-layout {
+  display: flex;
+  height: 100vh;
+}
+
+.left-card,
+.right-card {
+  flex: 1;
+  padding: 20px;
+  border: 1px solid #ccc;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.left-card {
+  background-color: #f0f0f0;
+}
+
+.right-card {
+  background-color: #fafafa;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  margin-bottom: 10px;
+}
