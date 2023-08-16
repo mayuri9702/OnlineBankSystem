@@ -4,10 +4,11 @@ import './LeftNavbar.css'
 export const LeftNavbar = () =>{
     return(
         <div className="vertical-navbar">
-            <a href="#">Account Details</a>
+            <a href="/accountDetails">Account Details</a>
             <a href="#">Account Summary</a>
             <a href="#">Fund Transfer</a>
-            <a href="#">Account Statement</a>
+            <a href="/accountStatement">Account Statement</a>
+            <a href="/setNewPassword">Change Login Password</a>
         </div>
     )
 }

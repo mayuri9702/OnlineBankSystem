@@ -1,0 +1,27 @@
+/* App.css */
+.app {
+    display: inline;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+  
+  .header {
+    display: inline;
+    color: #6495ED;
+  }
+  
+  .container {
+    display: flex;
+    flex: 1;
+  }
+  
+  .sidebar {
+    width: 200px;
+    padding: 1rem;
+  }
+  
+  .content {
+    flex: 1;
+    padding: 1rem;
+  }
+  

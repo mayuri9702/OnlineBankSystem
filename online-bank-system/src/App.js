@@ -7,7 +7,9 @@ import {ForgetPassword} from './components/ForgetPassword';
 import {ForgetUserID} from './components/ForgetUserID';
 import{SetNewPassword} from './components/SetNewPassword';
 import {AccountStatement} from './components/AccountStatement';
-import "./App.css";
+import {AccountDetails} from './components/AccountDetails';
+import './App.css';
+import React from 'react';
 
 
 function App() {
@@ -21,7 +23,8 @@ function App() {
       <Route exact path='/forgetPassword' element={<ForgetPassword/>}/>
       <Route exact path='/forgetUserID' element={<ForgetUserID/>}/>
       <Route exact path='/setNewPassword' element={<SetNewPassword/>}/>
-      <Route exact path='/dashboard' element={<AccountStatement/>}/>
+      <Route exact path='/accountStatement' element={<AccountStatement/>}/>
+      <Route exact path='/accountDetails' element={<AccountDetails/>}/>
     </Routes>
   
    </Router>

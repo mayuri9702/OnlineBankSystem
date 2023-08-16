@@ -4,7 +4,7 @@
     position: fixed;
     top: 0;
     left: 0;
-    background-color: #87CEEB;
+    background-color: #6082B6;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -22,5 +22,5 @@
 }
 
 .vertical-navbar a:hover{
-    background-color: #A7C7E7;
+    background-color: #87CEEB;
 }

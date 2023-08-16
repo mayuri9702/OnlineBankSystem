@@ -6,11 +6,22 @@ button{
     text-align: center;
     text-decoration: none;
     display: inline-block;
-    font-size: 25px;
+    font-size: 30px;
     margin-right: 5px;
     font-weight: bold;
 }
 
 nav{
-    background-color: #6495ED
+    background-color: #6082B6
+}
+
+.s{
+    font-family: 'Lato', sans-serif;
+    color:white;
+    font-size: 2.5rem;
+}
+
+img{
+    margin-top: 15px;
+    margin-right: 5px;
 }
