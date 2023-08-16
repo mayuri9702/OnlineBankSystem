@@ -1,8 +1,9 @@
 import React from 'react';
+import './NavbarLogout.css'
 
 function Navbar() {
   return (
-    <nav class="navbar navbar-expand-sm bg-primary navbar-dark">
+    <nav class="navbar navbar-expand-sm">
 
   <a class="navbar-brand">
   <img src="https://o.remove.bg/downloads/6049c90f-798a-42b4-a380-86d6f331d02a/pngtree-vector-internet-banking-icon-png-image_755759-removebg-preview.png" width="30" height="30" class="d-inline-block align-top" alt="">

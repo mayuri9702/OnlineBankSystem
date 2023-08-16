@@ -1,0 +1,26 @@
+.vertical-navbar{
+    height: 300px;
+    width: 200px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: #87CEEB;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 20px;
+    margin-top: 200px;
+}
+
+.vertical-navbar a{
+    color: white;
+    text-decoration: none;
+    padding: 10px;
+    width: 100%;
+    text-align: center;
+    transition: background-color 0.3s;
+}
+
+.vertical-navbar a:hover{
+    background-color: #A7C7E7;
+}

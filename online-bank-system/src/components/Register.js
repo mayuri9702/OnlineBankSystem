@@ -2,6 +2,7 @@ import React,{useState} from 'react';
 import Navbar from './Navbar';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios'
+import './Register.css'
 
 export const Register = () => {
 
@@ -12,9 +13,50 @@ export const Register = () => {
   const [password2, setPassword2] = useState("")
   const [transPassword, setTransPassword] = useState('')
   const [transPassword2, setTransPassword2] = useState('')
+  const [otp, setOtp] = useState('')
+  const [accountNoErr, setAccountNoErr] = useState(false)
+  const [passwordErr, setPasswordErr] = useState(false)
+  const [password2Err, setPassword2Err] = useState(false)
+  const [transPasswordErr, setTransPasswordErr] = useState(false)
+  const [transPassword2Err, setTransPassword2Err] = useState(false)
+  const [otpErr, setOtpErr] = useState(false)
+  const [accEmptyErr, setAccEmptyErr] = useState(false)
+  const [passEmptyErr, setPassEmptyErr] = useState(false)
+  const [transPassEmptyErr, setTransPassEmptyErr] = useState(false)
 
   async function save(event){
     event.preventDefault();
+    if(accountNo===''){
+      setAccEmptyErr(true)
+    }else{
+     setAccEmptyErr(false)
+    }
+    if(password===''){
+      setPassEmptyErr(true)
+    }else{
+      setPassEmptyErr(false)
+    }
+    if(password2===''){
+      setPassword2Err(true)
+    }else{
+      setPassword2Err(false)
+    }
+    if(transPassword===''){
+      setTransPassEmptyErr(true)
+    }else{
+      setTransPassEmptyErr(false)
+    }
+    if(transPassword2===''){
+      setTransPassword2Err(true)
+    }else{
+      setTransPassword2(false)
+    }
+    if(otp===''){
+      setOtpErr(true)
+    }else{
+      setOtpErr(false)
+    }
+    if(accountNo!=='' && password!=='' && password2!=='' && transPassword!=='' && transPassword2!=='' && otp!==''){
     try{
       const response = await axios.post("http://localhost:8080/account/register",
       {
@@ -22,7 +64,6 @@ export const Register = () => {
         login_password : password,
         transaction_pin : transPassword
       });
-      if(response.data=="added"){
         alert("Successfully registered for internet banking!!")
         navigate('/login')
         setAccountNo('')
@@ -30,16 +71,74 @@ export const Register = () => {
         setPassword2("")
         setTransPassword("")
         setTransPassword2("")
-      }
+      
     }
     catch(err){
       alert('Registration failed.')
     }
   }
+}
 
-  function handleValidations(event){
-    event.preventDefault();
+  function accountNoHandler(e){
+    let item = e.target.value
+    if(/^\d{11}$/.test(item)){
+      setAccountNoErr(false)
+    }else{
+    setAccountNoErr(true)
+    }
+    setAccountNo(e.target.value)
   }
+
+    function passwordHandler(e){
+      let item = e.target.value
+      if(/^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,20}$/.test(item)){
+        setPasswordErr(false)
+      }else{
+      setPasswordErr(true)
+      }
+      setPassword(e.target.value)
+    }
+
+      function password2Handler(e){
+        let item = e.target.value
+        if(item!==password){
+          setPassword2Err(true)
+        }else{
+        setPassword2Err(false)
+        }
+        setPassword2(e.target.value)
+      }
+
+      function transPasswordHandler(e){
+        let item = e.target.value
+        if(/^\d{6}$/.test(item)){
+          setTransPasswordErr(false)
+        }else{
+          setTransPasswordErr(true)
+        }
+        setTransPassword(e.target.value)
+      }
+
+      function transPassword2Handler(e){
+        let item = e.target.value
+        if(item!==transPassword){
+          setTransPassword2Err(true)
+        }else{
+        setTransPassword2Err(false)
+        }
+        setTransPassword2(e.target.value);
+      }
+
+      function otpHandler(e){
+        let item = e.target.value
+        if(/^\d{4}$/.test(item)){
+          setOtpErr(false)
+        }else{
+          setOtpErr(true)
+        }
+          setOtp(e.target.value);
+      }
+
 
         return (
             <div>
@@ -63,7 +162,9 @@ export const Register = () => {
                     <div class="form-outline flex-fill mb-0">
                       <label class="form-label" for="accountNumber">Account Number</label>
                       <input type="text" id="accountNumber" class="form-control"
-                      value={accountNo} onChange={(event)=>{setAccountNo(event.target.value)}} />
+                      value={accountNo} onChange={accountNoHandler} />
+                      {accountNoErr?<span>Account Number should be 11 digits!</span>:""}
+                      {accEmptyErr?<span>Account Number can't be empty!</span>:""}
                     </div>
                   </div>
 
@@ -72,7 +173,9 @@ export const Register = () => {
                     <div class="form-outline flex-fill mb-0">
                       <label class="form-label" for="loginPassword">Set Login Password</label>
                       <input type="password" id="loginPassword" class="form-control"
-                      value={password} onChange={(event)=>{setPassword(event.target.value)}} />
+                      value={password} onChange={passwordHandler} />
+                      {passwordErr?<span>Password should be 8-20 characters and should include at least 1 letter, 1 number and 1 special character!</span>:""}
+                      {passEmptyErr?<span>Login password can't be empty!</span>:""}
                     </div>
                   </div>
 
@@ -81,7 +184,8 @@ export const Register = () => {
                     <div class="form-outline flex-fill mb-0">
                       <label class="form-label" for="cLoginPassword">Confirm Login Password</label>
                       <input type="password" id="cLoginPassword" class="form-control"
-                      value={password2} onChange={(event)=>{setPassword2(event.target.value)}} />
+                      value={password2} onChange={password2Handler} />
+                       {password2Err?<span>Password doesn't match!</span>:""}
                     </div>
                   </div>
 
@@ -89,18 +193,21 @@ export const Register = () => {
                   <div class="d-flex flex-row align-items-center mb-4">
                     <i class="fas fa-lock fa-lg me-3 fa-fw"></i>
                     <div class="form-outline flex-fill mb-0">
-                      <label class="form-label" for="transPassword">Set Transaction Password</label>
+                      <label class="form-label" for="transPassword">Set Transaction pin</label>
                       <input type="password" id="transPassword" class="form-control"
-                      value={transPassword} onChange={(event)=>{setTransPassword(event.target.value)}} />
+                      value={transPassword} onChange={transPasswordHandler} />
+                      {transPasswordErr?<span>Transaction pin should be 6 digits!</span>:""}
+                      {transPassEmptyErr?<span>Login password can't be empty!</span>:""}
                     </div>
                   </div>
 
                   <div class="d-flex flex-row align-items-center mb-4">
                     <i class="fas fa-lock fa-lg me-3 fa-fw"></i>
                     <div class="form-outline flex-fill mb-0">
-                      <label class="form-label" for="cTransPassword">Confirm Transaction Password</label>
+                      <label class="form-label" for="cTransPassword">Confirm Transaction Pin</label>
                       <input type="password" id="cTransPassword" class="form-control"
-                      value={transPassword2} onChange={(event)=>{setTransPassword2(event.target.value)}} />
+                      value={transPassword2} onChange={transPassword2Handler} />
+                      {transPassword2Err?<span>Transaction pin doesn't match!</span>:""}
                     </div>
                   </div>
 
@@ -108,7 +215,9 @@ export const Register = () => {
                     <i class="fas fa-lock fa-lg me-3 fa-fw"></i>
                     <div class="form-outline flex-fill mb-0">
                       <label class="form-label" for="otp">Enter OTP</label>
-                      <input type="password" id="otp" class="form-control" />
+                      <input type="password" id="otp" class="form-control" 
+                      value={otp} onChange={otpHandler}/>
+                      {otpErr?<span>OTP doesn't match!</span>:""}
                     </div>
                   </div>
 
@@ -135,5 +244,4 @@ export const Register = () => {
 </div>
         );
     }
-
 

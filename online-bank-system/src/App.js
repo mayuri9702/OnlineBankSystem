@@ -6,6 +6,7 @@ import {CreateAccount} from './components/CreateAccount';
 import {ForgetPassword} from './components/ForgetPassword';
 import {ForgetUserID} from './components/ForgetUserID';
 import{SetNewPassword} from './components/SetNewPassword';
+import {AccountStatement} from './components/AccountStatement';
 import "./App.css";
 
 
@@ -20,6 +21,7 @@ function App() {
       <Route exact path='/forgetPassword' element={<ForgetPassword/>}/>
       <Route exact path='/forgetUserID' element={<ForgetUserID/>}/>
       <Route exact path='/setNewPassword' element={<SetNewPassword/>}/>
+      <Route exact path='/dashboard' element={<AccountStatement/>}/>
     </Routes>
   
    </Router>

@@ -1,9 +1,61 @@
-import React from 'react';
-import {Link} from 'react-router-dom';
+import React, { useState } from 'react';
+import {useNavigate} from 'react-router-dom';
 import Navbar from './Navbar';
 import "./Login.css"
 
 export const Login = () => {
+
+      const navigate = useNavigate()
+
+      const [userID, setUserID] = useState('')
+      const [password, setPassword] = useState('')
+      const [userIDErr, setUserIDErr] = useState(false)
+      const [passwordErr, setPasswordErr] = useState(false)
+
+      function userIDHandler(e){
+        let item=e.target.value
+        if(item===''){
+          setUserIDErr(true)
+        }else{
+          setUserIDErr(false)
+        }
+        setUserID(item)
+      }
+
+      function passwordHandler(e){
+        let item=e.target.value
+        if(item===''){
+          setPasswordErr(true)
+        }else{
+          setPasswordErr(false)
+        }
+        setPassword(item)
+      }
+
+      async function save(e){
+        e.preventDefault()
+        if(userID===''){
+          setUserIDErr(true)
+        }else{
+          setUserIDErr(false)
+        }
+        if(password===''){
+          setPasswordErr(true)
+        }else{
+          setPasswordErr(false)
+        }
+        if(userID!=='' && password!==''){
+          try{
+              navigate('/dashboard')
+             setUserID('')
+             setPassword('')            
+          }
+          catch(err){
+            alert('Login failed.')
+          }
+        }
+      }
+
         return (
             <div>
                 <Navbar></Navbar>
@@ -17,15 +69,17 @@ export const Login = () => {
       <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
         <form>
           <div class="form-outline mb-4">
+          <label class="form-label" for="userID">User ID</label>
             <input type="text" id="userID" class="form-control form-control-lg"
-              placeholder="Enter a User ID" />
-            <label class="form-label" for="userID">User ID</label>
+              placeholder="Enter a User ID" value={userID} onChange={userIDHandler}/>
+              {userIDErr?<span>UserID can't be empty!</span>:""}
           </div>
 
           <div class="form-outline mb-3">
-            <input type="password" id="password" class="form-control form-control-lg"
-              placeholder="Enter password" />
             <label class="form-label" for="password">Password</label>
+            <input type="password" id="password" class="form-control form-control-lg"
+              placeholder="Enter password" value={password} onChange={passwordHandler} />
+            {passwordErr?<span>Password can't be empty!</span>:""}
           </div>
 
           <div class="d-flex justify-content-between align-items-center">
@@ -40,7 +94,7 @@ export const Login = () => {
 
           <div class="text-center text-lg-start mt-4 pt-2">
             <button type="button" class="btn btn-primary btn-lg"
-              >Login</button>
+              onClick={save}>Login</button>
           </div>
 
         </form>
