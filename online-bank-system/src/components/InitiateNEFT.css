@@ -1,0 +1,19 @@
+.transaction-form{
+    width:80%;
+    margin:auto
+}
+
+.button-form{
+    display:flex;
+    justify-content: center;
+    margin-top:2em;
+}
+
+.neft-transaction{
+    font-weight: bolder;
+    font-size:2em;
+    width:80%;
+    margin:auto;
+    display:flex;
+    justify-content: center;
+}
