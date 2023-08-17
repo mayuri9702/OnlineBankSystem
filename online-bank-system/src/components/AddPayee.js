@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { NavbarLogout } from "./NavbarLogout";
 import { useNavigate } from "react-router-dom";
+import { LeftNavbar } from "./LeftNavbar";
+import './dashboard.css'
 
 export const AddPayee = () =>{
 
@@ -45,7 +47,7 @@ export const AddPayee = () =>{
 
     function reAccNoHandler(e){
         let item=e.target.value
-        if(item!=accNo){
+        if(item!==accNo){
           setReAccNoErr(true)
         }else{
           setReAccNoErr(false)
@@ -66,16 +68,15 @@ export const AddPayee = () =>{
     }
 
     return(
-        <div>
-       <NavbarLogout></NavbarLogout>
-   <section class="vh-100">
+        <div className="app">
+        <header className="header"><NavbarLogout></NavbarLogout></header>
+        <div className="container">
+          <div className="sidebar"><LeftNavbar></LeftNavbar></div>
+          <main className="content">
+          <section class="vh-100">
   <div class="container-fluid h-custom">
     <div class="row d-flex justify-content-center align-items-center h-100">
-      <div class="col-md-9 col-lg-6 col-xl-5">
-        <img src="https://www.transparentpng.com/thumb/user/add-user-male-transparent-icon--6vjB7f.png"
-          class="img-fluid" alt="Sample image"/>
-      </div>
-      <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
+      
         <form>
           <div class="form-outline mb-4">
                         <label class="form-label" for="name">Beneficiary Name</label>
@@ -112,12 +113,12 @@ export const AddPayee = () =>{
                     </div>
 
         </form>
+        </div>
       </div>
-    </div>
+    </section>
 
-  </div>
-</section>
-            </div>
-
+          </main>
+        </div>
+      </div>
     )
 }

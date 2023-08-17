@@ -46,7 +46,7 @@ export const Login = () => {
         }
         if(userID!=='' && password!==''){
           try{
-              navigate('/accountDetails')
+              navigate('/accountSummary')
              setUserID('')
              setPassword('')            
           }

@@ -7,10 +7,11 @@ import {ForgetPassword} from './components/ForgetPassword';
 import {ForgetUserID} from './components/ForgetUserID';
 import{SetNewPassword} from './components/SetNewPassword';
 import {AccountStatement} from './components/AccountStatement';
-import {AccountDetails} from './components/AccountDetails';
+import {AccountSummary} from './components/AccountSummary';
 import { FundTransfer } from './components/FundTransfer';
 import {AddPayee} from './components/AddPayee'
 import {InitiateTransaction} from './components/InitiateTransaction';
+import {TransferSuccess} from './components/TransferSuccess'; 
 import './App.css';
 import React from 'react';
 
@@ -27,10 +28,11 @@ function App() {
       <Route exact path='/forgetUserID' element={<ForgetUserID/>}/>
       <Route exact path='/setNewPassword' element={<SetNewPassword/>}/>
       <Route exact path='/accountStatement' element={<AccountStatement/>}/>
-      <Route exact path='/accountDetails' element={<AccountDetails/>}/>
+      <Route exact path='/accountSummary' element={<AccountSummary/>}/>
       <Route exact path='/fundTransfer' element={<FundTransfer/>}/>
       <Route exact path='/addPayee' element={<AddPayee/>}/>
       <Route exact path='/initiateTransaction' element={<InitiateTransaction/>}/>
+      <Route exact path='/transferSuccess' element={<TransferSuccess/>}/>
     </Routes>
   
    </Router>

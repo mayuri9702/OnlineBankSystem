@@ -15,5 +15,6 @@
     margin:auto;
     justify-content: center;
     margin-top: 20dp;
-    margin-bottom: 10dp;
+    margin-bottom: 20dp;
+    align-items: center;
 }
