@@ -24,3 +24,7 @@
 .vertical-navbar a:hover{
     background-color: #87CEEB;
 }
+
+.vertical-navbar a:active{
+    background-color: #87CEEB;
+}

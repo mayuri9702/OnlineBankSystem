@@ -20,9 +20,9 @@ export const AccountStatement = () => {
               <div className="form-container">
                 <div className='form-row'>
                   <label for="from">From:  </label>
-                  <input type='text' id="from"/>
+                  <input type='date' id="from"/>
                   <label for="to">To:  </label>
-                  <input type='text' id="to"/>
+                  <input type='date' id="to"/>
                 </div>
               </div>
             </div>

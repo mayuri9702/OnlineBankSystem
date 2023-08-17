@@ -7,6 +7,7 @@ export const AddPayee = () =>{
     const [name, setName] = useState('')
     const [accNo, setAccNo] = useState('')
     const [reAccNo, setReAccNo] = useState('')
+    const [nick, setNick] = useState('')
     const [nameErr, setNameErr] = useState(false)
     const [accNoErr, setAccNoErr] = useState(false)
     const [reAccNoErr, setReAccNoErr] = useState(false)
@@ -30,18 +31,38 @@ export const AddPayee = () =>{
             setReAccNoErr(false)
         }
         if(name!=='' && accNo!=='' && reAccNo!==''){
-            navigate('/fundTransfer')
+            try{
+                navigate('/accountDetails')
+               setName('')
+               setAccNo('')      
+               setReAccNo('')      
+            }
+            catch(err){
+              alert('Login failed.')
+            }
         }
     }
 
-    function ReAccNoHandler(e){
+    function reAccNoHandler(e){
         let item=e.target.value
-        if(item===''){
+        if(item!=accNo){
           setReAccNoErr(true)
         }else{
-          setPasswordErr(false)
+          setReAccNoErr(false)
         }
-        setPassword(item)
+        setReAccNo(item)
+    }
+
+    function nickHandler(e){
+        setNick(e.target.value)
+    }
+
+    function accNoHandler(e){
+        setAccNo(e.target.value)
+    }
+
+    function nameHandler(e){
+        setName(e.target.value)
     }
 
     return(
@@ -59,7 +80,7 @@ export const AddPayee = () =>{
           <div class="form-outline mb-4">
                         <label class="form-label" for="name">Beneficiary Name</label>
                         <input type="text" id="name" class="form-control form-control-lg border"
-                        value={name} />
+                        value={name} onChange={nameHandler} />
                         {nameErr?<span>Name can't be empty!</span>:""}
     
                     </div>
@@ -67,7 +88,7 @@ export const AddPayee = () =>{
                     <div class="form-outline mb-4">
                         <label class="form-label" for="acc">Beneficiary Account Number</label>
                         <input type="text" id="acc" class="form-control form-control-lg"
-                        value={accNo}/>
+                        value={accNo} onChange={accNoHandler}/>
                         {accNoErr?<span>Account number can't be empty!</span>:""} 
                     </div>
 
@@ -75,18 +96,19 @@ export const AddPayee = () =>{
                     <div class="form-outline mb-4">
                         <label class="form-label" for="accR">Re-enter Account Number</label>
                         <input type="text" id="accR" class="form-control form-control-lg"
-                        value={reAccNo} onChange={ReAccNoHandler} />
-                        {nameErr?<span>Account number doesn't match!</span>:""}
+                        value={reAccNo} onChange={reAccNoHandler} />
+                        {reAccNoErr?<span>Account number doesn't match!</span>:""}
                     </div>
 
                     
                     <div class="form-outline mb-4">
                         <label class="form-label" for="nick">Nick Name</label>
-                        <input type="text" id="nick" class="form-control form-control-lg" />
+                        <input type="text" id="nick" class="form-control form-control-lg"
+                        value={nick} onChange={nickHandler} />
                     </div>
 
                     <div class="d-flex justify-content-around align-items-center mb-4">
-                        <button type="submit" class="btn btn-primary btn-lg btn-block">Save As Beneficiary</button>
+                        <button type="submit" class="btn btn-primary btn-lg btn-block" onClick={save}>Save As Beneficiary</button>
                     </div>
 
         </form>
