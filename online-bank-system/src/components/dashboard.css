@@ -20,8 +20,10 @@
     padding: 1rem;
   }
   
-  .content {
-    flex: 1;
-    padding: 1rem;
+  main {
+   flex: 1;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   margin-top: 20px;
   }
-  

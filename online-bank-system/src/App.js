@@ -8,6 +8,8 @@ import {ForgetUserID} from './components/ForgetUserID';
 import{SetNewPassword} from './components/SetNewPassword';
 import {AccountStatement} from './components/AccountStatement';
 import {AccountDetails} from './components/AccountDetails';
+import { FundTransfer } from './components/FundTransfer';
+import {AddPayee} from './components/AddPayee'
 import './App.css';
 import React from 'react';
 
@@ -25,6 +27,8 @@ function App() {
       <Route exact path='/setNewPassword' element={<SetNewPassword/>}/>
       <Route exact path='/accountStatement' element={<AccountStatement/>}/>
       <Route exact path='/accountDetails' element={<AccountDetails/>}/>
+      <Route exact path='/fundTransfer' element={<FundTransfer/>}/>
+      <Route exact path='/addPayee' element={<AddPayee/>}/>
     </Routes>
   
    </Router>
