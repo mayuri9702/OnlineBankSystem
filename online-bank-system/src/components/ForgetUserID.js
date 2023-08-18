@@ -1,41 +1,97 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom'; // Import Link from react-router-dom
+
+import React, { useState } from 'react';
+import axios from 'axios';
+import './ForgetUserID.css';
 
 export const ForgetUserID = () => {
-    const navigate = useNavigate();
-        return (
-            <div>
-                    <nav class="navbar navbar-expand-sm bg-primary navbar-dark">
-          <a class="navbar-brand">
-          <img src="https://o.remove.bg/downloads/6049c90f-798a-42b4-a380-86d6f331d02a/pngtree-vector-internet-banking-icon-png-image_755759-removebg-preview.png" width="30" height="30" class="d-inline-block align-top" alt="">
-           </img> Online Banking System</a>
-           </nav>
-                        <div class="row d-flex align-items-center justify-content-center h-100" style={{marginTop:5+'rem'}}>
-                        <div class="col-md-7 col-lg-5 col-xl-5 offset-xl-1">
+    const [email, setEmail] = useState('');
+    const [otp, setOtp] = useState('');
+    const [showOtpModal, setShowOtpModal] = useState(false);
+    const [showUserId, setShowUserId] = useState(false);
+    const [verificationResult, setVerificationResult] = useState('');
+    const [userId, setUserId] = useState('');
 
-                            <div class="d-flex justify-content-around align-items-center mb-4">
-                                    <h1>Forget User ID</h1>
-                            </div>
+    const handleSendOTP = async () => {
+        try {
+            const response = await axios.post('http://localhost:8081/logins/emailid', {
+                emailid: email
+            });
 
-                            <form>
-                            <div class="form-outline mb-4">
-                                <label class="form-label" for="accountNumber">Enter Account Number</label>
-                                <input type="text" id="accountNumber" class="form-control form-control-lg" />
-                            </div>
+            if (response.data.message === 'OTP sent successfully') {
+                setShowOtpModal(true);
+            } else {
+                setVerificationResult('Invalid email ID');
+            }
+        } catch (error) {
+            console.error(error);
+            // Handle error or show error message
+        }
+    };
 
-                            <div class="form-outline mb-4">
-                                <label class="form-label" for="otp">Enter OTP</label>
-                                <input type="text" id="otp" class="form-control form-control-lg" />
-                            </div>
+    const handleVerifyOTP = async () => {
+        try {
+            const response = await axios.post('http://localhost:8081/logins/verify-otp', {
+                emailid: email,
+                otp: otp
+            });
 
-                            <div class="d-flex justify-content-around align-items-center mb-4">
-                                <button type="submit" class="btn btn-primary btn-lg btn-block" onClick={()=>navigate('/login')}>Proceed</button>
-                                <button type="submit" class="btn btn-primary btn-lg btn-block" onClick={()=>{navigate('/login');}}>Back</button>
-                            </div>
-                        </form>
+            if (response.data.message === 'OTP verified successfully') {
+                setVerificationResult(response.data.message);
+                setUserId(response.data.userId);
+                setShowOtpModal(false);
+                setShowUserId(true);
+            } else {
+                setVerificationResult('Incorrect OTP, please try again.');
+            }
+        } catch (error) {
+            if (error.response && error.response.status===400){
+                setVerificationResult('Incorrect OTP, please try again.');
+            }else{
+                console.error(error);
+            // Handle error or show error message
+            }
+        }
+    };
 
+    return (
+        <div className="container">
+            <div className="form-group">
+                <input
+                    type="text"
+                    className="form-control"
+                    placeholder="Enter Email ID"
+                    value={email}
+                    onChange={e => setEmail(e.target.value)}
+                />
+            </div>
+            <div className="form-group">
+                <button type="button" className="btn btn-primary btn-lg btn-block" onClick={handleSendOTP}>Send OTP</button>
+            </div>
+
+            {verificationResult && <p className="error-message">{verificationResult}</p>}
+
+            {showOtpModal && (
+                <div className="modal-container">
+                    <div className="modal-content">
+                        <h5>Enter OTP</h5>
+                        <input
+                            type="text"
+                            className="form-control"
+                            value={otp}
+                            onChange={e => setOtp(e.target.value)}
+                        />
+                        <button type="button" className="btn btn-primary" onClick={handleVerifyOTP}>Submit</button>
                     </div>
                 </div>
-            </div>
-        )
-}
+            )}
+
+            {showUserId && (
+                <div>
+                    <h5>User ID: {userId}</h5>
+                    <Link to="/login" className="link">Go back to Home</Link>
+                </div>
+            )}
+        </div>
+    );
+};
