@@ -2,12 +2,22 @@ import React, { useState } from 'react';
 import Navbar from './Navbar';
 import './NewUser.css'; // Import the CSS file for NewUser component
 import axios from 'axios';
+import PopUp from './PopUp';
 
 export const NewUser = () => {
+  const [popUpState, setPopUpState] = useState(false)
   const [userid, setUserid] = useState('');
   const [password, setPassword] = useState('');
   const [emailid, setemailid] = useState('');
   const [registrationStatus, setRegistrationStatus] = useState(null); // State for registration status
+
+  const openPopUp = () => {
+    setPopUpState(1);
+  };
+
+  const closePopUp = () => {
+    setPopUpState(0);
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -36,15 +46,19 @@ try {
   
 
     if (response.status === 201) {
-      console.log('User registered successfully');
-      setRegistrationStatus('success');
+      console.log('User registered successfully!!');
+      setRegistrationStatus('User registered successfully!!');
+      setPopUpState(1)
     }
   } catch (error) {
 
-    console.error('User registration failed', error);
-    setRegistrationStatus('error');
+    console.error('User registration failed!!', error);
+    setRegistrationStatus('User registration failed!!');
+    setPopUpState(1)
   }
+  
 };
+
 
 
   return (
@@ -108,17 +122,22 @@ try {
                   <button type="submit" className="btn btn-primary btn-lg">Register</button>
                 </div>
 
-                {registrationStatus === 'success' && (
-                  <p className="text-center text-success mt-3">User registered successfully!</p>
+                {registrationStatus === 'User registered successfully!!' && (
+                  <a href="/login">Back to login</a>
                 )}
-                {registrationStatus === 'error' && (
-                  <p className="text-center text-danger mt-3">User registration failed. Please try again.</p>
+                {registrationStatus === 'User registration failed!!' && (
+                  <p className="text-center text-danger mt-3">User ID already exist. Please try again!!</p>
                 )}
               </form>
             </div>
           </div>
         </div>
       </section>
+      {popUpState === 1 && (
+        <PopUp onClose={closePopUp}>
+          <p>{registrationStatus}</p>
+        </PopUp>
+      )}
     </div>
   );
 };
