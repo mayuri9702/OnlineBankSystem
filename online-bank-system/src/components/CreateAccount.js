@@ -4,39 +4,41 @@ import axios from 'axios';
 
 export const CreateAccount = () => {
   const [showUserIdPopup, setShowUserIdPopup] = useState(true);
+ 
+  const [isValidUserId, setIsValidUserId] = useState(false);
   const [userId, setUserId] = useState('');
-  const [isValidUserId, setIsValidUserId] = useState(true);
-  const [userData, setUserData] = useState({
-    userId: '',
-    password: '',
-    email: '',
-  });
+  const [password,setPassword]=useState('');
+  const [email,setEmail]=useState('');
+  
 
 
   const generateAccountNumber = () => {
-    const upperPart = Math.floor(Math.random * 100000) * 1000000000;
-    const lowerPart = Math.floor(Math.random * 1000000000);
+    const upperPart = Math.floor(Math.random() * 100000) * 1000000000;
+    const lowerPart = Math.floor(Math.random() * 1000000000);
     const accountNumber = upperPart + lowerPart;
     return accountNumber;
   };
 
-  const [accountno, setAccount_no] = useState(generateAccountNumber());
-
   
-  console.log(accountno)
+ 
   const handleUserIdSubmit = async () => {
     try {
       const response = await axios.get(`http://localhost:8081/logins/user/${userId}`);
 
+      console.log(response);
       if (response.data.message === 'User ID is valid') {
         setIsValidUserId(true);
         setShowUserIdPopup(false);
-        setUserData({
-          userId: response.data.userId,
-          password: response.data.password,
-          email: response.data.email,
-        });
-        console.log(userData.userId);
+        // setUserData({
+        //   userId: response.data.userId,
+        //   password: response.data.password,
+        //   email: response.data.email,
+        // });
+        // console.log(userData.userId);
+        setUserId(response.data.userId);
+        setPassword(response.data.password);
+        setEmail(response.data.email);
+        
       } else {
         setIsValidUserId(false);
       }
@@ -45,9 +47,87 @@ export const CreateAccount = () => {
     }
   };
 
+  const [accountType,setAccountType]=useState("");
+  const [title,setTitle]=useState("");
+  const [firstName,setFirstName]=useState("");
+  const [middleName,setMiddleName]=useState("");
+  const [lastName,setLastName]=useState("");
+  const [fatherName,setFatherName]=useState("");
+  const [dateOfBirth,setDateOfBirth]=useState("");
+  const [mobileNumber,setMobileNumber]=useState("");
+  const [aadharNumber,setAadharNumber]=useState("");
+  const [residentialAddress,setResidentialAddress]=useState("");
+  const [permanentAddress,setPermanentAddress]=useState("");
+  const [occupationType,setOccupationType]=useState("");
+  const [sourceIncome,setSourceIncome]=useState("");
+  const [annualIncome,setAnnualIncome]=useState("");
+  const [transactionPin,setTransactionPin]=useState("");
+
+  const handleAccountType=(e)=>{
+    setAccountType(e.target.value);
+  }
+
+  const handleTitle=(e)=>{
+    setTitle(e.target.value);
+  }
+
+  const handleFirstName=(e)=>{
+    setFirstName(e.target.value);
+  }
+
+  const handleMiddleName=(e)=>{
+    setMiddleName(e.target.value);
+  }
+
+  const handleLastName=(e)=>{
+    setLastName(e.target.value);
+  }
+
+  const handleFatherName=(e)=>{
+    setFatherName(e.target.value);
+  }
+
+  const handledDateOfBirth=(e)=>{setDateOfBirth(e.target.value);}
+  const handleMobileNumber=(e)=>{setMobileNumber(e.target.value);}
+  const handleAadharNumber=(e)=>{setAadharNumber(e.target.value);}
+  const handleResidentialAddress=(e)=>{setResidentialAddress(e.target.value);}
+  const handlePermanentAddress=(e)=>{setPermanentAddress(e.target.value);}
+  const handleOccupationType=(e)=>{setOccupationType(e.target.value);}
+  const handleSourceIncome=(e)=>{setSourceIncome(e.target.value);}
+  const handleAnnualIncome=(e)=>{setAnnualIncome(e.target.value);}
+  const handleTransactionPin=(e)=>{setTransactionPin(e.target.value);}
+
+
   const handleFormSubmit = async () => {
-    console.log(formData)
+  
+    if(isValidUserId){
     try {
+
+     const accountNo=generateAccountNumber();
+
+      const formData={
+      account_no: accountNo,
+      accounttype: accountType,
+      title: title,
+      firstname: firstName,
+      middlename: middleName,
+      lastname: lastName,
+      fathersname: fatherName,
+      mobilenumber: Number(mobileNumber),
+      aadharnumber: Number(aadharNumber), 
+      dob: dateOfBirth, 
+      residentialAddress: residentialAddress,
+      permanentAddress: permanentAddress,
+      occupationtype: occupationType,
+      sourceofincome:  sourceIncome,
+      annualincome: Number(annualIncome),
+      balance: Number(1000),
+      transaactionpin:Number(transactionPin),
+      userid:Number(userId)
+      };
+      console.log(accountNo);
+
+      console.log(formData);
       const response = await axios.post('http://localhost:8081/logins', formData);
       if (response.status === 200) {
         // Account created successfully
@@ -60,75 +140,8 @@ export const CreateAccount = () => {
       // Handle error
       console.log('Error:', error.message);
     }
+  }
   };
-
-  
-  const [formData, setFormData] = useState({
-  user_id: userData.userId,
-  password: userData.password,
-  email: userData.email,
-  isadmin: 0,
-  Account: [
-    {
-      account_no: accountno,
-      accountType: "",
-      title: "",
-      firstName: "",
-      middleName: "",
-      lastName: "",
-      fatherName: "",
-      mobileNumber: 0,// Change to the correct default value if needed
-      aadharNumber: 0, // Change to the correct default value if needed
-      dateOfBirth: "", 
-      residentialAddress: `{
-        rAddressLine1: "",
-        rAddressLine2: "",
-        rLandmark: "",
-        rState: "",
-        rCity: "",
-        rPincode: "",
-      }`,
-      permanentAddress: `{
-        pAddressLine1: "",
-        pAddressLine2: "",
-        pLandmark: "",
-        pState: "",
-        pCity: "",
-        pPincode: "",
-      }`,
-      occupationType: "",
-      sourceIncome: "",
-      annualIncome: "",
-    },
-  ],
-});
-
-const handleInputChange = (event) => {
-  const { name, value, type, checked } = event.target;
-  const newvalue = type === 'checkbox' ? checked : value;
-
-  if(name==='account_no'){
-    setAccount_no(newvalue);
-  }
-
-  if (name.startsWith('Account.')) {
-    const fieldName = name.split('.')[1];
-    const accountData = formData.Account[0];
-    const updatedAccountData = {
-      ...accountData,
-      [fieldName]: newvalue,
-    };
-    setFormData((prevData) => ({
-      ...prevData,
-      Account: [updatedAccountData],
-    }));
-  } else {
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: newvalue,
-    }));
-  }
-};
 
 
 
@@ -149,8 +162,8 @@ const handleInputChange = (event) => {
                         <form>
 
                         <div className="col-md-12">
-                                <select className="form-select mt-3" required="true" onChange={handleInputChange} name="accountType">
-                                      <option selected disabled value="">Select Type of Account</option>
+                                <select className="form-select mt-3" required onChange={handleAccountType} name="accountType">
+                                      <option selected disabled value={accountType}>Select Type of Account</option>
                                       <option value="savings">Savings</option>
                                       <option value="current">Current</option>
                                       <option value="salary">Salary</option>
@@ -162,8 +175,8 @@ const handleInputChange = (event) => {
                            </div>
 
                         <div className="col-md-12">
-                                <select className="form-select mt-3" required="true" onChange={handleInputChange} name="title">
-                                      <option selected disabled value="">Title</option>
+                                <select className="form-select mt-3" required={true} onChange={handleTitle} name="title">
+                                      <option selected disabled value={title}>Title</option>
                                       <option value="mr">Mr.</option>
                                       <option value="mrs">Mrs.</option>
                                       <option value="miss">Miss.</option>
@@ -173,99 +186,46 @@ const handleInputChange = (event) => {
                         
           
                           <div className="form-outline mb-4">
-                            <input type="text" id="firstName" className="form-control form-control-lg" placeholder='First Name' onChange={handleInputChange} name="firstName" required="true"/>
+                            <input type="text" id="firstName" className="form-control form-control-lg" placeholder='First Name' onChange={handleFirstName} value ={firstName} name="firstName" required/>
                           </div>
           
                           <div className="form-outline mb-4">
                             <input type="text" id="middleName" className="form-control form-control-lg" placeholder='Middle Name'
-                            onChange={handleInputChange} name="middleName"/>
+                            onChange={handleMiddleName} value={middleName} name="middleName"/>
                           </div>
 
                           <div className="form-outline mb-4">
-                            <input type="text" id="lastName" className="form-control form-control-lg" placeholder='Last Name' onChange={handleInputChange} name="lastName" required="true"/>
+                            <input type="text" id="lastName" className="form-control form-control-lg" placeholder='Last Name' onChange={handleLastName} value={lastName} name="lastName" required="true"/>
                           </div>
 
                           <div className="form-outline mb-4">
-                            <input type="text" id="fatherName" className="form-control form-control-lg" placeholder="Father's Name" onChange={handleInputChange} name="fatherName" required="true"/>
+                            <input type="text" id="fatherName" className="form-control form-control-lg" placeholder="Father's Name" onChange={handleFatherName} value={fatherName} name="fatherName" required="true"/>
                           </div>
 
                           <div className="form-outline mb-4">
-                            <input type="text" id="mobileNumber" className="form-control form-control-lg" placeholder='Mobile Number' onChange={handleInputChange} name="mobileNumber" required="true"/>
+                            <input type="number" id="mobileNumber" className="form-control form-control-lg" placeholder='Mobile Number' onChange={handleMobileNumber} value={mobileNumber} name="mobileNumber" required="true"/>
                           </div>
 
 
 
                           <div className="form-outline mb-4">
-                            <input type="text" id="aadharNumber" className="form-control form-control-lg" placeholder='Aadhar Card Number' onChange={handleInputChange} name="aadharNumber" required="true"/>
+                            <input type="number" id="aadharNumber" className="form-control form-control-lg" placeholder='Aadhar Card Number' onChange={handleAadharNumber} value={aadharNumber} name="aadharNumber" required="true"/>
                           </div>
 
                           <div className="form-outline mb-4">
-                            <input type="text" id="dateOfBirth" className="form-control form-control-lg" placeholder='Date of Birth'onChange={handleInputChange} name="dateOfBirth" required="true"/>
+                            <input type="text" id="dateOfBirth" className="form-control form-control-lg" placeholder='Date of Birth'onChange={handledDateOfBirth} value ={dateOfBirth} name="dateOfBirth" required="true"/>
+                          </div>
+
+
+                          <div className="form-outline mb-4">
+                            <input type="text" id="residentialAddress" className="form-control form-control-lg" placeholder='Residential Address' onChange={handleResidentialAddress} value={residentialAddress}  name="residentialAddress" required="true"/>
                           </div>
 
                           <div className="form-outline mb-4">
-                            <h5>Residential Address</h5>
+                            <input type="text" id="permanentAddress" className="form-control form-control-lg" placeholder='Permanent Address' onChange={handlePermanentAddress} value={permanentAddress}  name="permanentAddress" required="true"/>
                           </div>
 
-                          <div className="form-outline mb-4">
-                            <input type="text" id="rAddressLine1" className="form-control form-control-lg" placeholder='Address Line 1' onChange={handleInputChange} name="residentialAddress.rAddressLine1" required="true"/>
-                          </div>
-
-                          <div className="form-outline mb-4">
-                            <input type="text" id="rAddressLine2" className="form-control form-control-lg" placeholder='Address Line 2' onChange={handleInputChange} name="residentialAddress.rAddressLine2" required="true"/>
-                          </div>
-
-                          <div className="form-outline mb-4">
-                            <input type="text" id="rLandmark" className="form-control form-control-lg" placeholder='Landmark'
-                            onChange={handleInputChange} name="residentialAddress.rLandmark"/>
-                          </div>
-
-                          <div className="form-outline mb-4">
-                            <input type="text" id="rState" className="form-control form-control-lg" placeholder='State' required="true" onChange={handleInputChange} name="residentialAddress.rState"/>
-                          </div>
-
-                          <div className="form-outline mb-4">
-                            <input type="text" id="rCity" className="form-control form-control-lg" placeholder='City' required="true" onChange={handleInputChange} name="residentialAddress.rCity"/>
-                          </div>
-
-                          <div className="form-outline mb-4">
-                            <input type="text" id="rPincode" className="form-control form-control-lg" placeholder='Pincode' required="true" onChange={handleInputChange} name="residentialAddress.rPincode"/>
-                          </div>
-
-                          <div className="form-outline mb-4">
-                            <h5>Permanent Address</h5>
-                          </div>
-
-                          <div className="form-outline mb-4">
-                            <input type="text" id="pAddressLine1" className="form-control form-control-lg" placeholder='Address Line 1' required="true"
-                            onChange={handleInputChange} name="permanentlAddress.pAddressLine1"/>
-                          </div>
-
-                          <div className="form-outline mb-4">
-                            <input type="text" id="pAddressLine2" className="form-control form-control-lg" placeholder='Address Line 2' required="true"
-                            onChange={handleInputChange} name="permanentAddress.pAddressLine2"/>
-                          </div>
-
-                          <div className="form-outline mb-4">
-                            <input type="text" id="pLandmark" className="form-control form-control-lg" placeholder='Landmark'
-                            onChange={handleInputChange} name="permanentAddress.pLandmark"/>
-                          </div>
-
-                          <div className="form-outline mb-4">
-                            <input type="text" id="pState" className="form-control form-control-lg" placeholder='State' 
-                            required="true"
-                            onChange={handleInputChange} name="permanentAddress.pState"/>
-                          </div>
-
-                          <div className="form-outline mb-4">
-                            <input type="text" id="pCity" className="form-control form-control-lg" placeholder='City' required="true"
-                            onChange={handleInputChange} name="permanentAddress.pCity"/>
-                          </div>
-
-                          <div className="form-outline mb-4">
-                            <input type="text" id="pPincode" className="form-control form-control-lg" placeholder='Pincode' required="true"
-                            onChange={handleInputChange} name="permanentAddress.pPincode"/>
-                          </div>
+              
 
                           <div className="form-outline mb-4">
                             <h5>Occupation Details</h5>
@@ -273,22 +233,27 @@ const handleInputChange = (event) => {
 
                           <div className="form-outline mb-4">
                             <input type="text" id="occupationType" className="form-control form-control-lg" placeholder='Occupation Type' required="true"
-                            onChange={handleInputChange} name="occupationType"/>
+                            onChange={handleOccupationType} value={occupationType} name="occupationType"/>
                           </div>
 
                           <div className="form-outline mb-4">
                             <input type="text" id="sourceIncome" className="form-control form-control-lg" placeholder='Source of Income' required="true"
-                            onChange={handleInputChange} name="sourceIncome"/>
+                            onChange={handleSourceIncome} value={sourceIncome} name="sourceIncome"/>
                           </div>
 
                           <div className="form-outline mb-4">
-                            <input type="text" id="annualIncome" className="form-control form-control-lg" placeholder='Gross Annual Income' required="true"
-                            onChange={handleInputChange} name="annualIncome"/>
+                            <input type="number" id="annualIncome" className="form-control form-control-lg" placeholder='Gross Annual Income' required="true"
+                            onChange={handleAnnualIncome} value={annualIncome} name="annualIncome"/>
+                          </div>
+
+                          <div className="form-outline mb-4">
+                            <input type="number" id="transactionPin" className="form-control form-control-lg" placeholder='Transaction Pin' required="true"
+                            onChange={handleTransactionPin} value={transactionPin} name="transactionPin"/>
                           </div>
 
                           <div className="form-check-inline">
                                 <label className="form-check-label" required="true"
-                                onChange={handleInputChange} name="wantDebitCard">Do you want a debit card?
+                                 name="wantDebitCard">Do you want a debit card?
                                 </label>
                             </div>
                             <div className="form-check-inline">
@@ -303,15 +268,15 @@ const handleInputChange = (event) => {
                             </div>
 
                           <div className="form-check d-flex mb-5">
-                            <input className="form-check-input me-2" type="checkbox" value="" id="optNetBanking" />
+                            <input className="form-check-input me-2" type="checkbox" value="" id="optNetBanking" required="true" />
                             <label className="form-check-label" for="optNetBanking" required="true"
-                            onChange={handleInputChange} name="optNetBanking">Opt for Net Banking</label>
+                             name="optNetBanking">Opt for Net Banking</label>
                           </div>
           
                           <div className="form-check d-flex mb-5">
-                            <input className="form-check-input me-2" type="checkbox" value="" id="agree" />
+                            <input className="form-check-input me-2" type="checkbox" value="" id="agree" required="true"/>
                             <label className="form-check-label" for="agree" required="true"
-                            onChange={handleInputChange} name="agree">I agree...</label>
+                             name="agree">I agree...</label>
                           </div>
           
                           <div className="d-flex justify-content-center">
@@ -350,7 +315,7 @@ const handleInputChange = (event) => {
                 onChange={(e)=> setUserId(e.target.value)}
               />
               <button onClick={handleUserIdSubmit}>Submit</button>
-              {!isValidUserId && <p className="error-message">Invalid User Id</p>}
+              {isValidUserId && <p className="error-message">Invalid User Id</p>}
             </div>
           )}
           </div>
