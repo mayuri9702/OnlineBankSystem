@@ -11,7 +11,7 @@ function Navbar() {
 
   <ul class="navbar-nav">
     <li class="nav-item">
-      <a class="nav-link" href="/login">Login for Internet Banking</a>
+      <a class="nav-link" href="/newUser">Register/New User</a>
     </li>
     <li class="nav-item">
       <a class="nav-link" href="/register">Register for Internet Banking</a>

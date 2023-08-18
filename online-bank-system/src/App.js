@@ -12,6 +12,7 @@ import { FundTransfer } from './components/FundTransfer';
 import {AddPayee} from './components/AddPayee'
 import {InitiateTransaction} from './components/InitiateTransaction';
 import {TransferSuccess} from './components/TransferSuccess'; 
+import {NewUser} from './components/NewUser';
 import './App.css';
 import React from 'react';
 
@@ -33,6 +34,7 @@ function App() {
       <Route exact path='/addPayee' element={<AddPayee/>}/>
       <Route exact path='/initiateTransaction' element={<InitiateTransaction/>}/>
       <Route exact path='/transferSuccess' element={<TransferSuccess/>}/>
+      <Route exact path='/newUser' element={<NewUser/>}/>
     </Routes>
   
    </Router>
