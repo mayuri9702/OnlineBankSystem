@@ -30,8 +30,8 @@ function App() {
       <Route exact path='/accountStatement' element={<AccountStatement/>}/>
       <Route exact path='/accountSummary' element={<AccountSummary/>}/>
       <Route exact path='/fundTransfer' element={<FundTransfer/>}/>
-      <Route exact path='/addPayee' element={<AddPayee/>}/>
-      <Route exact path='/initiateTransaction' element={<InitiateTransaction/>}/>
+      <Route exact path='/fundTransfer/addPayee' element={<AddPayee/>}/>
+      <Route exact path='/fundTransfer/initiateTransaction' element={<InitiateTransaction/>}/>
       <Route exact path='/transferSuccess' element={<TransferSuccess/>}/>
     </Routes>
   

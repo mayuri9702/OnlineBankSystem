@@ -12,9 +12,11 @@ export const InitiateTransaction=()=>{
       const [toAccount,setToAccount]=useState("");
       const [amount,setAmount]=useState("");
       const [remark,setRemark]=useState("");
+      const [pin, setPin] = useState('')
       const [fromAccErr, setFromAccErr]=useState(false);
       const [toAccErr, setToAccErr]=useState(false);
       const [amtErr, setAmtErr]=useState(false);
+      const [pinErr, setPinErr] = useState(false)
       
       const [popUpState, setPopUpState] = useState(0);
       const [response, setResponse] = useState(1)
@@ -52,8 +54,13 @@ export const InitiateTransaction=()=>{
         }else{
           setAmtErr(false)
         }
+        if(pin===''){
+          setPinErr(true)
+        }else{
+          setPinErr(false)
+        }
 
-        if(fromAccount!=='' && toAccount!=='' && amount!==''){
+        if(fromAccount!=='' && toAccount!=='' && amount!=='' && pin!==''){
           if(response===1){
             setPopUpState(1)
           }
@@ -92,6 +99,13 @@ export const InitiateTransaction=()=>{
                                 <input type="number" id="amount" class="form-control form-control-lg" 
                                 value={amount} onChange={(e)=>setAmount(e.target.value)}/>
                                 {amtErr?<span>Amount can't be empty!</span>:""}
+                            </div>
+
+                            <div class="form-outline mb-4">
+                                <label class="form-label" for="pin">Enter Transaction Pin</label>
+                                <input type="number" id="pin" class="form-control form-control-lg" 
+                                value={pin} onChange={(e)=>setPin(e.target.value)}/>
+                                {pinErr?<span>Transaction Pin can't be empty!</span>:""}
                             </div>
 
                             <div class="form-outline mb-4">
