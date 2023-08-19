@@ -124,12 +124,12 @@ export const CreateAccount = () => {
       annualincome: Number(annualIncome),
       balance: Number(1000),
       transaactionpin:Number(transactionPin),
-      userid:Number(userId)
+      userid:userId
       };
       console.log(accountNo);
 
       console.log(formData);
-      const response = await axios.post('http://localhost:8081/logins', formData);
+      const response = await axios.post(`http://localhost:8081/accounts/${userId}`, formData);
       if (response.status === 200) {
         // Account created successfully
         console.log('Account created successfully');
