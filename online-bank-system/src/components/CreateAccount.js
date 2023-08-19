@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import './CreateAccount.css'
 import axios from 'axios';
 
+
 export const CreateAccount = () => {
   const [showUserIdPopup, setShowUserIdPopup] = useState(true);
   const [userId, setUserId] = useState('');
@@ -11,32 +12,41 @@ export const CreateAccount = () => {
     password: '',
     email: '',
   });
-
-
+  const getRandom=(length)=>{
+    return Math.floor(Math.pow(
+      10,length-1)+Math.random()*9*Math.pow(10,length-1))
+   
+  };
+  console.log(getRandom(11))
   const generateAccountNumber = () => {
-    const upperPart = Math.floor(Math.random * 100000) * 1000000000;
-    const lowerPart = Math.floor(Math.random * 1000000000);
-    const accountNumber = upperPart + lowerPart;
-    return accountNumber;
+    var upperPart = Math.floor(Math.random * 100000) * 1000000000;
+    // console.log(upperPart);
+    var lowerPart = Math.floor(Math.random * 1000000000);
+    // console.log(lowerPart);
+    var accountNumber = upperPart + lowerPart;
+    console.log(accountNumber);
+    // return accountNumber;
   };
 
-  const [accountno, setAccount_no] = useState(generateAccountNumber());
 
-  
-  console.log(accountno)
+  const [accountno, setAccount_no] = useState('');
+
+
+ 
   const handleUserIdSubmit = async () => {
     try {
       const response = await axios.get(`http://localhost:8081/logins/user/${userId}`);
 
+
       if (response.data.message === 'User ID is valid') {
         setIsValidUserId(true);
         setShowUserIdPopup(false);
-        setUserData({
+        setFormData({
           userId: response.data.userId,
           password: response.data.password,
           email: response.data.email,
         });
-        console.log(userData.userId);
+        console.log(response.data.userId);
       } else {
         setIsValidUserId(false);
       }
@@ -45,10 +55,18 @@ export const CreateAccount = () => {
     }
   };
 
+
   const handleFormSubmit = async () => {
-    console.log(formData)
+    // formData.Account.account_no=getRandom(11)
+    const newAccNumber = getRandom(11);
+    // setFormData({...formData, Account: [...formData, accountno: newAccNumber]}, ()=>{
+    //   console.log('formData', formData)
+    // })
+    let temp = accoutDetails;
+    temp.push({accountNumber: newAccNumber})
+    setAccountDetails(temp)
     try {
-      const response = await axios.post('http://localhost:8081/logins', formData);
+      const response = await axios.post('http://localhost:8081/logins', accoutDetails);
       if (response.status === 200) {
         // Account created successfully
         console.log('Account created successfully');
@@ -62,54 +80,57 @@ export const CreateAccount = () => {
     }
   };
 
-  
+const [accoutDetails, setAccountDetails] = useState([
+  {
+    accountType: "",
+    title: "",
+    firstName: "",
+    middleName: "",
+    lastName: "",
+    fatherName: "",
+    mobileNumber: 0,// Change to the correct default value if needed
+    aadharNumber: 0, // Change to the correct default value if needed
+    dateOfBirth: "",
+    residentialAddress: `{
+      rAddressLine1: "",
+      rAddressLine2: "",
+      rLandmark: "",
+      rState: "",
+      rCity: "",
+      rPincode: "",
+    }`,
+    permanentAddress: `{
+      pAddressLine1: "",
+      pAddressLine2: "",
+      pLandmark: "",
+      pState: "",
+      pCity: "",
+      pPincode: "",
+    }`,
+    occupationType: "",
+    sourceIncome: "",
+    annualIncome: "",
+  },
+],)
+ 
   const [formData, setFormData] = useState({
   user_id: userData.userId,
   password: userData.password,
   email: userData.email,
   isadmin: 0,
-  Account: [
-    {
-      account_no: accountno,
-      accountType: "",
-      title: "",
-      firstName: "",
-      middleName: "",
-      lastName: "",
-      fatherName: "",
-      mobileNumber: 0,// Change to the correct default value if needed
-      aadharNumber: 0, // Change to the correct default value if needed
-      dateOfBirth: "", 
-      residentialAddress: `{
-        rAddressLine1: "",
-        rAddressLine2: "",
-        rLandmark: "",
-        rState: "",
-        rCity: "",
-        rPincode: "",
-      }`,
-      permanentAddress: `{
-        pAddressLine1: "",
-        pAddressLine2: "",
-        pLandmark: "",
-        pState: "",
-        pCity: "",
-        pPincode: "",
-      }`,
-      occupationType: "",
-      sourceIncome: "",
-      annualIncome: "",
-    },
-  ],
+  
 });
+
 
 const handleInputChange = (event) => {
   const { name, value, type, checked } = event.target;
   const newvalue = type === 'checkbox' ? checked : value;
 
+
   if(name==='account_no'){
     setAccount_no(newvalue);
   }
+
 
   if (name.startsWith('Account.')) {
     const fieldName = name.split('.')[1];
@@ -133,8 +154,13 @@ const handleInputChange = (event) => {
 
 
 
+
+
+
+
         return (
           <div>
+
 
             <section className="vh-100 bg-image"
             style ={ { backgroundImage: "url('https://i.pinimg.com/originals/5d/e0/8d/5de08de24459fedac3d28b10a039e2a6.jpg')" } }>
@@ -147,6 +173,7 @@ const handleInputChange = (event) => {
                         <h2 className="text-uppercase text-center mb-5">Open an Account</h2>
           {isValidUserId ?(
                         <form>
+
 
                         <div className="col-md-12">
                                 <select className="form-select mt-3" required="true" onChange={handleInputChange} name="accountType">
@@ -161,6 +188,7 @@ const handleInputChange = (event) => {
                                <br></br>
                            </div>
 
+
                         <div className="col-md-12">
                                 <select className="form-select mt-3" required="true" onChange={handleInputChange} name="title">
                                       <option selected disabled value="">Title</option>
@@ -170,24 +198,27 @@ const handleInputChange = (event) => {
                                </select>
                                <br></br>
                            </div>
-                        
-          
+                       
+         
                           <div className="form-outline mb-4">
                             <input type="text" id="firstName" className="form-control form-control-lg" placeholder='First Name' onChange={handleInputChange} name="firstName" required="true"/>
                           </div>
-          
+         
                           <div className="form-outline mb-4">
                             <input type="text" id="middleName" className="form-control form-control-lg" placeholder='Middle Name'
                             onChange={handleInputChange} name="middleName"/>
                           </div>
 
+
                           <div className="form-outline mb-4">
                             <input type="text" id="lastName" className="form-control form-control-lg" placeholder='Last Name' onChange={handleInputChange} name="lastName" required="true"/>
                           </div>
 
+
                           <div className="form-outline mb-4">
                             <input type="text" id="fatherName" className="form-control form-control-lg" placeholder="Father's Name" onChange={handleInputChange} name="fatherName" required="true"/>
                           </div>
+
 
                           <div className="form-outline mb-4">
                             <input type="text" id="mobileNumber" className="form-control form-control-lg" placeholder='Mobile Number' onChange={handleInputChange} name="mobileNumber" required="true"/>
@@ -195,96 +226,119 @@ const handleInputChange = (event) => {
 
 
 
+
+
+
                           <div className="form-outline mb-4">
                             <input type="text" id="aadharNumber" className="form-control form-control-lg" placeholder='Aadhar Card Number' onChange={handleInputChange} name="aadharNumber" required="true"/>
                           </div>
+
 
                           <div className="form-outline mb-4">
                             <input type="text" id="dateOfBirth" className="form-control form-control-lg" placeholder='Date of Birth'onChange={handleInputChange} name="dateOfBirth" required="true"/>
                           </div>
 
+
                           <div className="form-outline mb-4">
                             <h5>Residential Address</h5>
                           </div>
+
 
                           <div className="form-outline mb-4">
                             <input type="text" id="rAddressLine1" className="form-control form-control-lg" placeholder='Address Line 1' onChange={handleInputChange} name="residentialAddress.rAddressLine1" required="true"/>
                           </div>
 
+
                           <div className="form-outline mb-4">
                             <input type="text" id="rAddressLine2" className="form-control form-control-lg" placeholder='Address Line 2' onChange={handleInputChange} name="residentialAddress.rAddressLine2" required="true"/>
                           </div>
+
 
                           <div className="form-outline mb-4">
                             <input type="text" id="rLandmark" className="form-control form-control-lg" placeholder='Landmark'
                             onChange={handleInputChange} name="residentialAddress.rLandmark"/>
                           </div>
 
+
                           <div className="form-outline mb-4">
                             <input type="text" id="rState" className="form-control form-control-lg" placeholder='State' required="true" onChange={handleInputChange} name="residentialAddress.rState"/>
                           </div>
+
 
                           <div className="form-outline mb-4">
                             <input type="text" id="rCity" className="form-control form-control-lg" placeholder='City' required="true" onChange={handleInputChange} name="residentialAddress.rCity"/>
                           </div>
 
+
                           <div className="form-outline mb-4">
                             <input type="text" id="rPincode" className="form-control form-control-lg" placeholder='Pincode' required="true" onChange={handleInputChange} name="residentialAddress.rPincode"/>
                           </div>
 
+
                           <div className="form-outline mb-4">
                             <h5>Permanent Address</h5>
                           </div>
+
 
                           <div className="form-outline mb-4">
                             <input type="text" id="pAddressLine1" className="form-control form-control-lg" placeholder='Address Line 1' required="true"
                             onChange={handleInputChange} name="permanentlAddress.pAddressLine1"/>
                           </div>
 
+
                           <div className="form-outline mb-4">
                             <input type="text" id="pAddressLine2" className="form-control form-control-lg" placeholder='Address Line 2' required="true"
                             onChange={handleInputChange} name="permanentAddress.pAddressLine2"/>
                           </div>
+
 
                           <div className="form-outline mb-4">
                             <input type="text" id="pLandmark" className="form-control form-control-lg" placeholder='Landmark'
                             onChange={handleInputChange} name="permanentAddress.pLandmark"/>
                           </div>
 
+
                           <div className="form-outline mb-4">
-                            <input type="text" id="pState" className="form-control form-control-lg" placeholder='State' 
+                            <input type="text" id="pState" className="form-control form-control-lg" placeholder='State'
                             required="true"
                             onChange={handleInputChange} name="permanentAddress.pState"/>
                           </div>
+
 
                           <div className="form-outline mb-4">
                             <input type="text" id="pCity" className="form-control form-control-lg" placeholder='City' required="true"
                             onChange={handleInputChange} name="permanentAddress.pCity"/>
                           </div>
 
+
                           <div className="form-outline mb-4">
                             <input type="text" id="pPincode" className="form-control form-control-lg" placeholder='Pincode' required="true"
                             onChange={handleInputChange} name="permanentAddress.pPincode"/>
                           </div>
 
+
                           <div className="form-outline mb-4">
                             <h5>Occupation Details</h5>
                           </div>
+
 
                           <div className="form-outline mb-4">
                             <input type="text" id="occupationType" className="form-control form-control-lg" placeholder='Occupation Type' required="true"
                             onChange={handleInputChange} name="occupationType"/>
                           </div>
 
+
                           <div className="form-outline mb-4">
                             <input type="text" id="sourceIncome" className="form-control form-control-lg" placeholder='Source of Income' required="true"
                             onChange={handleInputChange} name="sourceIncome"/>
                           </div>
 
+
                           <div className="form-outline mb-4">
                             <input type="text" id="annualIncome" className="form-control form-control-lg" placeholder='Gross Annual Income' required="true"
                             onChange={handleInputChange} name="annualIncome"/>
                           </div>
+
 
                           <div className="form-check-inline">
                                 <label className="form-check-label" required="true"
@@ -302,24 +356,25 @@ const handleInputChange = (event) => {
                                 </label>
                             </div>
 
+
                           <div className="form-check d-flex mb-5">
                             <input className="form-check-input me-2" type="checkbox" value="" id="optNetBanking" />
                             <label className="form-check-label" for="optNetBanking" required="true"
                             onChange={handleInputChange} name="optNetBanking">Opt for Net Banking</label>
                           </div>
-          
+         
                           <div className="form-check d-flex mb-5">
                             <input className="form-check-input me-2" type="checkbox" value="" id="agree" />
                             <label className="form-check-label" for="agree" required="true"
                             onChange={handleInputChange} name="agree">I agree...</label>
                           </div>
-          
+         
                           <div className="d-flex justify-content-center">
                             <button type="button"
                               className="btn btn-success btn-block btn-lg gradient-custom-4 text-body" onClick={handleFormSubmit}>
                                 Submit</button>
                           </div>
-          
+         
                         </form>):(<div className="user-id-popup">
                         <h2>Enter Your User ID</h2>
                         <input
@@ -332,7 +387,7 @@ const handleInputChange = (event) => {
                         {!isValidUserId && <p className="error-message">Invalid User ID</p>}
                       </div>
 )}
-              
+             
                       </div>
                     </div>
                   </div>
@@ -356,5 +411,9 @@ const handleInputChange = (event) => {
           </div>
         );
     }
+
+
+
+
 
 
