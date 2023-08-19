@@ -3,6 +3,7 @@ import Navbar from './Navbar';
 import './NewUser.css'; // Import the CSS file for NewUser component
 import axios from 'axios';
 import PopUp from './PopUp';
+import validator from 'validator'
 
 export const NewUser = () => {
   const [popUpState, setPopUpState] = useState(false)
@@ -10,6 +11,7 @@ export const NewUser = () => {
   const [password, setPassword] = useState('');
   const [emailid, setemailid] = useState('');
   const [registrationStatus, setRegistrationStatus] = useState(null); // State for registration status
+  const [passwordErrorMessage, setPasswordErrorMessage] = useState('');
 
   const openPopUp = () => {
     setPopUpState(1);
@@ -18,7 +20,27 @@ export const NewUser = () => {
   const closePopUp = () => {
     setPopUpState(0);
   };
+  // function isStrongPassword(password) {
 
+  //   const minLength = 6;
+  //   const hasUpperCase = /[A-Z]/.test(password);
+  //   const hasLowerCase = /[a-z]/.test(password);
+  //   const hasDigit = /\d/.test(password);
+  
+  //   return password.length >= minLength && hasUpperCase && hasLowerCase && hasDigit;
+  // };
+
+  const validatePassword = (value) => {
+    setPassword(value);
+    if(validator.isStrongPassword(value, {
+      minLength: 6, minLowercase: 1, minUppercase: 1, minNumbers:1, minSymbols:1
+    })){
+      setPasswordErrorMessage('')
+    }
+    else{
+      setPasswordErrorMessage('Password must contain atleast 1 uppercase, 1 lowercase and 1 digit and length should be minimum 6')
+    }
+  }
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -28,10 +50,10 @@ export const NewUser = () => {
 
 
     // Validate constraints
-    if (userid.length !== 10 || password.length !== 10) {
-      console.error('User input violates constraints');
-      return;
-    }
+    // if (userid.length !== 10 || password.length !== 10) {
+    //   console.error('User input violates constraints');
+    //   return;
+    // }
 
     const newUser = {
       userid,
@@ -61,6 +83,9 @@ try {
 
 
 
+
+
+
   return (
     <div>
       <Navbar />
@@ -85,8 +110,8 @@ try {
                     value={userid}
                     onChange={(e) => setUserid(e.target.value)}
                   />
-                  {userid.length !== 10 && (
-                    <div className="hint">User ID must be exactly 10 characters long.</div>
+                  {(userid.length <6 || userid.length >16) && (
+                    <div className="hint">User ID must be between 6 to 16 characters long.</div>
                   )}
                 </div>
 
@@ -97,11 +122,10 @@ try {
                     className="form-control form-control-lg"
                     placeholder="Enter Login Password"
                     value={password}
-                    onChange={(e) => setPassword(e.target.value)}
+                    onChange={(e) => validatePassword(e.target.value)}
                   />
-                  {password.length !== 10 && (
-                    <div className="hint">Password must be exactly 10 characters long.</div>
-                  )}
+
+                  {passwordErrorMessage === '' ? null : <span className='hint'>{passwordErrorMessage}</span>}
                 </div>
 
                 <div className="form-outline mb-3">
