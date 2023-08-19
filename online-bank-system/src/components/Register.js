@@ -3,10 +3,13 @@ import Navbar from './Navbar';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios'
 import './Register.css'
+import PopUp from './PopUp';
 
 export const Register = () => {
 
   const navigate = useNavigate()
+
+  const [popUpState, setPopUpState] = useState(false)
 
   const [accountNo, setAccountNo] = useState('')
   const [password, setPassword] = useState("")
@@ -23,6 +26,15 @@ export const Register = () => {
   const [accEmptyErr, setAccEmptyErr] = useState(false)
   const [passEmptyErr, setPassEmptyErr] = useState(false)
   const [transPassEmptyErr, setTransPassEmptyErr] = useState(false)
+
+  
+  const openPopUp = () => {
+    setPopUpState(1);
+  };
+
+  const closePopUp = () => {
+    setPopUpState(0);
+  };
 
   async function save(event){
     event.preventDefault();
@@ -241,6 +253,11 @@ export const Register = () => {
     </div>
   </div>
 </section>
+{popUpState === 1 && (
+        <PopUp onClose={closePopUp}>
+          <p>User registered successfully!!</p>
+        </PopUp>
+      )}
 </div>
         );
     }
