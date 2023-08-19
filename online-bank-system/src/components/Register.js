@@ -180,7 +180,7 @@ export const Register = () => {
                     </div>
                   </div>
 
-                  <div class="d-flex flex-row align-items-center mb-4">
+                  {/* <div class="d-flex flex-row align-items-center mb-4">
                     <i class="fas fa-envelope fa-lg me-3 fa-fw"></i>
                     <div class="form-outline flex-fill mb-0">
                       <label class="form-label" for="loginPassword">Set Login Password</label>
@@ -189,9 +189,9 @@ export const Register = () => {
                       {passwordErr?<span>Password should be 8-20 characters and should include at least 1 letter, 1 number and 1 special character!</span>:""}
                       {passEmptyErr?<span>Login password can't be empty!</span>:""}
                     </div>
-                  </div>
+                  </div> */}
 
-                  <div class="d-flex flex-row align-items-center mb-4">
+                  {/* <div class="d-flex flex-row align-items-center mb-4">
                     <i class="fas fa-lock fa-lg me-3 fa-fw"></i>
                     <div class="form-outline flex-fill mb-0">
                       <label class="form-label" for="cLoginPassword">Confirm Login Password</label>
@@ -199,7 +199,7 @@ export const Register = () => {
                       value={password2} onChange={password2Handler} />
                        {password2Err?<span>Password doesn't match!</span>:""}
                     </div>
-                  </div>
+                  </div> */}
 
                   
                   <div class="d-flex flex-row align-items-center mb-4">
@@ -223,7 +223,7 @@ export const Register = () => {
                     </div>
                   </div>
 
-                  <div class="d-flex flex-row align-items-center mb-4">
+                  {/* <div class="d-flex flex-row align-items-center mb-4">
                     <i class="fas fa-lock fa-lg me-3 fa-fw"></i>
                     <div class="form-outline flex-fill mb-0">
                       <label class="form-label" for="otp">Enter OTP</label>
@@ -231,7 +231,7 @@ export const Register = () => {
                       value={otp} onChange={otpHandler}/>
                       {otpErr?<span>OTP doesn't match!</span>:""}
                     </div>
-                  </div>
+                  </div> */}
 
                   <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
                     <button type="button" class="btn btn-primary btn-lg" onClick={save}>Submit</button>

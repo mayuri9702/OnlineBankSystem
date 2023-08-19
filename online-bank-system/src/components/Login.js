@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import {useNavigate} from 'react-router-dom';
+import axios from 'axios';
+import PopUp from './PopUp';
 import Navbar from './Navbar';
 import "./Login.css"
 
@@ -7,10 +9,19 @@ export const Login = () => {
 
       const navigate = useNavigate()
 
+      const [popUpState, setPopUpState] = useState(false)
       const [userID, setUserID] = useState('')
       const [password, setPassword] = useState('')
       const [userIDErr, setUserIDErr] = useState(false)
       const [passwordErr, setPasswordErr] = useState(false)
+      const [loginStatus, setLoginStatus] = useState(null)
+
+      const openPopUp = () => {
+        setPopUpState(1);
+      };
+      const closePopUp = () => {
+        setPopUpState(0);
+      };
 
       function userIDHandler(e){
         let item=e.target.value
@@ -44,15 +55,18 @@ export const Login = () => {
         }else{
           setPasswordErr(false)
         }
-        if(userID!=='' && password!==''){
-          try{
-              navigate('/accountSummary')
-             setUserID('')
-             setPassword('')            
-          }
-          catch(err){
-            alert('Login failed.')
-          }
+        try{
+        const response = await axios.get(`http://localhost:8081/logins/user/${userID}`);
+
+     
+        if(response.data.userId===userID && response.data.password===password){
+            navigate('/accountSummary')
+        }
+      }
+        catch(error){
+          console.log('invalid username/password')
+          setLoginStatus("Invalid username or password")
+          setPopUpState(1)
         }
       }
 
@@ -103,6 +117,11 @@ export const Login = () => {
 
   </div>
 </section>
+{popUpState === 1 && (
+        <PopUp onClose={closePopUp}>
+          <p>{loginStatus}</p>
+        </PopUp>
+      )}
             </div>
         );
     }

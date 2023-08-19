@@ -49,12 +49,7 @@ export const NewUser = () => {
     console.log(emailid);
 
 
-    // Validate constraints
-    // if (userid.length !== 10 || password.length !== 10) {
-    //   console.error('User input violates constraints');
-    //   return;
-    // }
-
+  
     const newUser = {
       userid,
       password,
@@ -80,10 +75,6 @@ try {
   }
   
 };
-
-
-
-
 
 
   return (
