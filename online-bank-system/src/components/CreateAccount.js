@@ -7,19 +7,26 @@ import { useNavigate } from 'react-router-dom';
 
 
 export const CreateAccount = () => {
+<<<<<<< HEAD
+=======
 
   const navigate = useNavigate()
 
   const [showUserIdPopup, setShowUserIdPopup] = useState(true);
+>>>>>>> 607fe461e795fff9c4f9e7a4cd857cdcd08e986b
  
   const [isValidUserId, setIsValidUserId] = useState(false);
   const [userId, setUserId] = useState('');
   const [password,setPassword]=useState('');
+<<<<<<< HEAD
+  // const [email,setEmail]=useState('');
+=======
   const [email,setEmail]=useState('');
   const [popUpState, setPopUpState] = useState(0)
   const [status, setStatus] = useState('')
   const [navigatePage, setNavigatePage] = useState('')
  
+>>>>>>> 607fe461e795fff9c4f9e7a4cd857cdcd08e986b
   
   const openPopUp = () => {
     setPopUpState(1);
@@ -65,18 +72,12 @@ export const CreateAccount = () => {
       const response = await axios.get(`http://localhost:8081/logins/user/${userId}`);
 
       console.log(response);
-      if (response.data.message === 'User ID is valid') {
+      if (response.status === 200 && response.data.password === password) {
         setIsValidUserId(true);
-        setShowUserIdPopup(false);
-        // setUserData({
-        //   userId: response.data.userId,
-        //   password: response.data.password,
-        //   email: response.data.email,
-        // });
-        // console.log(userData.userId);
-        setUserId(response.data.userId);
-        setPassword(response.data.password);
-        setEmail(response.data.email);
+        
+        // setUserId(response.data.userId);
+        // setPassword(response.data.password);
+        // setEmail(response.data.email);
         
       } else {
         setIsValidUserId(false);
@@ -344,15 +345,23 @@ return (
   
                 </form>):(
                 <div className="user-id-popup">
-                <h2>Enter Your User ID</h2>
+                <label for="userid">Username</label>
                 <input
                   type="text"
+                  id='userid'
                   placeholder="USER ID"
                   value={userId}
                   onChange={(e) => setUserId(e.target.value)}
                 />
+                <label for="password">Password</label>
+                <input type="password"
+                id='password'
+                placeholder='password'
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                />
                 <button onClick={handleUserIdSubmit}>Submit</button>
-                {!isValidUserId && <p className="error-message">Invalid User ID</p>}
+                {!isValidUserId && <p className="error-message">Invalid Username or Password</p>}
               </div>
 )}
              
@@ -362,7 +371,7 @@ return (
                 </div>
             
           </section>
-          {showUserIdPopup &&(
+          {/* {showUserIdPopup &&(
             <div className="user-id-popup">
               <h2>Enter Your User ID</h2>
               <input
@@ -374,6 +383,9 @@ return (
               <button onClick={handleUserIdSubmit}>Submit</button>
               {isValidUserId && <p className="error-message">Invalid User Id</p>}
             </div>
+<<<<<<< HEAD
+          )} */}
+=======
           )}
 
           {popUpState === 1 && (
@@ -384,6 +396,7 @@ return (
             </PopUp>
           )}
 
+>>>>>>> 607fe461e795fff9c4f9e7a4cd857cdcd08e986b
           </div>
         );
     }
