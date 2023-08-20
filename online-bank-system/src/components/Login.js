@@ -60,7 +60,7 @@ export const Login = () => {
 
      
         if(response.data.userId===userID && response.data.password===password){
-            navigate('/accountSummary')
+            navigate('/accountSummary',{state:{user:userID}})
         }
       }
         catch(error){
