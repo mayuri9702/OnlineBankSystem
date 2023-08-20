@@ -152,7 +152,7 @@ export const CreateAccount = () => {
       fathersname: fatherName,
       mobilenumber: Number(mobileNumber),
       aadharnumber: Number(aadharNumber), 
-      dob: dateOfBirth, 
+      dob: dateOfBirth,
       residentialAddress: residentialAddress,
       permanentAddress: permanentAddress,
       occupationtype: occupationType,

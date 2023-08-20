@@ -55,27 +55,24 @@ export const Register = () => {
     
     if (accountNo !== "" && transPassword !== "" && transPassword2 !== "" && transPassword === transPassword2) {
       try {
-        // const response = await axios.post(
-        //   "http://localhost:8080/account/register",
-        //   {
-        //     account_number: accountNo,
-        //     login_password: password,
-        //     transaction_pin: transPassword,
-        //   }
-        // );
-        // alert("Successfully registered for internet banking!!");
-        // navigate("/login");
-        // setAccountNo("");
-        // setPassword("");
-        // setPassword2("");
-        // setTransPassword("");
-        // setTransPassword2("");
         const response = await axios.get(`http://localhost:8081/accounts/${accountNo}`);
-        console.log(response)
-        console.log("registration done")
+        
+          console.log(response)
+          const updatedAccount ={
+            transactionpin : transPassword
+          };
+          const response1 = await axios.put(`http://localhost:8081/accounts/${accountNo}`,updatedAccount);
+          // console.log(response1.status)
+          console.log(response1)
+            alert("Successfully registered for internet banking!!");
+            navigate("/login");
+            console.log("registration done")
       } catch (err) {
-        alert("Registration failed.");
+        alert("Account number Invalid!");
       }
+    }
+    else {
+      alert("transaction pin should be same for both");
     }
   }
 
