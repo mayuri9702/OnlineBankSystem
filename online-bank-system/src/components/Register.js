@@ -11,20 +11,17 @@ export const Register = () => {
   const [popUpState, setPopUpState] = useState(false);
 
   const [accountNo, setAccountNo] = useState("");
-  const [password, setPassword] = useState("");
-  const [password2, setPassword2] = useState("");
   const [transPassword, setTransPassword] = useState("");
   const [transPassword2, setTransPassword2] = useState("");
-  const [otp, setOtp] = useState("");
   const [accountNoErr, setAccountNoErr] = useState(false);
-  const [passwordErr, setPasswordErr] = useState(false);
-  const [password2Err, setPassword2Err] = useState(false);
   const [transPasswordErr, setTransPasswordErr] = useState(false);
   const [transPassword2Err, setTransPassword2Err] = useState(false);
-  const [otpErr, setOtpErr] = useState(false);
   const [accEmptyErr, setAccEmptyErr] = useState(false);
-  const [passEmptyErr, setPassEmptyErr] = useState(false);
   const [transPassEmptyErr, setTransPassEmptyErr] = useState(false);
+  const [transPass2EmptyErr, setTransPass2EmptyErr] = useState(false);
+  const [isValidUserId, setIsValidUserId] = useState(false);
+  const [userId, setUserId] = useState('');
+  const [password,setPassword]=useState('');
 
   const openPopUp = () => {
     setPopUpState(1);
@@ -32,6 +29,25 @@ export const Register = () => {
 
   const closePopUp = () => {
     setPopUpState(0);
+  };
+  const handleUserIdSubmit = async () => {
+    try {
+      const response = await axios.get(`http://localhost:8081/logins/user/${userId}`);
+
+      console.log(response);
+      if (response.status === 200 && response.data.password === password) {
+        setIsValidUserId(true);
+        
+        // setUserId(response.data.userId);
+        // setPassword(response.data.password);
+        // setEmail(response.data.email);
+        
+      } else {
+        setIsValidUserId(false);
+      }
+    } catch (error) {
+      setIsValidUserId(false);
+    }
   };
 
   async function save(event) {
@@ -41,37 +57,47 @@ export const Register = () => {
     } else {
       setAccEmptyErr(false);
     }
-   
+
     if (transPassword === "") {
       setTransPassEmptyErr(true);
     } else {
       setTransPassEmptyErr(false);
     }
     if (transPassword2 === "") {
-      setTransPassword2Err(true);
+      setTransPass2EmptyErr(true);
     } else {
-      setTransPassword2(false);
+      setTransPass2EmptyErr(false);
     }
-    
-    if (accountNo !== "" && transPassword !== "" && transPassword2 !== "" && transPassword === transPassword2) {
+
+    if (
+      accountNo !== "" &&
+      transPassword !== "" &&
+      transPassword2 !== "" &&
+      transPassword === transPassword2
+    ) {
       try {
-        const response = await axios.get(`http://localhost:8081/accounts/${accountNo}`);
-        
-          console.log(response)
-          const updatedAccount ={
-            transactionpin : transPassword
-          };
-          const response1 = await axios.put(`http://localhost:8081/accounts/${accountNo}`,updatedAccount);
-          // console.log(response1.status)
-          console.log(response1)
-            alert("Successfully registered for internet banking!!");
-            navigate("/login");
-            console.log("registration done")
+        const response = await axios.get(
+          `http://localhost:8081/accounts/${accountNo}`
+        );
+
+        console.log(response);
+        const updatedAccount = {
+          transactionpin: transPassword,
+        };
+        const response1 = await axios.put(
+          `http://localhost:8081/accounts/${accountNo}`,
+          updatedAccount
+        );
+        // console.log(response1.status)
+        console.log(response1);
+        alert("Successfully registered for internet banking!!");
+        navigate("/login");
+        console.log("registration done");
       } catch (err) {
         alert("Account number Invalid!");
       }
     }
-    else {
+     else if(transPassword!=="" && transPassword2!=="" && accountNo !== "") {
       alert("transaction pin should be same for both");
     }
   }
@@ -85,8 +111,6 @@ export const Register = () => {
     }
     setAccountNo(e.target.value);
   }
-
- 
 
   function transPasswordHandler(e) {
     let item = e.target.value;
@@ -123,8 +147,7 @@ export const Register = () => {
                       <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">
                         Register for Internet Banking
                       </p>
-
-                      <form class="mx-1 mx-md-4">
+{isValidUserId?(<form class="mx-1 mx-md-4">
                         <div class="d-flex flex-row align-items-center mb-4">
                           <i class="fas fa-user fa-lg me-3 fa-fw"></i>
                           <div class="form-outline flex-fill mb-0">
@@ -132,45 +155,21 @@ export const Register = () => {
                               Account Number
                             </label>
                             <input
+                              maxLength={11}
                               type="text"
                               id="accountNumber"
                               class="form-control"
                               value={accountNo}
-                              onChange={accountNoHandler}
+                              onChange={accountNoHandler} 
                             />
                             {accountNoErr ? (
                               <span>Account Number should be 11 digits!</span>
-                            ) : (
-                              ""
-                            )}
-                            {accEmptyErr ? (
-                              <span>Account Number can't be empty!</span>
-                            ) : (
-                              ""
-                            )}
+                            ) : null}
+                            {/* {accEmptyErr? (
+                              <span>account number can't be empty!</span>
+                            ): null} */}
                           </div>
                         </div>
-
-                        {/* <div class="d-flex flex-row align-items-center mb-4">
-                    <i class="fas fa-envelope fa-lg me-3 fa-fw"></i>
-                    <div class="form-outline flex-fill mb-0">
-                      <label class="form-label" for="loginPassword">Set Login Password</label>
-                      <input type="password" id="loginPassword" class="form-control"
-                      value={password} onChange={passwordHandler} />
-                      {passwordErr?<span>Password should be 8-20 characters and should include at least 1 letter, 1 number and 1 special character!</span>:""}
-                      {passEmptyErr?<span>Login password can't be empty!</span>:""}
-                    </div>
-                  </div> */}
-
-                        {/* <div class="d-flex flex-row align-items-center mb-4">
-                    <i class="fas fa-lock fa-lg me-3 fa-fw"></i>
-                    <div class="form-outline flex-fill mb-0">
-                      <label class="form-label" for="cLoginPassword">Confirm Login Password</label>
-                      <input type="password" id="cLoginPassword" class="form-control"
-                      value={password2} onChange={password2Handler} />
-                       {password2Err?<span>Password doesn't match!</span>:""}
-                    </div>
-                  </div> */}
 
                         <div class="d-flex flex-row align-items-center mb-4">
                           <i class="fas fa-lock fa-lg me-3 fa-fw"></i>
@@ -179,22 +178,16 @@ export const Register = () => {
                               Set Transaction pin
                             </label>
                             <input
+                            maxLength={6}
                               type="password"
                               id="transPassword"
                               class="form-control"
                               value={transPassword}
-                              onChange={transPasswordHandler}
+                              onChange={transPasswordHandler} 
                             />
                             {transPasswordErr ? (
                               <span>Transaction pin should be 6 digits!</span>
-                            ) : (
-                              ""
-                            )}
-                            {transPassEmptyErr ? (
-                              <span>Login password can't be empty!</span>
-                            ) : (
-                              ""
-                            )}
+                            ) : null}
                           </div>
                         </div>
 
@@ -205,6 +198,7 @@ export const Register = () => {
                               Confirm Transaction Pin
                             </label>
                             <input
+                            maxLength={6}
                               type="password"
                               id="cTransPassword"
                               class="form-control"
@@ -213,21 +207,9 @@ export const Register = () => {
                             />
                             {transPassword2Err ? (
                               <span>Transaction pin doesn't match!</span>
-                            ) : (
-                              ""
-                            )}
+                            ) : null}
                           </div>
                         </div>
-
-                        {/* <div class="d-flex flex-row align-items-center mb-4">
-                    <i class="fas fa-lock fa-lg me-3 fa-fw"></i>
-                    <div class="form-outline flex-fill mb-0">
-                      <label class="form-label" for="otp">Enter OTP</label>
-                      <input type="password" id="otp" class="form-control" 
-                      value={otp} onChange={otpHandler}/>
-                      {otpErr?<span>OTP doesn't match!</span>:""}
-                    </div>
-                  </div> */}
 
                         <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
                           <button
@@ -238,7 +220,28 @@ export const Register = () => {
                             Submit
                           </button>
                         </div>
-                      </form>
+                      </form>):(
+                <div className="user-id-popup">
+                <label for="userid">Username</label>
+                <input
+                  type="text"
+                  id='userid'
+                  placeholder="USER ID"
+                  value={userId}
+                  onChange={(e) => setUserId(e.target.value)}
+                />
+                <label for="password">Password</label>
+                <input type="password"
+                id='password'
+                placeholder='password'
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                />
+                <button onClick={handleUserIdSubmit}>Submit</button>
+                {!isValidUserId && <p className="error-message">Invalid Username or Password</p>}
+              </div>
+)}
+                      
                     </div>
                     <div class="col-md-10 col-lg-6 col-xl-7 d-flex align-items-center order-1 order-lg-2">
                       <img
