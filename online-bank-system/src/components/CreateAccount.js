@@ -14,9 +14,10 @@ export const CreateAccount = () => {
 
 
   const generateAccountNumber = () => {
-    const upperPart = Math.floor(Math.random() * 100000) * 1000000000;
-    const lowerPart = Math.floor(Math.random() * 1000000000);
-    const accountNumber = upperPart + lowerPart;
+    // const upperPart = Math.floor(Math.random() * 100000) * 1000000000;
+    // const lowerPart = Math.floor(Math.random() * 1000000000);
+    // const accountNumber = upperPart + lowerPart;
+    const  accountNumber = Math.floor(10000000000 + Math.random() * 90000000000);
     return accountNumber;
   };
 
