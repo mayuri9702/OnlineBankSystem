@@ -62,7 +62,6 @@ export const CreateAccount = () => {
   const [occupationType,setOccupationType]=useState("");
   const [sourceIncome,setSourceIncome]=useState("");
   const [annualIncome,setAnnualIncome]=useState("");
-  const [transactionPin,setTransactionPin]=useState("");
 
   const handleAccountType=(e)=>{
     setAccountType(e.target.value);
@@ -96,7 +95,6 @@ export const CreateAccount = () => {
   const handleOccupationType=(e)=>{setOccupationType(e.target.value);}
   const handleSourceIncome=(e)=>{setSourceIncome(e.target.value);}
   const handleAnnualIncome=(e)=>{setAnnualIncome(e.target.value);}
-  const handleTransactionPin=(e)=>{setTransactionPin(e.target.value);}
 
 
   const handleFormSubmit = async () => {
@@ -107,7 +105,7 @@ export const CreateAccount = () => {
      const accountNo=generateAccountNumber();
 
       const formData={
-      account_no: accountNo,
+      accountNo: accountNo,
       accounttype: accountType,
       title: title,
       firstname: firstName,
@@ -123,7 +121,6 @@ export const CreateAccount = () => {
       sourceofincome:  sourceIncome,
       annualincome: Number(annualIncome),
       balance: Number(1000),
-      transaactionpin:Number(transactionPin),
       userid:userId
       };
       console.log(accountNo);
@@ -264,11 +261,7 @@ return (
                     onChange={handleAnnualIncome} value={annualIncome} name="annualIncome"/>
                   </div>
 
-                  <div className="form-outline mb-4">
-                    <input type="number" id="transactionPin" className="form-control form-control-lg" placeholder='Transaction Pin' required="true"
-                    onChange={handleTransactionPin} value={transactionPin} name="transactionPin"/>
-                  </div>
-
+                 
 
                   <div className="form-check-inline">
                         <label className="form-check-label" required="true"
