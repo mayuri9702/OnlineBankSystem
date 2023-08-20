@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { NavbarLogout } from './NavbarLogout'
 import { LeftNavbar } from './LeftNavbar'
 import './dashboard.css'
 
 export const AccountSummary = () => {
+
     return (
         <div className="app">
         <header className="header"><NavbarLogout></NavbarLogout></header>

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './CreateAccount.css'
 import axios from 'axios';
+import Navbar from './Navbar'
 
 
 export const CreateAccount = () => {
@@ -153,10 +154,10 @@ export const CreateAccount = () => {
 
 return (
   <div>
+    <Navbar></Navbar>
     <section className="vh-100 bg-image"
     style ={ { backgroundImage: "url('https://i.pinimg.com/originals/5d/e0/8d/5de08de24459fedac3d28b10a039e2a6.jpg')" } }>
-    <div className="mask d-flex align-items-center h-100 gradient-custom-3">
-      <div className="container h-100">
+   
         <div className="row d-flex justify-content-center align-items-center h-100">
           <div className="col-12 col-md-9 col-lg-7 col-xl-6">
             <div className="card" style={{borderradius: 15+"px"}}>
@@ -323,8 +324,7 @@ return (
                     </div>
                   </div>
                 </div>
-              </div>
-            </div>
+            
           </section>
           {showUserIdPopup &&(
             <div className="user-id-popup">
