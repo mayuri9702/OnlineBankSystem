@@ -56,6 +56,7 @@ export const NewUser = () => {
       admin: 0,
       emailid
     };
+    
 
    
 try {
