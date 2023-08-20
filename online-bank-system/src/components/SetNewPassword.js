@@ -1,9 +1,61 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { NavbarLogout } from './NavbarLogout';
 import { LeftNavbar } from './LeftNavbar';
+import axios from 'axios';
 
 export const SetNewPassword = () => {
+    const userId = 'mayuri0012'
+    const [newPassword, setNewPassword] = useState('')
+    const [newPassword1, setNewPassword1] = useState('')
+    const [newPasswordErr, setNewPasswordErr] = useState(false)
+    const [newPassword1Err, setNewPassword1Err] = useState(false)
+    const [message, setMessage] = useState('')
+
+    const handleP = (e) =>{
+        let item = e.target.value
+        if(item===''){
+            setNewPasswordErr(true)
+        }else{
+            setNewPasswordErr(false)
+        }
+        setNewPassword(e.target.value)
+    }
+
+    const handleP1 = (e) =>{
+        let item = e.target.value
+        if(item!==newPassword){
+            setNewPassword1Err(true)
+        }else{
+            setNewPassword1Err(false)
+        }
+        setNewPassword1(e.target.value)
+    }
+
+    const handleSubmit = (e) =>{
+        e.preventDefault()
+        if(newPassword===''){
+            setNewPasswordErr(true)
+        }else{
+            setNewPasswordErr(false)
+        }
+        if(newPassword1===''){
+            setNewPassword1Err(true)
+        }else{
+            setNewPassword1Err(false)
+        }
+        if(newPassword!=='' && newPassword1!==''){
+            axios.put("http://localhost:8081/logins/updatePassword/mayuri0012","Mayuri@0021")
+            .then(reponse=>{
+                setMessage('Password updated successfully!!')
+            })
+            .catch(error=>{
+                console.log(error)
+                setMessage('Password update failed.')
+            })
+        }
+    }
+
     const navigate = useNavigate();
         return (
             <div>
@@ -18,22 +70,24 @@ export const SetNewPassword = () => {
                                     <h1>Set New Password</h1>
                             </div>
 
-                            <form>
+                            <form onSubmit={handleSubmit}>
                             <div class="form-outline mb-4">
-                                <label class="form-label" for="loginPassword">Login Password</label>
-                                <input type="password" id="loginPassword" class="form-control form-control-lg" />
+                                <label class="form-label" for="loginPassword">New Login Password</label>
+                                <input type="password" id="loginPassword" class="form-control form-control-lg" value={newPassword} onChange={handleP}/>
+                                {newPasswordErr?<span>Password can't be empty!</span>:""}
                             </div>
 
                             <div class="form-outline mb-4">
-                                <label class="form-label" for="cLoginPassword">Confirm Login Password</label>
-                                <input type="text" id="cLoginPassword" class="form-control form-control-lg" />
+                                <label class="form-label" for="cLoginPassword">Confirm New Login Password</label>
+                                <input type="password" id="cLoginPassword" class="form-control form-control-lg" value={newPassword1} onChange={handleP1}/>
+                                {newPassword1Err?<span>Password doesn't match!</span>:""}
                             </div>
 
                             <div class="d-flex justify-content-around align-items-center mb-4">
-                                <button type="submit" class="btn btn-primary btn-lg btn-block" onClick={()=>navigate('/login')}>Submit</button>
+                                <button type="submit" class="btn btn-primary btn-lg btn-block">Submit</button>
                             </div>
                         </form>
-
+                    <p>{message}</p>
                     </div>
                 </div>
   </div>

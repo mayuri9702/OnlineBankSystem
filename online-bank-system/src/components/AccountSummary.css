@@ -1,0 +1,21 @@
+.app-container{
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: center;
+    margin: 20px;
+}
+
+.items-table{
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid black;
+}
+
+.items-table th, .items-table td{
+    border: 1px solid black;
+    padding: 8px;
+    text-align: left;
+}
+
+.items-table th{
+    background-color: aliceblue;
+}
