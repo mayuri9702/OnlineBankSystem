@@ -2,16 +2,60 @@ import React, { useState } from 'react';
 import './CreateAccount.css'
 import axios from 'axios';
 import Navbar from './Navbar'
+import PopUp from './PopUp';
+import { useNavigate } from 'react-router-dom';
 
 
 export const CreateAccount = () => {
+<<<<<<< HEAD
+=======
+
+  const navigate = useNavigate()
+
+  const [showUserIdPopup, setShowUserIdPopup] = useState(true);
+>>>>>>> 607fe461e795fff9c4f9e7a4cd857cdcd08e986b
  
   const [isValidUserId, setIsValidUserId] = useState(false);
   const [userId, setUserId] = useState('');
   const [password,setPassword]=useState('');
+<<<<<<< HEAD
   // const [email,setEmail]=useState('');
+=======
+  const [email,setEmail]=useState('');
+  const [popUpState, setPopUpState] = useState(0)
+  const [status, setStatus] = useState('')
+  const [navigatePage, setNavigatePage] = useState('')
+ 
+>>>>>>> 607fe461e795fff9c4f9e7a4cd857cdcd08e986b
   
+  const openPopUp = () => {
+    setPopUpState(1);
+  };
 
+  const closePopUp = () => {
+    setPopUpState(0);
+    if(navigatePage==='success'){
+      reset()
+    }
+  };
+
+  const reset = () =>{
+    setAccountType('')
+    setTitle('default')
+    setFirstName('')
+    setMiddleName('')
+    setLastName('')
+    setFatherName('')
+    setAadharNumber('')
+
+    setDateOfBirth('')
+    setPermanentAddress('')
+    setResidentialAddress('')
+    setAnnualIncome('')
+    setSourceIncome('')
+    setMobileNumber('')
+    setOccupationType('')
+  }
 
   const generateAccountNumber = () => {
     // const upperPart = Math.floor(Math.random() * 100000) * 1000000000;
@@ -43,8 +87,8 @@ export const CreateAccount = () => {
     }
   };
 
-  const [accountType,setAccountType]=useState("");
-  const [title,setTitle]=useState("");
+  const [accountType,setAccountType]=useState('default');
+  const [title,setTitle]=useState('default');
   const [firstName,setFirstName]=useState("");
   const [middleName,setMiddleName]=useState("");
   const [lastName,setLastName]=useState("");
@@ -124,9 +168,15 @@ export const CreateAccount = () => {
       const response = await axios.post(`http://localhost:8081/accounts/${userId}`, formData);
       if (response.status === 200) {
         // Account created successfully
+        setPopUpState(1)
+        setStatus('Account created successfully!! \n Your account number is :'.concat(formData['accountNo']).concat("\n Don't share your account number with anyone."))
+        setNavigatePage('success')
         console.log('Account created successfully');
       } else {
         // Handle error
+        setPopUpState(1)
+        setStatus('Failed to create an account!')
+    
         console.log('Invalid credentials');
       }
     } catch (error) {
@@ -159,8 +209,8 @@ return (
 
 
                 <div className="col-md-12">
-                        <select className="form-select mt-3" required onChange={handleAccountType} name="accountType">
-                              <option selected disabled value={accountType}>Select Type of Account</option>
+                        <select className="form-select mt-3" required onChange={handleAccountType} name="accountType" value={accountType}>
+                              <option selected disabled value="default" >Select Type of Account</option>
                               <option value="savings">Savings</option>
                               <option value="current">Current</option>
                               <option value="salary">Salary</option>
@@ -173,8 +223,8 @@ return (
 
 
                 <div className="col-md-12">
-                        <select className="form-select mt-3" required={true} onChange={handleTitle} name="title">
-                              <option selected disabled value={title}>Title</option>
+                        <select className="form-select mt-3" required={true} onChange={handleTitle} name="title" value={title}>
+                              <option selected disabled  value="default">Title</option>
                               <option value="mr">Mr.</option>
                               <option value="mrs">Mrs.</option>
                               <option value="miss">Miss.</option>
@@ -333,7 +383,20 @@ return (
               <button onClick={handleUserIdSubmit}>Submit</button>
               {isValidUserId && <p className="error-message">Invalid User Id</p>}
             </div>
+<<<<<<< HEAD
           )} */}
+=======
+          )}
+
+          {popUpState === 1 && (
+            <PopUp onClose={closePopUp}>
+              <div>
+                <h3>{status}</h3>
+              </div>
+            </PopUp>
+          )}
+
+>>>>>>> 607fe461e795fff9c4f9e7a4cd857cdcd08e986b
           </div>
         );
     }
