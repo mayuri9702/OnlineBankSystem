@@ -10,7 +10,7 @@ export const AccountSummary = () => {
 
   const [accounts, setAccounts] = useState([])
   const location = useLocation()
-  const userID = location.state.user
+  const userID = location.state.userid
 
   useEffect(()=>{
     axio.get(`http://localhost:8081/accounts/user/${userID}`)
@@ -23,7 +23,6 @@ export const AccountSummary = () => {
     })
   },[])
 
-  
     return (
         <div className="app">
         <header className="header"><NavbarLogout></NavbarLogout></header>
