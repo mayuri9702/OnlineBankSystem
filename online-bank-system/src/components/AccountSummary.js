@@ -1,22 +1,25 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { NavbarLogout } from './NavbarLogout'
 import { LeftNavbar } from './LeftNavbar'
 import './dashboard.css'
 import { useLocation } from 'react-router-dom';
 import axio from 'axios';
 import './AccountSummary.css'
+import UserIdContext from '../context/UserIdContext';
 
 export const AccountSummary = () => {
-
+  const user = useContext(UserIdContext)
   const [accounts, setAccounts] = useState([])
   const location = useLocation()
-  const userID = location.state.user
+  
+ 
 
   useEffect(()=>{
-    axio.get('http://localhost:8081/accounts/user/mayuri0012')
+    axio.get(`http://localhost:8081/accounts/user/${user}`)
     .then(response=>{
       setAccounts(response.data)
       console.log(response.data)
+      console.log(user)
     })
     .catch(error=>{
       console.error('Error fetching data: ',error)
@@ -31,7 +34,7 @@ export const AccountSummary = () => {
           <div className="sidebar"><LeftNavbar></LeftNavbar></div>
           <main className="content">
             <div className='app-container'>
-              <h5>Welcome, {userID}</h5>
+              <h5>Welcome, {user}</h5>
               <table className='items-table'>
                 <thead>
                   <tr>

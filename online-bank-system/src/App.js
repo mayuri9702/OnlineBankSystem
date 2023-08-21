@@ -16,11 +16,15 @@ import {NewUser} from './components/NewUser';
 import {SessionExpired} from './components/SessionExpired'
 import './App.css';
 import React from 'react';
+import UserIdState from './context/UserIdState';
+
 
 
 function App() {
   return (
+    <UserIdState>
    <Router>
+    
     <Routes>
     <Route exact path="/" element= {<Home/>} />
       <Route exact path='/login' element={<Login/>}/>
@@ -39,7 +43,11 @@ function App() {
       <Route exact path='/sessionExpired' element={<SessionExpired/>}/>
     </Routes>
   
+  
    </Router>
+   </UserIdState>
+
+  
   
    
    

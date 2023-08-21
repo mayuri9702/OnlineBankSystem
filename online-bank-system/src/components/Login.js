@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import {useNavigate} from 'react-router-dom';
 import axios from 'axios';
 import PopUp from './PopUp';
 import Navbar from './Navbar';
 import "./Login.css"
+import UserIdState from '../context/UserIdState';
+import UserIdContext from '../context/UserIdContext';
 
 export const Login = () => {
 
@@ -15,6 +17,9 @@ export const Login = () => {
       const [userIDErr, setUserIDErr] = useState(false)
       const [passwordErr, setPasswordErr] = useState(false)
       const [loginStatus, setLoginStatus] = useState(null)
+
+      const contextValue = useContext(UserIdContext)
+     
 
       const openPopUp = () => {
         setPopUpState(1);
@@ -58,9 +63,14 @@ export const Login = () => {
         try{
         const response = await axios.get(`http://localhost:8081/logins/user/${userID}`);
 
-     
-        if(response.data.userId===userID && response.data.password===password){
-            navigate('/accountSummary',{state:{user:userID}})
+          console.log(response)
+          console.log(userID)
+          console.log(password)
+        if(response.data.userid===userID && response.data.password===password){
+          contextValue.setValue(userID)
+          console.log(contextValue)
+          console.log(userID)
+            navigate('/accountSummary')
         }
       }
         catch(error){
@@ -71,6 +81,7 @@ export const Login = () => {
       }
 
         return (
+         
             <div>
                 <Navbar></Navbar>
                 <section class="vh-100">
@@ -122,7 +133,9 @@ export const Login = () => {
           <p>{loginStatus}</p>
         </PopUp>
       )}
+      
             </div>
+           
         );
     }
 
