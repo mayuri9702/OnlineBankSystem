@@ -29,6 +29,9 @@ export const CreateAccount = () => {
 
   const closePopUp = () => {
     setPopUpState(0);
+    console.log(popUpState)
+    console.log('hello')
+    navigate('/login')
     if(navigatePage==='success'){
       reset()
     }
@@ -364,7 +367,15 @@ return (
                     </div>
                   </div>
                 </div>
-            
+            {popUpState === 1 &&(
+              <PopUp onClose={closePopUp}>
+                <div>
+                  <h3>
+                    {status}
+                  </h3>
+                </div>
+              </PopUp>
+            )}
           </section>
           {/* {showUserIdPopup &&(
             <div className="user-id-popup">
@@ -391,11 +402,8 @@ return (
 
 
           </div>
-        );
-    }
-
-
-
+);
+}
 
 
 

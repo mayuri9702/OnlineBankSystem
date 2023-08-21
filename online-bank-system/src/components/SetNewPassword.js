@@ -5,7 +5,7 @@ import { LeftNavbar } from './LeftNavbar';
 import axios from 'axios';
 
 export const SetNewPassword = () => {
-    const userId = 'mayuri0012'
+    const userId = '1234567890'
     const [newPassword, setNewPassword] = useState('')
     const [newPassword1, setNewPassword1] = useState('')
     const [newPasswordErr, setNewPasswordErr] = useState(false)
@@ -31,7 +31,9 @@ export const SetNewPassword = () => {
         }
         setNewPassword1(e.target.value)
     }
-
+    const formData={
+        newPassword:newPassword
+    };
     const handleSubmit = (e) =>{
         e.preventDefault()
         if(newPassword===''){
@@ -45,7 +47,7 @@ export const SetNewPassword = () => {
             setNewPassword1Err(false)
         }
         if(newPassword!=='' && newPassword1!==''){
-            axios.put("http://localhost:8081/logins/updatePassword/mayuri0012","Mayuri@0021")
+            axios.put(`http://localhost:8081/logins/updatePassword/${userId}`,formData)
             .then(reponse=>{
                 setMessage('Password updated successfully!!')
             })

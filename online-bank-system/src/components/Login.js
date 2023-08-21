@@ -63,14 +63,9 @@ export const Login = () => {
         try{
         const response = await axios.get(`http://localhost:8081/logins/user/${userID}`);
 
-          console.log(response)
-          console.log(userID)
-          console.log(password)
+     
         if(response.data.userid===userID && response.data.password===password){
-          contextValue.setValue(userID)
-          console.log(contextValue)
-          console.log(userID)
-            navigate('/accountSummary')
+            navigate('/accountSummary',{state:{userid:userID}})
         }
       }
         catch(error){

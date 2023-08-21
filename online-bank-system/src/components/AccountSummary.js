@@ -11,11 +11,10 @@ export const AccountSummary = () => {
   const user = useContext(UserIdContext)
   const [accounts, setAccounts] = useState([])
   const location = useLocation()
-  
- 
+  const userID = location.state.userid
 
   useEffect(()=>{
-    axio.get(`http://localhost:8081/accounts/user/${user}`)
+    axio.get(`http://localhost:8081/accounts/user/${userID}`)
     .then(response=>{
       setAccounts(response.data)
       console.log(response.data)
@@ -26,7 +25,6 @@ export const AccountSummary = () => {
     })
   },[])
 
-  
     return (
         <div className="app">
         <header className="header"><NavbarLogout></NavbarLogout></header>
