@@ -105,7 +105,7 @@ export const AddPayee = () =>{
 
                     <div class="form-outline mb-4">
                         <label class="form-label" for="acc">Beneficiary Account Number</label>
-                        <input type="text" id="acc" class="form-control form-control-lg"
+                        <input type="number" id="acc" class="form-control form-control-lg"
                         value={accNo} onChange={accNoHandler}/>
                         {accNoErr?<span>Account number can't be empty!</span>:""} 
                     </div>
@@ -113,7 +113,7 @@ export const AddPayee = () =>{
                     
                     <div class="form-outline mb-4">
                         <label class="form-label" for="accR">Re-enter Account Number</label>
-                        <input type="text" id="accR" class="form-control form-control-lg"
+                        <input type="number" id="accR" class="form-control form-control-lg"
                         value={reAccNo} onChange={reAccNoHandler} />
                         {reAccNoErr?<span>Account number doesn't match!</span>:""}
                     </div>
