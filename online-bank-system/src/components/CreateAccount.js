@@ -15,12 +15,12 @@ export const CreateAccount = () => {
   const [isValidUserId, setIsValidUserId] = useState(false);
   const [userId, setUserId] = useState('');
   const [password,setPassword]=useState('');
-  const [email,setEmail]=useState('');
+  // const [email,setEmail]=useState('');
+  
+  const [email, setEmail] = useState('');
   const [popUpState, setPopUpState] = useState(0)
   const [status, setStatus] = useState('')
   const [navigatePage, setNavigatePage] = useState('')
- 
-  
   const openPopUp = () => {
     setPopUpState(1);
   };
@@ -336,7 +336,7 @@ return (
                         Submit</button>
                   </div>
   
-                </form>):(
+                </form>):showUserIdPopup && (
                 <div className="user-id-popup">
                 <label for="userid">Username</label>
                 <input

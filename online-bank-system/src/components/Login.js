@@ -59,8 +59,8 @@ export const Login = () => {
         const response = await axios.get(`http://localhost:8081/logins/user/${userID}`);
 
      
-        if(response.data.userId===userID && response.data.password===password){
-            navigate('/accountSummary')
+        if(response.data.userid===userID && response.data.password===password){
+            navigate('/accountSummary',{state:{user:userID}})
         }
       }
         catch(error){
