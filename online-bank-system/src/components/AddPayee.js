@@ -3,6 +3,7 @@ import { NavbarLogout } from "./NavbarLogout";
 import { useLocation,useNavigate } from "react-router-dom";
 import { LeftNavbar } from "./LeftNavbar";
 import './dashboard.css'
+import axios from 'axios'
 
 
 export const AddPayee = () =>{
@@ -37,10 +38,15 @@ export const AddPayee = () =>{
         }
         if(name!=='' && accNo!=='' && reAccNo!==''){
             try{
-                navigate('/accountDetails')
-               setName('')
-               setAccNo('')      
-               setReAccNo('')      
+                const formData = {
+                    payeeaccountno : accNo,
+                    payeename : name,
+                    nickname : nick
+                } 
+                const response = await axios.post(`http://localhost:8081/payees/${accountNo}`)
+                if(response.status===200){
+                    alert("Payee added successfully")
+                }    
             }
             catch(err){
               alert('Login failed.')
@@ -92,7 +98,7 @@ export const AddPayee = () =>{
 
                     <div class="form-outline mb-4">
                         <label class="form-label" for="acc">Beneficiary Account Number</label>
-                        <input type="text" id="acc" class="form-control form-control-lg"
+                        <input type="number" id="acc" class="form-control form-control-lg"
                         value={accNo} onChange={accNoHandler}/>
                         {accNoErr?<span>Account number can't be empty!</span>:""} 
                     </div>
@@ -100,7 +106,7 @@ export const AddPayee = () =>{
                     
                     <div class="form-outline mb-4">
                         <label class="form-label" for="accR">Re-enter Account Number</label>
-                        <input type="text" id="accR" class="form-control form-control-lg"
+                        <input type="number" id="accR" class="form-control form-control-lg"
                         value={reAccNo} onChange={reAccNoHandler} />
                         {reAccNoErr?<span>Account number doesn't match!</span>:""}
                     </div>
