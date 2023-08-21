@@ -7,26 +7,19 @@ import { useNavigate } from 'react-router-dom';
 
 
 export const CreateAccount = () => {
-<<<<<<< HEAD
-=======
 
   const navigate = useNavigate()
 
   const [showUserIdPopup, setShowUserIdPopup] = useState(true);
->>>>>>> 607fe461e795fff9c4f9e7a4cd857cdcd08e986b
  
   const [isValidUserId, setIsValidUserId] = useState(false);
   const [userId, setUserId] = useState('');
   const [password,setPassword]=useState('');
-<<<<<<< HEAD
-  // const [email,setEmail]=useState('');
-=======
   const [email,setEmail]=useState('');
   const [popUpState, setPopUpState] = useState(0)
   const [status, setStatus] = useState('')
   const [navigatePage, setNavigatePage] = useState('')
  
->>>>>>> 607fe461e795fff9c4f9e7a4cd857cdcd08e986b
   
   const openPopUp = () => {
     setPopUpState(1);
@@ -371,38 +364,9 @@ return (
                 </div>
             
           </section>
-          {/* {showUserIdPopup &&(
-            <div className="user-id-popup">
-              <h2>Enter Your User ID</h2>
-              <input
-                type="text"
-                placeholder="USER ID"
-                value={userId}
-                onChange={(e)=> setUserId(e.target.value)}
-              />
-              <button onClick={handleUserIdSubmit}>Submit</button>
-              {isValidUserId && <p className="error-message">Invalid User Id</p>}
-            </div>
-<<<<<<< HEAD
-          )} */}
-=======
-          )}
-
-          {popUpState === 1 && (
-            <PopUp onClose={closePopUp}>
-              <div>
-                <h3>{status}</h3>
-              </div>
-            </PopUp>
-          )}
-
->>>>>>> 607fe461e795fff9c4f9e7a4cd857cdcd08e986b
           </div>
-        );
-    }
-
-
-
+);
+}
 
 
 
