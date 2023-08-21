@@ -9,11 +9,12 @@ import { useLocation } from 'react-router-dom';
 export const AccountStatement = () => {
   const location = useLocation()
   const userID = location.state.userid
+  const accountNo = location.state.accountno
     return(
         <div className="app">
         <header className="header"><NavbarLogout></NavbarLogout></header>
         <div className="container">
-          <div className="sidebar"><LeftNavbar state={{userid:userID}}/></div>
+          <div className="sidebar"><LeftNavbar state={{userid:userID,accountno:accountNo}}/></div>
           <main className="content">
             <div>
             <div>

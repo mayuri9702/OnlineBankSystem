@@ -8,6 +8,7 @@ import { useLocation } from 'react-router-dom';
 export const FundTransfer = () => {
     const location = useLocation()
     const userID = location.state.userid
+    const accountNo = location.state.accountno
     const navigate = useNavigate()
     const [mode, setMode] = useState('')
     const [modeErr, setModeErr] = useState(false)
@@ -22,7 +23,7 @@ export const FundTransfer = () => {
             setModeErr(true)
         }else{
             try{
-                navigate('/fundTransfer/initiateTransaction',{state:{userid:userID}})
+                navigate('/fundTransfer/initiateTransaction',{state:{userid:userID, accountno:accountNo}})
             }catch{
 
             }
@@ -34,12 +35,12 @@ export const FundTransfer = () => {
         <div className="app">
         <header className="header"><NavbarLogout></NavbarLogout></header>
         <div className="container">
-          <div className="sidebar"><LeftNavbar state={{userid:userID}}/></div>
+          <div className="sidebar"><LeftNavbar state={{userid:userID, accountno:accountNo}}/></div>
           <main className="content">
             <div>
                 <div class="text-center text-lg-start mt-4 pt-2">
                 <button type="button" class="btn btn-primary btn-lg"
-                onClick={()=>navigate("/fundTransfer/addPayee", {state:{userid:userID}})}>Add Payee</button>
+                onClick={()=>navigate("/fundTransfer/addPayee", {state:{userid:userID, accountno:accountNo}})}>Add Payee</button>
                 </div>
                 <hr></hr>
                 <div class="text-center text-lg-start mt-4 pt-2">

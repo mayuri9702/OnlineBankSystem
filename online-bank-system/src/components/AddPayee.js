@@ -3,11 +3,13 @@ import { NavbarLogout } from "./NavbarLogout";
 import { useLocation,useNavigate } from "react-router-dom";
 import { LeftNavbar } from "./LeftNavbar";
 import './dashboard.css'
+import axios from 'axios';
 
 
 export const AddPayee = () =>{
     const location = useLocation()
     const userID = location.state.userid
+    const accountNo = location.state.accountno
     const [name, setName] = useState('')
     const [accNo, setAccNo] = useState('')
     const [reAccNo, setReAccNo] = useState('')
@@ -34,12 +36,24 @@ export const AddPayee = () =>{
         }else{
             setReAccNoErr(false)
         }
-        if(name!=='' && accNo!=='' && reAccNo!==''){
+        if(name!=='' && accNo!=='' && reAccNo!=='' && accNo === reAccNo){
             try{
-                navigate('/accountDetails')
-               setName('')
-               setAccNo('')      
-               setReAccNo('')      
+                const payeedetails={
+                    payeeaccountno: accNo,
+                    payeename: name,
+                    nickname: nick
+                    // accountNo: accountNo
+                };
+                const response = await axios.post(`http://localhost:8081/payees/${accountNo}`, payeedetails);
+                if(response.status === 200)
+                {
+
+                    navigate('/fundTransfer',{state:{userid:userID,accountno:accountNo}})
+                    // console.log(response)
+                }
+            //    setName('')
+            //    setAccNo('')      
+            //    setReAccNo('')      
             }
             catch(err){
               alert('Login failed.')
@@ -48,13 +62,13 @@ export const AddPayee = () =>{
     }
 
     function reAccNoHandler(e){
-        let item=e.target.value
-        if(item!==accNo){
-          setReAccNoErr(true)
-        }else{
-          setReAccNoErr(false)
-        }
-        setReAccNo(item)
+        // let item=e.target.value
+        // if(item!==accNo){
+        //   setReAccNoErr(true)
+        // }else{
+        //   setReAccNoErr(false)
+        // }
+        setReAccNo(e.target.value)
     }
 
     function nickHandler(e){
@@ -73,14 +87,15 @@ export const AddPayee = () =>{
         <div className="app">
         <header className="header"><NavbarLogout></NavbarLogout></header>
         <div className="container">
-          <div className="sidebar"><LeftNavbar state={{userid:userID}}/></div>
+          <div className="sidebar"><LeftNavbar state={{userid:userID, accountno:accountNo}}/></div>
           <main className="content">
           <section class="vh-100">
   <div class="container-fluid h-custom">
     <div class="row d-flex justify-content-center align-items-center h-100">
-      
+    
         <form>
           <div class="form-outline mb-4">
+          
                         <label class="form-label" for="name">Beneficiary Name</label>
                         <input type="text" id="name" class="form-control form-control-lg border"
                         value={name} onChange={nameHandler} />
