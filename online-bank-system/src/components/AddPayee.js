@@ -3,7 +3,7 @@ import { NavbarLogout } from "./NavbarLogout";
 import { useLocation,useNavigate } from "react-router-dom";
 import { LeftNavbar } from "./LeftNavbar";
 import './dashboard.css'
-import axios from 'axios'
+import axios from 'axios';
 
 
 export const AddPayee = () =>{
@@ -36,17 +36,24 @@ export const AddPayee = () =>{
         }else{
             setReAccNoErr(false)
         }
-        if(name!=='' && accNo!=='' && reAccNo!==''){
+        if(name!=='' && accNo!=='' && reAccNo!=='' && accNo === reAccNo){
             try{
-                const formData = {
-                    payeeaccountno : accNo,
-                    payeename : name,
-                    nickname : nick
-                } 
-                const response = await axios.post(`http://localhost:8081/payees/${accountNo}`)
-                if(response.status===200){
-                    alert("Payee added successfully")
-                }    
+                const payeedetails={
+                    payeeaccountno: accNo,
+                    payeename: name,
+                    nickname: nick
+                    // accountNo: accountNo
+                };
+                const response = await axios.post(`http://localhost:8081/payees/${accountNo}`, payeedetails);
+                if(response.status === 200)
+                {
+
+                    navigate('/fundTransfer',{state:{userid:userID,accountno:accountNo}})
+                    // console.log(response)
+                }
+            //    setName('')
+            //    setAccNo('')      
+            //    setReAccNo('')      
             }
             catch(err){
               alert('Login failed.')
@@ -55,13 +62,13 @@ export const AddPayee = () =>{
     }
 
     function reAccNoHandler(e){
-        let item=e.target.value
-        if(item!==accNo){
-          setReAccNoErr(true)
-        }else{
-          setReAccNoErr(false)
-        }
-        setReAccNo(item)
+        // let item=e.target.value
+        // if(item!==accNo){
+        //   setReAccNoErr(true)
+        // }else{
+        //   setReAccNoErr(false)
+        // }
+        setReAccNo(e.target.value)
     }
 
     function nickHandler(e){
