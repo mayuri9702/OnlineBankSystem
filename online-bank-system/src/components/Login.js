@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import {useNavigate} from 'react-router-dom';
 import axios from 'axios';
 import PopUp from './PopUp';
@@ -16,7 +16,6 @@ export const Login = () => {
       const [passwordErr, setPasswordErr] = useState(false)
       const [loginStatus, setLoginStatus] = useState(null)
 
-      const contextValue = useContext(UserIdContext)
      
 
       const openPopUp = () => {

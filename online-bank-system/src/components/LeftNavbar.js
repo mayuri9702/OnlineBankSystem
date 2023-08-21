@@ -1,6 +1,7 @@
 import React from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import './LeftNavbar.css'
+import { Link } from "react-router-dom"
 
 export const LeftNavbar = () =>{
 
@@ -8,21 +9,22 @@ export const LeftNavbar = () =>{
   const activeLinkStyle = {
     backgroundColor: '#87CEEB', // Set your desired background color here
   };
+  const userID = location.state.userid
 
     return(
         <div className="vertical-navbar">
+            {/* <p>{props.userid}</p> */}
+            <Link class = "active" to="/accountSummary" className={location.pathname === '/accountSummary' ? 'active-link' : 'navbar-link'}
+        style={location.pathname === '/accountSummary' ? activeLinkStyle : {}} state={{userid:userID}}>Account Summary</Link>
 
-            <a class = "active" href="/accountSummary" className={location.pathname === '/accountSummary' ? 'active-link' : 'navbar-link'}
-        style={location.pathname === '/accountSummary' ? activeLinkStyle : {}}>Account Summary</a>
+            <Link to="/fundTransfer" className={location.pathname === '/fundTransfer' ? 'active-link' : 'navbar-link'}
+        style={location.pathname === '/fundTransfer' ? activeLinkStyle : {}} state={{userid:userID}}>Fund Transfer</Link>
 
-            <a href="/fundTransfer" className={location.pathname === '/fundTransfer' ? 'active-link' : 'navbar-link'}
-        style={location.pathname === '/fundTransfer' ? activeLinkStyle : {}}>Fund Transfer</a>
+            <Link to="/accountStatement" className={location.pathname === '/accountStatement' ? 'active-link' : 'navbar-link'}
+        style={location.pathname === '/accountStatement' ? activeLinkStyle : {}} state={{userid:userID}}>Account Statement</Link>
 
-            <a href="/accountStatement" className={location.pathname === '/accountStatement' ? 'active-link' : 'navbar-link'}
-        style={location.pathname === '/accountStatement' ? activeLinkStyle : {}}>Account Statement</a>
-
-            <a href="/setNewPassword" className={location.pathname === '/setNewPassword' ? 'active-link' : 'navbar-link'}
-        style={location.pathname === '/setNewPassword' ? activeLinkStyle : {}}>Change Login Password</a>
+            <Link to="/setNewPassword" className={location.pathname === '/setNewPassword' ? 'active-link' : 'navbar-link'}
+        style={location.pathname === '/setNewPassword' ? activeLinkStyle : {}} state={{userid:userID}}>Change Login Password</Link>
 
         </div>
     )
