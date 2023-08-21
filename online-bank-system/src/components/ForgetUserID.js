@@ -1,8 +1,10 @@
-import { Link } from 'react-router-dom'; // Import Link from react-router-dom
 
+
+import { Link } from 'react-router-dom';
 import React, { useState } from 'react';
 import axios from 'axios';
 import './ForgetUserID.css';
+
 
 export const ForgetUserID = () => {
     const [email, setEmail] = useState('');
@@ -11,6 +13,7 @@ export const ForgetUserID = () => {
     const [showUserId, setShowUserId] = useState(false);
     const [verificationResult, setVerificationResult] = useState('');
     const [userId, setUserId] = useState('');
+
 
     const handleSendOTP = async () => {
         try {
@@ -54,44 +57,58 @@ export const ForgetUserID = () => {
         }
     };
 
+    
+
     return (
-        <div className="container">
-            <div className="form-group">
-                <input
-                    type="text"
-                    className="form-control"
-                    placeholder="Enter Email ID"
-                    value={email}
-                    onChange={e => setEmail(e.target.value)}
-                />
-            </div>
-            <div className="form-group">
-                <button type="button" className="btn btn-primary btn-lg btn-block" onClick={handleSendOTP}>Send OTP</button>
-            </div>
-
-            {verificationResult && <p className="error-message">{verificationResult}</p>}
-
-            {showOtpModal && (
-                <div className="modal-container">
-                    <div className="modal-content">
-                        <h5>Enter OTP</h5>
+        <div className="card-container">
+            <div className="card">
+                <div className="card-header">Forgot User ID</div>
+                <div className="card-body">
+                    <div className="form-group">
                         <input
                             type="text"
                             className="form-control"
-                            value={otp}
-                            onChange={e => setOtp(e.target.value)}
+                            placeholder="Enter Email ID"
+                            value={email}
+                            onChange={e => setEmail(e.target.value)}
                         />
-                        <button type="button" className="btn btn-primary" onClick={handleVerifyOTP}>Submit</button>
                     </div>
-                </div>
-            )}
+                    <div className="form-group">
+                        <button type="button" className="btn btn-primary btn-lg btn-block" onClick={handleSendOTP}>Send OTP</button>
+                    </div>
 
-            {showUserId && (
-                <div>
-                    <h5>User ID: {userId}</h5>
-                    <Link to="/login" className="link">Go back to Home</Link>
+
+                    {verificationResult && <p className="error-message">{verificationResult}</p>}
+
+
+                    {showOtpModal && (
+                        <div className="modal-container">
+                            <div className="modal-content">
+                                <h5>Enter OTP</h5>
+                                <input
+                                    type="text"
+                                    className="form-control"
+                                    value={otp}
+                                    onChange={e => setOtp(e.target.value)}
+                                />
+                                <button type="button" className="btn btn-primary" onClick={handleVerifyOTP}>Submit</button>
+                            </div>
+                        </div>
+                    )}
+
+
+                    {showUserId && (
+                        <div>
+                            <h5>User ID: {userId}</h5>
+                            <Link to="/login" className="link">Go back to Home</Link>
+                        </div>
+                    )}
                 </div>
-            )}
+            </div>
         </div>
     );
 };
+
+
+
+
