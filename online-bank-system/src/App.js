@@ -16,12 +16,13 @@ import {NewUser} from './components/NewUser';
 import {SessionExpired} from './components/SessionExpired'
 import './App.css';
 import React from 'react';
-import { LeftNavbar } from './components/LeftNavbar';
+
 
 
 function App() {
   return (
    <Router>
+    
     <Routes>
     <Route exact path="/" element= {<Home/>} />
       <Route exact path='/login' element={<Login/>}/>
@@ -38,10 +39,12 @@ function App() {
       <Route exact path='/transferSuccess' element={<TransferSuccess/>}/>
       <Route exact path='/newUser' element={<NewUser/>}/>
       <Route exact path='/sessionExpired' element={<SessionExpired/>}/>
-      <Route exact path='/leftnavbar' element={<LeftNavbar/>}/>
     </Routes>
   
+  
    </Router>
+
+  
   
    
    

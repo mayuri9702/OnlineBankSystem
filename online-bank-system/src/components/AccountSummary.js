@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, {  useEffect, useState } from 'react';
 import { NavbarLogout } from './NavbarLogout'
 import { LeftNavbar } from './LeftNavbar'
 import './dashboard.css'
@@ -7,12 +7,11 @@ import axio from 'axios';
 import './AccountSummary.css'
 
 export const AccountSummary = () => {
-
   const [accounts, setAccounts] = useState([])
   const location = useLocation()
-  console.log('hello')
-  console.log(location)
-  console.log('hello')
+  // console.log('hello')
+  // console.log(location)
+  // console.log('hello')
   // var userID;
   const userID = location.state.userid
 

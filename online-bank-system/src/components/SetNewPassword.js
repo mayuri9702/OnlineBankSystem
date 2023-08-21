@@ -33,7 +33,9 @@ export const SetNewPassword = () => {
         }
         setNewPassword1(e.target.value)
     }
-
+    const formData={
+        newPassword:newPassword
+    };
     const handleSubmit = (e) =>{
         e.preventDefault()
         if(newPassword===''){
@@ -47,7 +49,7 @@ export const SetNewPassword = () => {
             setNewPassword1Err(false)
         }
         if(newPassword!=='' && newPassword1!==''){
-            axios.put("http://localhost:8081/logins/updatePassword/mayuri0012","Mayuri@0021")
+            axios.put(`http://localhost:8081/logins/updatePassword/${userID}`,formData)
             .then(reponse=>{
                 setMessage('Password updated successfully!!')
             })

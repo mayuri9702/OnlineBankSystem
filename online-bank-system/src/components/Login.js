@@ -16,6 +16,8 @@ export const Login = () => {
       const [passwordErr, setPasswordErr] = useState(false)
       const [loginStatus, setLoginStatus] = useState(null)
 
+     
+
       const openPopUp = () => {
         setPopUpState(1);
       };
@@ -61,7 +63,6 @@ export const Login = () => {
      
         if(response.data.userid===userID && response.data.password===password){
             navigate('/accountSummary',{state:{userid:userID}})
-            // navigate('/leftnavbar',{state:{userid:userID}})
         }
       }
         catch(error){
@@ -72,6 +73,7 @@ export const Login = () => {
       }
 
         return (
+         
             <div>
                 <Navbar></Navbar>
                 <section class="vh-100">
@@ -123,7 +125,9 @@ export const Login = () => {
           <p>{loginStatus}</p>
         </PopUp>
       )}
+      
             </div>
+           
         );
     }
 
