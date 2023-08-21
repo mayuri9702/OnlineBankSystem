@@ -10,6 +10,10 @@ export const AccountSummary = () => {
 
   const [accounts, setAccounts] = useState([])
   const location = useLocation()
+  console.log('hello')
+  console.log(location)
+  console.log('hello')
+  // var userID;
   const userID = location.state.userid
 
   useEffect(()=>{
@@ -25,9 +29,9 @@ export const AccountSummary = () => {
 
     return (
         <div className="app">
-        <header className="header"><NavbarLogout></NavbarLogout></header>
+        <header className="header"><NavbarLogout/></header>
         <div className="container">
-          <div className="sidebar"><LeftNavbar></LeftNavbar></div>
+          <div className="sidebar"><LeftNavbar state={{userid:userID}}/></div>
           <main className="content">
             <div className='app-container'>
               <h5>Welcome, {userID}</h5>

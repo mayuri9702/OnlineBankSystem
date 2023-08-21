@@ -3,8 +3,11 @@ import { NavbarLogout } from './NavbarLogout'
 import { LeftNavbar } from './LeftNavbar'
 import './dashboard.css'
 import { useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 
 export const FundTransfer = () => {
+    const location = useLocation()
+    const userID = location.state.userid
     const navigate = useNavigate()
     const [mode, setMode] = useState('')
     const [modeErr, setModeErr] = useState(false)
@@ -31,7 +34,7 @@ export const FundTransfer = () => {
         <div className="app">
         <header className="header"><NavbarLogout></NavbarLogout></header>
         <div className="container">
-          <div className="sidebar"><LeftNavbar></LeftNavbar></div>
+          <div className="sidebar"><LeftNavbar state={{userid:userID}}/></div>
           <main className="content">
             <div>
                 <div class="text-center text-lg-start mt-4 pt-2">
