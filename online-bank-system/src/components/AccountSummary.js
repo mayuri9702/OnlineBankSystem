@@ -2,19 +2,16 @@ import React, { useContext, useEffect, useState } from 'react';
 import { NavbarLogout } from './NavbarLogout'
 import { LeftNavbar } from './LeftNavbar'
 import './dashboard.css'
-import { useLocation } from 'react-router-dom';
 import axio from 'axios';
 import './AccountSummary.css'
-import UserIdContext from '../context/UserIdContext';
 
 export const AccountSummary = () => {
-  const user = useContext(UserIdContext)
+  
   const [accounts, setAccounts] = useState([])
-  const location = useLocation()
-  const userID = location.state.userid
+  
 
   useEffect(()=>{
-    axio.get(`http://localhost:8081/accounts/user/${userID}`)
+    axio.get(`http://localhost:8081/accounts/user/${user}`)
     .then(response=>{
       setAccounts(response.data)
       console.log(response.data)

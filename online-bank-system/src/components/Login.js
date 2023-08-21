@@ -4,8 +4,6 @@ import axios from 'axios';
 import PopUp from './PopUp';
 import Navbar from './Navbar';
 import "./Login.css"
-import UserIdState from '../context/UserIdState';
-import UserIdContext from '../context/UserIdContext';
 
 export const Login = () => {
 
@@ -66,6 +64,7 @@ export const Login = () => {
      
         if(response.data.userid===userID && response.data.password===password){
             navigate('/accountSummary',{state:{userid:userID}})
+            
         }
       }
         catch(error){
@@ -76,6 +75,7 @@ export const Login = () => {
       }
 
         return (
+          
          
             <div>
                 <Navbar></Navbar>
@@ -130,7 +130,7 @@ export const Login = () => {
       )}
       
             </div>
-           
+        
         );
     }
 
