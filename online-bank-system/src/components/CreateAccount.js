@@ -10,7 +10,6 @@ export const CreateAccount = () => {
 
   const navigate = useNavigate()
 
-  const [showUserIdPopup, setShowUserIdPopup] = useState(true);
  
   const [isValidUserId, setIsValidUserId] = useState(false);
   const [userId, setUserId] = useState('');
@@ -27,6 +26,9 @@ export const CreateAccount = () => {
 
   const closePopUp = () => {
     setPopUpState(0);
+    console.log(popUpState)
+    console.log('hello')
+    navigate('/login')
     if(navigatePage==='success'){
       reset()
     }
@@ -336,7 +338,7 @@ return (
                         Submit</button>
                   </div>
   
-                </form>):showUserIdPopup && (
+                </form>):(
                 <div className="user-id-popup">
                 <label for="userid">Username</label>
                 <input
@@ -362,7 +364,15 @@ return (
                     </div>
                   </div>
                 </div>
-            
+            {popUpState === 1 &&(
+              <PopUp onClose={closePopUp}>
+                <div>
+                  <h3>
+                    {status}
+                  </h3>
+                </div>
+              </PopUp>
+            )}
           </section>
           </div>
 );
