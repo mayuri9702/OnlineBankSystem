@@ -7,15 +7,17 @@ import './AccountSummary.css'
 import { useLocation } from 'react-router-dom';
 
 export const AccountSummary = () => {
-  const [accounts, setAccounts] = useState([])
+ 
   
   const location = useLocation()
   const userID = location.state.userid
-
+  const accountNo = location.state.accountno
+  
   useEffect(()=>{
-    axio.get(`http://localhost:8081/accounts/user/${userID}`)
+    axio.get(`http://localhost:8081/accounts/${accountNo}}`)
     .then(response=>{
-      setAccounts(response.data)
+      
+    //  console.log("hello:",accountNo)
       console.log(response.data)
     })
     .catch(error=>{
@@ -27,28 +29,10 @@ export const AccountSummary = () => {
         <div className="app">
         <header className="header"><NavbarLogout/></header>
         <div className="container">
-          <div className="sidebar"><LeftNavbar state={{userid:userID}}/></div>
+          <div className="sidebar"><LeftNavbar state={{userid:userID, accountno:accountNo}}/></div>
           <main className="content">
             <div className='app-container'>
-              <h5>Welcome, {userID}</h5>
-              <table className='items-table'>
-                <thead>
-                  <tr>
-                    <th>Account Number</th>
-                    <th>Account Type</th>
-                    <th>Balance</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {accounts.map(account=>(
-                    <tr key={account.accountNo}>
-                      <td>{account.accountNo}</td>
-                      <td>{account.accounttype}</td>
-                      <td>{account.balance}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+              <h5>Welcome</h5>
             </div>
           </main>
         </div>

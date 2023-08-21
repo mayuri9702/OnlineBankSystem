@@ -8,6 +8,7 @@ import './dashboard.css'
 export const AddPayee = () =>{
     const location = useLocation()
     const userID = location.state.userid
+    const accountNo = location.state.accountno
     const [name, setName] = useState('')
     const [accNo, setAccNo] = useState('')
     const [reAccNo, setReAccNo] = useState('')
@@ -73,14 +74,15 @@ export const AddPayee = () =>{
         <div className="app">
         <header className="header"><NavbarLogout></NavbarLogout></header>
         <div className="container">
-          <div className="sidebar"><LeftNavbar state={{userid:userID}}/></div>
+          <div className="sidebar"><LeftNavbar state={{userid:userID, accountno:accountNo}}/></div>
           <main className="content">
           <section class="vh-100">
   <div class="container-fluid h-custom">
     <div class="row d-flex justify-content-center align-items-center h-100">
-      
+    
         <form>
           <div class="form-outline mb-4">
+          
                         <label class="form-label" for="name">Beneficiary Name</label>
                         <input type="text" id="name" class="form-control form-control-lg border"
                         value={name} onChange={nameHandler} />

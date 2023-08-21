@@ -8,6 +8,7 @@ import { useLocation } from 'react-router-dom';
 export const SetNewPassword = () => {
     const location = useLocation()
     const userID = location.state.userid
+    const accountNo = location.state.accountno
     const [newPassword, setNewPassword] = useState('')
     const [newPassword1, setNewPassword1] = useState('')
     const [newPasswordErr, setNewPasswordErr] = useState(false)
@@ -66,7 +67,7 @@ export const SetNewPassword = () => {
                 
                     <NavbarLogout></NavbarLogout>
                     
-          <LeftNavbar state={{userid:userID}}/>
+          <LeftNavbar state={{userid:userID, accountno:accountNo}}/>
                         <div class="row d-flex align-items-center justify-content-center h-100" style={{marginTop:5+'rem'}}>
                         <div class="col-md-7 col-lg-5 col-xl-5 offset-xl-1">
 
