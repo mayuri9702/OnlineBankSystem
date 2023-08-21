@@ -1,8 +1,9 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import "./InitiateTransaction.css";
 import { LeftNavbar } from './LeftNavbar';
 import { NavbarLogout } from './NavbarLogout';
 import './dashboard.css';
+import axios from 'axios';
 import PopUp from './PopUp';
 import { useLocation } from 'react-router-dom'
 
@@ -11,6 +12,7 @@ export const InitiateTransaction=()=>{
       const location = useLocation()
       const userID = location.state.userid
       const accountNo = location.state.accountno
+      const mode = location.state.mode
       const [fromAccount,setFromAccount]=useState("");
       const [toAccount,setToAccount]=useState("");
       const [amount,setAmount]=useState("");
@@ -20,9 +22,24 @@ export const InitiateTransaction=()=>{
       const [toAccErr, setToAccErr]=useState(false);
       const [amtErr, setAmtErr]=useState(false);
       const [pinErr, setPinErr] = useState(false)
-      
+      const [payeeAccountNo,setPayeeAccountNo]=useState(0);
+      const [allPayee, setAllPayee] = useState([])
       const [popUpState, setPopUpState] = useState(0);
       const [response, setResponse] = useState(1)
+
+
+      // const responsepayee = axios.get(`http://localhost:8081/payees/${accountNo}`);
+      // console.log(responsepayee)
+      useEffect(()=>{
+        axios.get(`http://localhost:8081/payees/${accountNo}`)
+        .then(response=>{
+          setAllPayee(response.data)
+          console.log(response.data)
+        })
+        .catch(error=>{
+          console.error('Error fetching data: ',error)
+        })
+      },[])
 
       const openPopUp = () => {
         setPopUpState(1);
@@ -31,6 +48,10 @@ export const InitiateTransaction=()=>{
       const closePopUp = () => {
         setPopUpState(0);
       };
+
+      const handlePayeeDetails=(e)=>{
+        setPayeeAccountNo(e.target.value);
+      }
 
       function reset(event){
         event.preventDefault();
@@ -41,6 +62,7 @@ export const InitiateTransaction=()=>{
       }
 
       async function continueTransaction (event){
+        const responseaccount = await axios.get(`http://localhost:8081/accounts/${accountNo}`);
         event.preventDefault();
         if(fromAccount===''){
           setFromAccErr(true)
@@ -63,10 +85,12 @@ export const InitiateTransaction=()=>{
           setPinErr(false)
         }
 
-        if(fromAccount!=='' && toAccount!=='' && amount!=='' && pin!==''){
+        if(fromAccount!=='' && toAccount!=='' && amount!=='' && pin!=='' && pin === responseaccount.data.transactionpin && amount<=responseaccount.data.balance){
+          
           if(response===1){
             setPopUpState(1)
           }
+
       }
 
       }
@@ -83,32 +107,55 @@ export const InitiateTransaction=()=>{
                             </div>
 
                             <form>
+                              <div class="form-outline mb-4">
+                              
+                            <select className="form-select mt-3" name="payee" required onChange={handlePayeeDetails}>
+                              <option selected disabled value={0} >Select a payee</option>
+                              {allPayee.map(payee=>(
+
+                                <option value={payee.payeeaccountno}>{payee.payeename}</option>
+                              ))
+
+                              }
+                              {/* <option value="current">Current</option>
+                              <option value="salary">Salary</option>
+                              <option value="fixedDeposit">Fixed Deposit</option>
+                              <option value="recurringDeposit">Recurring Deposit</option>
+                              <option value="nri">NRI</option> */}
+                            </select>
+                            </div>
                             <div class="form-outline mb-4">
-                                <label class="form-label" for="toAccountNumber">Enter To Account Number</label>
+                                <label class="form-label" for="toAccountNumber">To Account Number</label>
                                 <input type="number" id="toAaccountNumber" class="form-control form-control-lg"
-                                value={toAccount} onChange={(e)=>setToAccount(e.target.value)} />
-                                {toAccErr?<span>To Account Number can't be empty!</span>:""}
+                                value={payeeAccountNo} />
+                                {toAccErr?<span>To Account Number can't be empty!</span>:null}
                             </div>
 
                             <div class="form-outline mb-4">
-                                <label class="form-label" for="fromAccountNumber">Enter From Account Number</label>
+                                <label class="form-label" for="fromAccountNumber">From Account Number</label>
                                 <input type="number" id="fromAaccountNumber" class="form-control form-control-lg"
-                                value={fromAccount} onChange={(e)=>setFromAccount(e.target.value)} />
-                                {fromAccErr?<span>From Account Number can't be empty!</span>:""}
+                                value={accountNo} onChange={(e)=>setFromAccount(e.target.value)} />
+                                {fromAccErr?<span>From Account Number can't be empty!</span>:null}
                             </div>
 
                             <div class="form-outline mb-4">
                                 <label class="form-label" for="amount">Enter Amount</label>
                                 <input type="number" id="amount" class="form-control form-control-lg" 
-                                value={amount} onChange={(e)=>setAmount(e.target.value)}/>
-                                {amtErr?<span>Amount can't be empty!</span>:""}
+                                value={amount} onChange={(e)=>setAmount(e.target.value)} required={true}/>
+                                {amtErr?<span>Amount can't be empty!</span>:null}
                             </div>
 
                             <div class="form-outline mb-4">
                                 <label class="form-label" for="pin">Enter Transaction Pin</label>
-                                <input type="number" id="pin" class="form-control form-control-lg" 
-                                value={pin} onChange={(e)=>setPin(e.target.value)}/>
-                                {pinErr?<span>Transaction Pin can't be empty!</span>:""}
+                                <input type="password" id = "pin" class="form-control form-control-lg" 
+                                value={pin} onChange={(e)=>setPin(e.target.value)} maxLength={6} required={true}/>
+                                {pinErr?<span>Transaction Pin can't be empty!</span>:null}
+                            </div>
+
+                            <div class="form-outline mb-4">
+                                <label class="form-label" for="review">Mode</label>
+                                <input type="text" id="review" class="form-control form-control-lg"
+                                value={mode} />
                             </div>
 
                             <div class="form-outline mb-4">

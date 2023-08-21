@@ -23,7 +23,7 @@ export const FundTransfer = () => {
             setModeErr(true)
         }else{
             try{
-                navigate('/fundTransfer/initiateTransaction',{state:{userid:userID, accountno:accountNo}})
+                navigate('/fundTransfer/initiateTransaction',{state:{userid:userID, accountno:accountNo,mode:mode}})
             }catch{
 
             }
