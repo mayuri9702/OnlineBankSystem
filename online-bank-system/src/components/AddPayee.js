@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import { NavbarLogout } from "./NavbarLogout";
-import { useNavigate } from "react-router-dom";
+import { useLocation,useNavigate } from "react-router-dom";
 import { LeftNavbar } from "./LeftNavbar";
 import './dashboard.css'
 
-export const AddPayee = () =>{
 
+export const AddPayee = () =>{
+    const location = useLocation()
+    const userID = location.state.userid
     const [name, setName] = useState('')
     const [accNo, setAccNo] = useState('')
     const [reAccNo, setReAccNo] = useState('')
@@ -71,7 +73,7 @@ export const AddPayee = () =>{
         <div className="app">
         <header className="header"><NavbarLogout></NavbarLogout></header>
         <div className="container">
-          <div className="sidebar"><LeftNavbar></LeftNavbar></div>
+          <div className="sidebar"><LeftNavbar state={{userid:userID}}/></div>
           <main className="content">
           <section class="vh-100">
   <div class="container-fluid h-custom">
