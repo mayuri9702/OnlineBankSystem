@@ -22,7 +22,7 @@ export const FundTransfer = () => {
             setModeErr(true)
         }else{
             try{
-                navigate('/fundTransfer/initiateTransaction')
+                navigate('/fundTransfer/initiateTransaction',{state:{userid:userID}})
             }catch{
 
             }
@@ -39,7 +39,7 @@ export const FundTransfer = () => {
             <div>
                 <div class="text-center text-lg-start mt-4 pt-2">
                 <button type="button" class="btn btn-primary btn-lg"
-                onClick={()=>navigate("/fundTransfer/addPayee")}>Add Payee</button>
+                onClick={()=>navigate("/fundTransfer/addPayee", {state:{suerid:userID}})}>Add Payee</button>
                 </div>
                 <hr></hr>
                 <div class="text-center text-lg-start mt-4 pt-2">
