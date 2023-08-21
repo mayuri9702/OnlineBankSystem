@@ -8,7 +8,6 @@ import { useNavigate } from 'react-router-dom';
 
 export const CreateAccount = () => {
 
-
   const navigate = useNavigate()
 
   const [showUserIdPopup, setShowUserIdPopup] = useState(true);
@@ -365,13 +364,9 @@ return (
                 </div>
             
           </section>
-
           </div>
-        );
-    }
-
-
-
+);
+}
 
 
 
