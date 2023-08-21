@@ -3,9 +3,12 @@ import { useNavigate } from 'react-router-dom';
 import { NavbarLogout } from './NavbarLogout';
 import { LeftNavbar } from './LeftNavbar';
 import axios from 'axios';
+import { useLocation } from 'react-router-dom';
 
 export const SetNewPassword = () => {
-    const userId = '1234567890'
+    const location = useLocation()
+    const userID = location.state.userid
+    const accountNo = location.state.accountno
     const [newPassword, setNewPassword] = useState('')
     const [newPassword1, setNewPassword1] = useState('')
     const [newPasswordErr, setNewPasswordErr] = useState(false)
@@ -47,7 +50,7 @@ export const SetNewPassword = () => {
             setNewPassword1Err(false)
         }
         if(newPassword!=='' && newPassword1!==''){
-            axios.put(`http://localhost:8081/logins/updatePassword/${userId}`,formData)
+            axios.put(`http://localhost:8081/logins/updatePassword/${userID}`,formData)
             .then(reponse=>{
                 setMessage('Password updated successfully!!')
             })
@@ -64,7 +67,7 @@ export const SetNewPassword = () => {
                 
                     <NavbarLogout></NavbarLogout>
                     
-          <LeftNavbar></LeftNavbar>
+          <LeftNavbar state={{userid:userID, accountno:accountNo}}/>
                         <div class="row d-flex align-items-center justify-content-center h-100" style={{marginTop:5+'rem'}}>
                         <div class="col-md-7 col-lg-5 col-xl-5 offset-xl-1">
 

@@ -1,10 +1,13 @@
 import React from 'react';
 import './NavbarLogout.css'
 import axios from 'axios'
+import { useNavigate } from 'react-router-dom';
 
 export const NavbarLogout = () =>{
 
+    const navigate = useNavigate()
     async function handleLogout() {
+        navigate('/login')
       } 
 
     return (

@@ -4,10 +4,13 @@ import { LeftNavbar } from './LeftNavbar';
 import { NavbarLogout } from './NavbarLogout';
 import './dashboard.css';
 import PopUp from './PopUp';
+import { useLocation } from 'react-router-dom'
 
 
 export const InitiateTransaction=()=>{
-
+      const location = useLocation()
+      const userID = location.state.userid
+      const accountNo = location.state.accountno
       const [fromAccount,setFromAccount]=useState("");
       const [toAccount,setToAccount]=useState("");
       const [amount,setAmount]=useState("");
@@ -71,7 +74,7 @@ export const InitiateTransaction=()=>{
     return (
       <div>
                     <NavbarLogout></NavbarLogout>
-                    <LeftNavbar></LeftNavbar>
+                    <LeftNavbar state={{useid:userID, accountno:accountNo}}/>
                         <div class="row d-flex align-items-center justify-content-center h-100" style={{marginTop:5+'rem'}}>
                         <div class="col-md-7 col-lg-5 col-xl-5 offset-xl-1">
 
