@@ -93,7 +93,7 @@ export const InitiateTransaction=()=>{
         }else{
           setPinErr(false)
         }
-        console.log(fromAccount,toAccount,amount,pin)
+        console.log(accountNo,toAccount,amount,pin)
         console.log(pin,responseaccount.data.transactionpin)
         console.log(amount, responseaccount.data.balance)
         if(pin == responseaccount.data.transactionpin && amount<=responseaccount.data.balance){
@@ -102,14 +102,14 @@ export const InitiateTransaction=()=>{
             balance: updatedBalance
         };
         console.log(updatedBalance)
-        // const response1 = await axios.put(`http://localhost:8081/accounts/${accountNo}`,updatedAccount);
+        const response1 = await axios.put(`http://localhost:8081/accounts/accbalance/${accountNo}`,updatedAccount);
         // console.log(response1)
         
         const transactionNo = generateTransactionNumber()
         var today = new Date()
         var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
         const transactiondetails ={
-          transactionno: transactionNo,
+          transactionid: transactionNo,
           toaccno :toAccount,
           amount:amount,
           date:date,
@@ -117,7 +117,7 @@ export const InitiateTransaction=()=>{
           mode:mode
         };
         console.log(transactiondetails)
-        // const responsepost = await axios.post(`https://localhost:8081/transactions/${accountNo}`,transactiondetails);
+        const responsepost = await axios.post(`http://localhost:8081/transactions/${accountNo}`,transactiondetails);
       
           // openPopUp()
           // console.log(responsepost)
