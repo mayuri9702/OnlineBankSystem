@@ -22,6 +22,10 @@ export const Register = () => {
   const [isValidUserId, setIsValidUserId] = useState(false);
   const [userId, setUserId] = useState('');
   const [password,setPassword]=useState('');
+  const imageStyle = {
+    width:'500px',
+    height:'500px',
+  }
 
   const openPopUp = () => {
     setPopUpState(1);
@@ -135,10 +139,10 @@ export const Register = () => {
   return (
     <div>
       <Navbar></Navbar>
-
-      <section class="vh-100" style={{ backgroundcolor: "#eee" }}>
-        <div class="container h-100">
-          <div class="row d-flex justify-content-center align-items-center h-100">
+      <section class="vh-100 bg-image"
+   style={{backgroundColor: '#BBD2EC'}}>
+   
+        <div class="row d-flex justify-content-center align-items-center h-100">
             <div class="col-lg-12 col-xl-11">
               <div class="card text-black" style={{ borderradius: 25 + "px" }}>
                 <div class="card-body p-md-5">
@@ -165,9 +169,7 @@ export const Register = () => {
                             {accountNoErr ? (
                               <span>Account Number should be 11 digits!</span>
                             ) : null}
-                            {/* {accEmptyErr? (
-                              <span>account number can't be empty!</span>
-                            ): null} */}
+
                           </div>
                         </div>
 
@@ -246,7 +248,7 @@ export const Register = () => {
                     <div class="col-md-10 col-lg-6 col-xl-7 d-flex align-items-center order-1 order-lg-2">
                       <img
                         src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-registration/draw1.webp"
-                        class="img-fluid"
+                        class="img-fluid" style={imageStyle}
                         alt="Sample image"
                       />
                     </div>
@@ -254,9 +256,9 @@ export const Register = () => {
                 </div>
               </div>
             </div>
-          </div>
-        </div>
-      </section>
+            </div>
+            </section>
+  
       {popUpState === 1 && (
         <PopUp onClose={closePopUp}>
           <p>User registered successfully!!</p>

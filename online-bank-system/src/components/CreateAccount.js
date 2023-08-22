@@ -16,13 +16,12 @@ export const CreateAccount = () => {
   const [isValidUserId, setIsValidUserId] = useState(false);
   const [userId, setUserId] = useState('');
   const [password,setPassword]=useState('');
-
-  const [email,setEmail]=useState('');
+  // const [email,setEmail]=useState('');
+  
+  const [email, setEmail] = useState('');
   const [popUpState, setPopUpState] = useState(0)
   const [status, setStatus] = useState('')
   const [navigatePage, setNavigatePage] = useState('')
- 
-  
   const openPopUp = () => {
     setPopUpState(1);
   };
@@ -167,7 +166,7 @@ export const CreateAccount = () => {
       if (response.status === 200) {
         // Account created successfully
         setPopUpState(1)
-        setStatus('Account created successfully!! \n Your account number is :'.concat(formData['accountNo']).concat("\n Don't share your account number with anyone."))
+        setStatus('Account created successfully!! \n Your account number is :'.concat(formData['accountNo']))
         setNavigatePage('success')
         console.log('Account created successfully');
       } else {
@@ -195,7 +194,7 @@ return (
   <div>
     <Navbar></Navbar>
     <section className="vh-100 bg-image"
-    style ={ { backgroundImage: "url('https://i.pinimg.com/originals/5d/e0/8d/5de08de24459fedac3d28b10a039e2a6.jpg')" } }>
+   style={{backgroundColor: '#BBD2EC'}}>
    
         <div className="row d-flex justify-content-center align-items-center h-100">
           <div className="col-12 col-md-9 col-lg-7 col-xl-6">

@@ -13,3 +13,7 @@ height: calc(100% - 73px);
 height: 100%;
 }
 }
+.image-icon{
+    height: 200px;
+    width: 200px;
+}
