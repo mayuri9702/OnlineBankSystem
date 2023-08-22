@@ -5,24 +5,24 @@ import { NavbarLogout } from './NavbarLogout';
 import './dashboard.css';
 import axios from 'axios';
 import PopUp from './PopUp';
-import { useLocation } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 
 
 export const InitiateTransaction=()=>{
       const location = useLocation()
+      const navigate = useNavigate()
       const userID = location.state.userid
       const accountNo = location.state.accountno
       const mode = location.state.mode
-      const [fromAccount,setFromAccount]=useState("");
-      const [toAccount,setToAccount]=useState("");
-      const [amount,setAmount]=useState("");
+      const [fromAccount,setFromAccount]=useState(accountNo);
+      const [toAccount,setToAccount]=useState('');
+      const [amount,setAmount]=useState('');
       const [remark,setRemark]=useState("");
       const [pin, setPin] = useState('')
       const [fromAccErr, setFromAccErr]=useState(false);
       const [toAccErr, setToAccErr]=useState(false);
       const [amtErr, setAmtErr]=useState(false);
       const [pinErr, setPinErr] = useState(false)
-      const [payeeAccountNo,setPayeeAccountNo]=useState(0);
       const [allPayee, setAllPayee] = useState([])
       const [popUpState, setPopUpState] = useState(0);
       const [response, setResponse] = useState(1)
@@ -48,9 +48,10 @@ export const InitiateTransaction=()=>{
       const closePopUp = () => {
         setPopUpState(0);
       };
-
+      
+      
       const handlePayeeDetails=(e)=>{
-        setPayeeAccountNo(e.target.value);
+        setToAccount(e.target.value);
       }
 
       function reset(event){
@@ -61,9 +62,17 @@ export const InitiateTransaction=()=>{
         setRemark("");
       }
 
+      const generateTransactionNumber = () => {
+        const  transactiontNumber = Math.floor(100000000000 + Math.random() * 900000000000);
+        return transactiontNumber;
+      };
+
       async function continueTransaction (event){
-        const responseaccount = await axios.get(`http://localhost:8081/accounts/${accountNo}`);
         event.preventDefault();
+        try{
+        const responseaccount = await axios.get(`http://localhost:8081/accounts/${accountNo}`);
+        console.log('get by account number')
+        console.log(responseaccount)
         if(fromAccount===''){
           setFromAccErr(true)
         }else{
@@ -84,21 +93,55 @@ export const InitiateTransaction=()=>{
         }else{
           setPinErr(false)
         }
-
-        if(fromAccount!=='' && toAccount!=='' && amount!=='' && pin!=='' && pin === responseaccount.data.transactionpin && amount<=responseaccount.data.balance){
-          
-          if(response===1){
-            setPopUpState(1)
-          }
+        console.log(fromAccount,toAccount,amount,pin)
+        console.log(pin,responseaccount.data.transactionpin)
+        console.log(amount, responseaccount.data.balance)
+        if(pin == responseaccount.data.transactionpin && amount<=responseaccount.data.balance){
+          const updatedBalance = responseaccount.data.balance - amount;
+          const updatedAccount ={
+            balance: updatedBalance
+        };
+        console.log(updatedBalance)
+        // const response1 = await axios.put(`http://localhost:8081/accounts/${accountNo}`,updatedAccount);
+        // console.log(response1)
+        
+        const transactionNo = generateTransactionNumber()
+        var today = new Date()
+        var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
+        const transactiondetails ={
+          transactionno: transactionNo,
+          toaccno :toAccount,
+          amount:amount,
+          date:date,
+          remarks:remark,
+          mode:mode
+        };
+        console.log(transactiondetails)
+        // const responsepost = await axios.post(`https://localhost:8081/transactions/${accountNo}`,transactiondetails);
+      
+          // openPopUp()
+          // console.log(responsepost)
+          console.log(('-------------------------------'))
+          // navigate('/fundTransfer',{state:{userid:userID, accountno:accountNo}})
 
       }
+      else {
+        console.log("do nothing")
+      }
+        }
+        catch(error)
+        {
+          console.log('Error:', error.message);
+        }
+      // console.log('------------------------------')
+      navigate('/fundTransfer',{state:{userid:userID, accountno:accountNo}})
 
       }
 
     return (
       <div>
                     <NavbarLogout></NavbarLogout>
-                    <LeftNavbar state={{useid:userID, accountno:accountNo}}/>
+                    <LeftNavbar state={{useid:userID, accountno:accountNo,mode:mode}}/>
                         <div class="row d-flex align-items-center justify-content-center h-100" style={{marginTop:5+'rem'}}>
                         <div class="col-md-7 col-lg-5 col-xl-5 offset-xl-1">
 
@@ -127,14 +170,14 @@ export const InitiateTransaction=()=>{
                             <div class="form-outline mb-4">
                                 <label class="form-label" for="toAccountNumber">To Account Number</label>
                                 <input type="number" id="toAaccountNumber" class="form-control form-control-lg"
-                                value={payeeAccountNo} />
+                                value={toAccount} />
                                 {toAccErr?<span>To Account Number can't be empty!</span>:null}
                             </div>
 
                             <div class="form-outline mb-4">
                                 <label class="form-label" for="fromAccountNumber">From Account Number</label>
                                 <input type="number" id="fromAaccountNumber" class="form-control form-control-lg"
-                                value={accountNo} onChange={(e)=>setFromAccount(e.target.value)} />
+                                value={accountNo} />
                                 {fromAccErr?<span>From Account Number can't be empty!</span>:null}
                             </div>
 
@@ -147,7 +190,7 @@ export const InitiateTransaction=()=>{
 
                             <div class="form-outline mb-4">
                                 <label class="form-label" for="pin">Enter Transaction Pin</label>
-                                <input type="password" id = "pin" class="form-control form-control-lg" 
+                                <input type="number" id = "pin" class="form-control form-control-lg" 
                                 value={pin} onChange={(e)=>setPin(e.target.value)} maxLength={6} required={true}/>
                                 {pinErr?<span>Transaction Pin can't be empty!</span>:null}
                             </div>

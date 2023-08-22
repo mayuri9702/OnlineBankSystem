@@ -16,7 +16,7 @@ export const FundTransfer = () => {
     function radioValue(event){
         setMode(event.target.value)
     }
-
+    
     function proceed(event){
         event.preventDefault()
         if(mode===''){
