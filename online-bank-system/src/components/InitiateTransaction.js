@@ -25,8 +25,7 @@ export const InitiateTransaction=()=>{
       const [pinErr, setPinErr] = useState(false)
       const [allPayee, setAllPayee] = useState([])
       const [popUpState, setPopUpState] = useState(0);
-      const [response, setResponse] = useState(1)
-
+      const [displayMessage, setDisplayMessage] = useState('')
 
       // const responsepayee = axios.get(`http://localhost:8081/payees/${accountNo}`);
       // console.log(responsepayee)
@@ -47,6 +46,7 @@ export const InitiateTransaction=()=>{
 
       const closePopUp = () => {
         setPopUpState(0);
+        navigate('/fundTransfer',{state:{userid:userID, accountno:accountNo}})
       };
       
       
@@ -123,18 +123,40 @@ export const InitiateTransaction=()=>{
           // console.log(responsepost)
           console.log(('-------------------------------'))
           // navigate('/fundTransfer',{state:{userid:userID, accountno:accountNo}})
-
+          setDisplayMessage(
+            <h4 style={{color:"green"}}>Transaction Successful</h4>
+          )
       }
-      else {
-        console.log("do nothing")
+      else 
+      {
+        if(pin != responseaccount.data.transactionpin){
+          setDisplayMessage(
+            <h4 style={{color:"red"}}>Incorrect Pin!</h4>
+          )
+        }
+        if(amount>responseaccount.data.balance)
+        {
+        setDisplayMessage(
+          <>
+          <h4 style={{color:"red"}}>Insufficient Fund!</h4>
+            <ul>
+              <li>The money in your account is not enough for this payment.</li>
+              <li>Check account balance and try again.</li>
+            </ul>
+          </>
+        )
+        }
       }
+      
         }
         catch(error)
         {
           console.log('Error:', error.message);
         }
       // console.log('------------------------------')
-      navigate('/fundTransfer',{state:{userid:userID, accountno:accountNo}})
+      // navigate('/fundTransfer',{state:{userid:userID, accountno:accountNo}})
+      openPopUp()
+      
 
       }
 
@@ -217,11 +239,7 @@ export const InitiateTransaction=()=>{
                 </div>
  {popUpState === 1 && (
         <PopUp onClose={closePopUp}>
-          <h4 style={{color:"red"}}>Insufficient Fund!</h4>
-          <ul>
-            <li>The money in your account is not enough for this payment.</li>
-            <li>Check account balance and try again.</li>
-          </ul>
+          {displayMessage}
         </PopUp>
       )}
             </div>
