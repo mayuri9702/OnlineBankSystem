@@ -37,7 +37,7 @@ export const Register = () => {
   const handleUserIdSubmit = async () => {
     try {
       const response = await axios.get(`http://localhost:8081/logins/user/${userId}`);
-
+      
       console.log(response);
       if (response.status === 200 && response.data.password === password) {
         setIsValidUserId(true);
@@ -86,7 +86,7 @@ export const Register = () => {
 
         console.log(response);
         const updatedAccount = {
-          transactionpin: transPassword,
+          transactionpin: transPassword
         };
         const response1 = await axios.put(
           `http://localhost:8081/accounts/${accountNo}`,

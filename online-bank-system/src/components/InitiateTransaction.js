@@ -1,28 +1,45 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import "./InitiateTransaction.css";
 import { LeftNavbar } from './LeftNavbar';
 import { NavbarLogout } from './NavbarLogout';
 import './dashboard.css';
+import axios from 'axios';
 import PopUp from './PopUp';
-import { useLocation } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 
 
 export const InitiateTransaction=()=>{
       const location = useLocation()
+      const navigate = useNavigate()
       const userID = location.state.userid
       const accountNo = location.state.accountno
-      const [fromAccount,setFromAccount]=useState("");
-      const [toAccount,setToAccount]=useState("");
-      const [amount,setAmount]=useState("");
+      const mode = location.state.mode
+      const [fromAccount,setFromAccount]=useState(accountNo);
+      const [toAccount,setToAccount]=useState('');
+      const [amount,setAmount]=useState('');
       const [remark,setRemark]=useState("");
       const [pin, setPin] = useState('')
       const [fromAccErr, setFromAccErr]=useState(false);
       const [toAccErr, setToAccErr]=useState(false);
       const [amtErr, setAmtErr]=useState(false);
       const [pinErr, setPinErr] = useState(false)
-      
+      const [allPayee, setAllPayee] = useState([])
       const [popUpState, setPopUpState] = useState(0);
       const [response, setResponse] = useState(1)
+
+
+      // const responsepayee = axios.get(`http://localhost:8081/payees/${accountNo}`);
+      // console.log(responsepayee)
+      useEffect(()=>{
+        axios.get(`http://localhost:8081/payees/${accountNo}`)
+        .then(response=>{
+          setAllPayee(response.data)
+          console.log(response.data)
+        })
+        .catch(error=>{
+          console.error('Error fetching data: ',error)
+        })
+      },[])
 
       const openPopUp = () => {
         setPopUpState(1);
@@ -31,6 +48,11 @@ export const InitiateTransaction=()=>{
       const closePopUp = () => {
         setPopUpState(0);
       };
+      
+      
+      const handlePayeeDetails=(e)=>{
+        setToAccount(e.target.value);
+      }
 
       function reset(event){
         event.preventDefault();
@@ -40,8 +62,17 @@ export const InitiateTransaction=()=>{
         setRemark("");
       }
 
+      const generateTransactionNumber = () => {
+        const  transactiontNumber = Math.floor(100000000000 + Math.random() * 900000000000);
+        return transactiontNumber;
+      };
+
       async function continueTransaction (event){
         event.preventDefault();
+        try{
+        const responseaccount = await axios.get(`http://localhost:8081/accounts/${accountNo}`);
+        console.log('get by account number')
+        console.log(responseaccount)
         if(fromAccount===''){
           setFromAccErr(true)
         }else{
@@ -62,19 +93,55 @@ export const InitiateTransaction=()=>{
         }else{
           setPinErr(false)
         }
+        console.log(accountNo,toAccount,amount,pin)
+        console.log(pin,responseaccount.data.transactionpin)
+        console.log(amount, responseaccount.data.balance)
+        if(pin == responseaccount.data.transactionpin && amount<=responseaccount.data.balance){
+          const updatedBalance = responseaccount.data.balance - amount;
+          const updatedAccount ={
+            balance: updatedBalance
+        };
+        console.log(updatedBalance)
+        const response1 = await axios.put(`http://localhost:8081/accounts/accbalance/${accountNo}`,updatedAccount);
+        // console.log(response1)
+        
+        const transactionNo = generateTransactionNumber()
+        var today = new Date()
+        var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
+        const transactiondetails ={
+          transactionid: transactionNo,
+          toaccno :toAccount,
+          amount:amount,
+          date:date,
+          remarks:remark,
+          mode:mode
+        };
+        console.log(transactiondetails)
+        const responsepost = await axios.post(`http://localhost:8081/transactions/${accountNo}`,transactiondetails);
+      
+          // openPopUp()
+          // console.log(responsepost)
+          console.log(('-------------------------------'))
+          // navigate('/fundTransfer',{state:{userid:userID, accountno:accountNo}})
 
-        if(fromAccount!=='' && toAccount!=='' && amount!=='' && pin!==''){
-          if(response===1){
-            setPopUpState(1)
-          }
       }
+      else {
+        console.log("do nothing")
+      }
+        }
+        catch(error)
+        {
+          console.log('Error:', error.message);
+        }
+      // console.log('------------------------------')
+      navigate('/fundTransfer',{state:{userid:userID, accountno:accountNo}})
 
       }
 
     return (
       <div>
                     <NavbarLogout></NavbarLogout>
-                    <LeftNavbar state={{useid:userID, accountno:accountNo}}/>
+                    <LeftNavbar state={{useid:userID, accountno:accountNo,mode:mode}}/>
                         <div class="row d-flex align-items-center justify-content-center h-100" style={{marginTop:5+'rem'}}>
                         <div class="col-md-7 col-lg-5 col-xl-5 offset-xl-1">
 
@@ -83,32 +150,55 @@ export const InitiateTransaction=()=>{
                             </div>
 
                             <form>
+                              <div class="form-outline mb-4">
+                              
+                            <select className="form-select mt-3" name="payee" required onChange={handlePayeeDetails}>
+                              <option selected disabled value={0} >Select a payee</option>
+                              {allPayee.map(payee=>(
+
+                                <option value={payee.payeeaccountno}>{payee.payeename}</option>
+                              ))
+
+                              }
+                              {/* <option value="current">Current</option>
+                              <option value="salary">Salary</option>
+                              <option value="fixedDeposit">Fixed Deposit</option>
+                              <option value="recurringDeposit">Recurring Deposit</option>
+                              <option value="nri">NRI</option> */}
+                            </select>
+                            </div>
                             <div class="form-outline mb-4">
-                                <label class="form-label" for="toAccountNumber">Enter To Account Number</label>
+                                <label class="form-label" for="toAccountNumber">To Account Number</label>
                                 <input type="number" id="toAaccountNumber" class="form-control form-control-lg"
-                                value={toAccount} onChange={(e)=>setToAccount(e.target.value)} />
-                                {toAccErr?<span>To Account Number can't be empty!</span>:""}
+                                value={toAccount} />
+                                {toAccErr?<span>To Account Number can't be empty!</span>:null}
                             </div>
 
                             <div class="form-outline mb-4">
-                                <label class="form-label" for="fromAccountNumber">Enter From Account Number</label>
+                                <label class="form-label" for="fromAccountNumber">From Account Number</label>
                                 <input type="number" id="fromAaccountNumber" class="form-control form-control-lg"
-                                value={fromAccount} onChange={(e)=>setFromAccount(e.target.value)} />
-                                {fromAccErr?<span>From Account Number can't be empty!</span>:""}
+                                value={accountNo} />
+                                {fromAccErr?<span>From Account Number can't be empty!</span>:null}
                             </div>
 
                             <div class="form-outline mb-4">
                                 <label class="form-label" for="amount">Enter Amount</label>
                                 <input type="number" id="amount" class="form-control form-control-lg" 
-                                value={amount} onChange={(e)=>setAmount(e.target.value)}/>
-                                {amtErr?<span>Amount can't be empty!</span>:""}
+                                value={amount} onChange={(e)=>setAmount(e.target.value)} required={true}/>
+                                {amtErr?<span>Amount can't be empty!</span>:null}
                             </div>
 
                             <div class="form-outline mb-4">
                                 <label class="form-label" for="pin">Enter Transaction Pin</label>
-                                <input type="number" id="pin" class="form-control form-control-lg" 
-                                value={pin} onChange={(e)=>setPin(e.target.value)}/>
-                                {pinErr?<span>Transaction Pin can't be empty!</span>:""}
+                                <input type="number" id = "pin" class="form-control form-control-lg" 
+                                value={pin} onChange={(e)=>setPin(e.target.value)} maxLength={6} required={true}/>
+                                {pinErr?<span>Transaction Pin can't be empty!</span>:null}
+                            </div>
+
+                            <div class="form-outline mb-4">
+                                <label class="form-label" for="review">Mode</label>
+                                <input type="text" id="review" class="form-control form-control-lg"
+                                value={mode} />
                             </div>
 
                             <div class="form-outline mb-4">

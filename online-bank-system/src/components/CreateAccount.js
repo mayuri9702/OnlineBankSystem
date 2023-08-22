@@ -37,27 +37,23 @@ export const CreateAccount = () => {
   };
 
   const reset = () =>{
-    setAccountType('')
-    setTitle('default')
-    setFirstName('')
-    setMiddleName('')
-    setLastName('')
-    setFatherName('')
-    setAadharNumber('')
-
+    setAccountType('default');
+    setTitle('default');
+    setFirstName('');
+    setMiddleName('');
+    setLastName('');
+    setFatherName('');
+    setAadharNumber('');
     setDateOfBirth('')
-    setPermanentAddress('')
-    setResidentialAddress('')
-    setAnnualIncome('')
-    setSourceIncome('')
-    setMobileNumber('')
-    setOccupationType('')
+    setResAddr(''); setResState(''); setResCity(''); setResPinCode('');
+    setPerAddr(''); setPerState(''); setPerCity(''); setPerPinCode('');
+    setAnnualIncome('');
+    setSourceIncome('');
+    setMobileNumber('');
+    setOccupationType('');
   }
 
   const generateAccountNumber = () => {
-    // const upperPart = Math.floor(Math.random() * 100000) * 1000000000;
-    // const lowerPart = Math.floor(Math.random() * 1000000000);
-    // const accountNumber = upperPart + lowerPart;
     const  accountNumber = Math.floor(10000000000 + Math.random() * 90000000000);
     return accountNumber;
   };
@@ -65,6 +61,11 @@ export const CreateAccount = () => {
   
  
   const handleUserIdSubmit = async () => {
+        
+    
+
+     
+
     try {
       const response = await axios.get(`http://localhost:8081/logins/user/${userId}`);
 
@@ -82,6 +83,7 @@ export const CreateAccount = () => {
     } catch (error) {
       setIsValidUserId(false);
     }
+  
   };
 
   const [accountType,setAccountType]=useState('default');
@@ -93,8 +95,14 @@ export const CreateAccount = () => {
   const [dateOfBirth,setDateOfBirth]=useState("");
   const [mobileNumber,setMobileNumber]=useState("");
   const [aadharNumber,setAadharNumber]=useState("");
-  const [residentialAddress,setResidentialAddress]=useState("");
-  const [permanentAddress,setPermanentAddress]=useState("");
+  const [resAddr,setResAddr]=useState("");
+  const [resState,setResState]=useState("");
+  const [resCity,setResCity]=useState("");
+  const [resPinCode,setResPinCode]=useState("");
+  const [perAddr,setPerAddr]=useState("");
+  const [perState,setPerState]=useState("");
+  const [perCity,setPerCity]=useState("");
+  const [perPinCode,setPerPinCode]=useState("");
   const [occupationType,setOccupationType]=useState("");
   const [sourceIncome,setSourceIncome]=useState("");
   const [annualIncome,setAnnualIncome]=useState("");
@@ -126,8 +134,14 @@ export const CreateAccount = () => {
   const handledDateOfBirth=(e)=>{setDateOfBirth(e.target.value);}
   const handleMobileNumber=(e)=>{setMobileNumber(e.target.value);}
   const handleAadharNumber=(e)=>{setAadharNumber(e.target.value);}
-  const handleResidentialAddress=(e)=>{setResidentialAddress(e.target.value);}
-  const handlePermanentAddress=(e)=>{setPermanentAddress(e.target.value);}
+  const handleResAddr=(e)=>{setResAddr(e.target.value);}
+  const handleResState=(e)=>{setResState(e.target.value);}
+  const handleResCity=(e)=>{setResCity(e.target.value);}
+  const handleResPinCode=(e)=>{setResPinCode(e.target.value);}
+  const handlePerAddr=(e)=>{setPerAddr(e.target.value);}
+  const handlePerState=(e)=>{setPerState(e.target.value);}
+  const handlePerCity=(e)=>{setPerCity(e.target.value);}
+  const handlePerPinCode=(e)=>{setPerPinCode(e.target.value);}
   const handleOccupationType=(e)=>{setOccupationType(e.target.value);}
   const handleSourceIncome=(e)=>{setSourceIncome(e.target.value);}
   const handleAnnualIncome=(e)=>{setAnnualIncome(e.target.value);}
@@ -138,7 +152,88 @@ export const CreateAccount = () => {
     if(isValidUserId){
     try {
 
+      if(accountType==='default')
+      {
+        alert("Please select a valid account type!!");
+        return;
+      }
+
+      if(title==='defalut'){
+        alert("Please select a valid title!!");
+        return
+      }
+
+      if(firstName===""){
+        alert("Please enter your first name!!");
+        return;
+      }
+
+      if(lastName===""){
+        alert("Please enter your first name!!");
+        return;
+      }
+
+      if(fatherName===""){
+        alert("Please enter your father's name");
+        return;
+      }
+
+      if(mobileNumber==="" || mobileNumber.toString().trim().length!=10){
+        alert("Please enter a valid mobile number ");
+        return;
+      }
+
+      if(aadharNumber==="" || aadharNumber.toString().trim().length!=12){
+        alert("Please enter a valid Aadhar number");
+        return;
+      }
+
+      if(dateOfBirth===""){
+        alert("Please enter your date of birth");
+        return;
+      }
+
+     if(resAddr==="" || resState==="" || resCity==="" || resPinCode==="" || resPinCode.toString().trim().length!=6){
+      alert("Please enter a valid residential address!!");
+      return;
+     }
+
+     if(perAddr==="" || perState==="" || perCity==="" || perPinCode==="" || perPinCode.toString().trim().length!=6){
+      alert("Please enter a valid permanent address!!");
+      return;
+     }
+
+      if(occupationType===""){
+        alert("Please enter your occupation");
+        return;
+      }
+
+      if(sourceIncome===""){
+        alert("Please enter your source of income");
+        return;
+      }
+
+      if(annualIncome===""){
+        alert("Please enter your annual income");
+        return;
+      }
+
      const accountNo=generateAccountNumber();
+
+     const residentialAddress={
+      resAddr:resAddr,
+      resState:resState,
+      resCity:resCity,
+      resPinCode: Number(resPinCode)
+     };
+
+     const permanentAddress={
+      perAddr:perAddr,
+      perState:perState,
+      perCity:perCity,
+      perPinCode:Number(perPinCode)
+     }
+
 
       const formData={
       accountNo: accountNo,
@@ -151,17 +246,18 @@ export const CreateAccount = () => {
       mobilenumber: Number(mobileNumber),
       aadharnumber: Number(aadharNumber), 
       dob: dateOfBirth,
-      residentialAddress: residentialAddress,
-      permanentAddress: permanentAddress,
+      residentialAddress: JSON.stringify(residentialAddress),
+      permanentAddress: JSON.stringify(permanentAddress),
       occupationtype: occupationType,
       sourceofincome:  sourceIncome,
       annualincome: Number(annualIncome),
-      balance: Number(1000),
+      balance: Number(100000),
       userid:userId
       };
       console.log(accountNo);
 
       console.log(formData);
+    
       const response = await axios.post(`http://localhost:8081/accounts/${userId}`, formData);
       if (response.status === 200) {
         // Account created successfully
@@ -182,13 +278,6 @@ export const CreateAccount = () => {
     }
   }
   };
-
-
-
-
-
-
-
 
 return (
   <div>
@@ -265,21 +354,52 @@ return (
 
 
                   <div className="form-outline mb-4">
-                    <input type="text" id="dateOfBirth" className="form-control form-control-lg" placeholder='Date of Birth'onChange={handledDateOfBirth} value ={dateOfBirth} name="dateOfBirth" required="true"/>
+                    <input type="date" id="dateOfBirth" className="form-control form-control-lg" placeholder='Date of Birth'onChange={handledDateOfBirth} value ={dateOfBirth} name="dateOfBirth" required="true"/>
                   </div>
 
 
                   <div className="form-outline mb-4">
-                    <input type="text" id="residentialAddress" className="form-control form-control-lg" placeholder='Residential Address' onChange={handleResidentialAddress} value={residentialAddress}  name="residentialAddress" required="true"/>
+                    <h5>Residential Adress</h5>
                   </div>
 
 
                   <div className="form-outline mb-4">
-                    <input type="text" id="permanentAddress" className="form-control form-control-lg" placeholder='Permanent Address' onChange={handlePermanentAddress} value={permanentAddress}  name="permanentAddress" required="true"/>
+                    <input type="text" id="resAddr" className="form-control form-control-lg" placeholder='Address Line' onChange={handleResAddr} value={resAddr}  name="resAddr" required/>
                   </div>
 
-      
+                  <div className="form-outline mb-4">
+                    <input type="text" id="resState" className="form-control form-control-lg" placeholder='State' onChange={handleResState} value={resState}  name="resState" required/>
+                  </div>
 
+                  <div className="form-outline mb-4">
+                    <input type="text" id="resCity" className="form-control form-control-lg" placeholder='City' onChange={handleResCity} value={resCity}  name="resCity" required/>
+                  </div>
+
+                  <div className="form-outline mb-4">
+                    <input type="number" id="resPinCode" className="form-control form-control-lg" placeholder='Pin Code' onChange={handleResPinCode} value={resPinCode}  name="perPinCode" required/>
+                  </div>  
+                  
+
+                  <div className="form-outline mb-4">
+                    <h5>Permanent Adress</h5>
+                  </div>
+
+
+                  <div className="form-outline mb-4">
+                    <input type="text" id="perAddr" className="form-control form-control-lg" placeholder='Address Line' onChange={handlePerAddr} value={perAddr}  name="perAddr" required/>
+                  </div>
+
+                  <div className="form-outline mb-4">
+                    <input type="text" id="perState" className="form-control form-control-lg" placeholder='State' onChange={handlePerState} value={perState}  name="perState" required/>
+                  </div>
+
+                  <div className="form-outline mb-4">
+                    <input type="text" id="perCity" className="form-control form-control-lg" placeholder='City' onChange={handlePerCity} value={perCity}  name="perCity" required/>
+                  </div>
+
+                  <div className="form-outline mb-4">
+                    <input type="number" id="perPinCode" className="form-control form-control-lg" placeholder='Pin Code' onChange={handlePerPinCode} value={perPinCode}  name="perPinCode" required/>
+                  </div>
 
                   <div className="form-outline mb-4">
                     <h5>Occupation Details</h5>

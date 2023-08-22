@@ -16,14 +16,14 @@ export const FundTransfer = () => {
     function radioValue(event){
         setMode(event.target.value)
     }
-
+    
     function proceed(event){
         event.preventDefault()
         if(mode===''){
             setModeErr(true)
         }else{
             try{
-                navigate('/fundTransfer/initiateTransaction',{state:{userid:userID, accountno:accountNo}})
+                navigate('/fundTransfer/initiateTransaction',{state:{userid:userID, accountno:accountNo,mode:mode}})
             }catch{
 
             }
