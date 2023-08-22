@@ -12,6 +12,10 @@ export const NewUser = () => {
   const [emailid, setemailid] = useState('');
   const [registrationStatus, setRegistrationStatus] = useState(null); // State for registration status
   const [passwordErrorMessage, setPasswordErrorMessage] = useState('');
+  const imageStyle = {
+    width:'500px',
+    height:'500px',
+  }
 
   const openPopUp = () => {
     setPopUpState(1);
@@ -82,12 +86,12 @@ try {
     <div>
       <Navbar />
       <section className="vh-100">
-        <div className="container h-100">
           <div className="row d-flex justify-content-center align-items-center h-100">
             <div className="col-md-9 col-lg-6 col-xl-5">
               <img
                 src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.webp"
                 className="img-fluid"
+                style={imageStyle}
                 alt="Sample image"
               />
             </div>
@@ -147,7 +151,7 @@ try {
               </form>
             </div>
           </div>
-        </div>
+       
       </section>
       {popUpState === 1 && (
         <PopUp onClose={closePopUp}>

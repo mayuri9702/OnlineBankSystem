@@ -24,6 +24,22 @@ export const DisplayAccount = () => {
     })
   },[])
 
+  if(accounts.length===0){
+    return(
+      <div className="app">
+        <header className="header"><NavbarLogout/></header>
+        <div className="container">
+          <main className="content">
+            <div className='app-container'>
+      <h5>Welcome, {userID}</h5>
+      <p>You don't have any account yet!</p>
+    </div>
+    </main>
+    </div>
+    </div>
+    )
+  }
+
     return (
         <div className="app">
         <header className="header"><NavbarLogout/></header>
@@ -31,6 +47,7 @@ export const DisplayAccount = () => {
           <main className="content">
             <div className='app-container'>
               <h5>Welcome, {userID}</h5>
+              
               <table className='items-table'>
                 <thead>
                   <tr>
