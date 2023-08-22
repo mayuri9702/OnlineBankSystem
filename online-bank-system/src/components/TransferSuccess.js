@@ -2,13 +2,17 @@ import React from "react";
 import './dashboard.css'
 import { NavbarLogout } from "./NavbarLogout";
 import { LeftNavbar } from "./LeftNavbar";
+import { useLocation } from "react-router-dom";
 
 export const TransferSuccess=()=>{
+  const location=useLocation()
+  const userID = location.state.userid 
+  const accountNo = location.state.accountno
   return(
     <div className="app">
         <header className="header"><NavbarLogout></NavbarLogout></header>
         <div className="container">
-          <div className="sidebar"><LeftNavbar></LeftNavbar></div>
+          <div className="sidebar"><LeftNavbar state={{userid:userID, accountno:accountNo}}/></div>
           <main className="content" style={{backgroundColor:'#D6F6D5'}}>
             <div>
               <div class="row" style={{marginBottom:5+'rem'}}>

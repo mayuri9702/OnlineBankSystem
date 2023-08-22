@@ -1,54 +1,100 @@
-import React, { useEffect, useState } from 'react';
+import React, {  useEffect, useState } from 'react';
 import { NavbarLogout } from './NavbarLogout'
 import { LeftNavbar } from './LeftNavbar'
 import './dashboard.css'
-import { useLocation } from 'react-router-dom';
 import axio from 'axios';
 import './AccountSummary.css'
+import { useLocation } from 'react-router-dom';
 
 export const AccountSummary = () => {
-
-  const [accounts, setAccounts] = useState([])
+ 
+  let [account, setAccount] = useState([]) 
   const location = useLocation()
   const userID = location.state.userid
+  const accountNo = location.state.accountno
+  
 
   useEffect(()=>{
-    axio.get(`http://localhost:8081/accounts/user/${userID}`)
-    .then(response=>{
-      setAccounts(response.data)
-      console.log(response.data)
+   fetchData()
+  },[account])
+
+  const fetchData = () =>{
+    axio.get(`http://localhost:8081/accounts/${accountNo}`)
+    .then(response=>{ 
+      setAccount(response.data) 
     })
     .catch(error=>{
       console.error('Error fetching data: ',error)
     })
-  },[])
+  }
+
+  
 
     return (
         <div className="app">
-        <header className="header"><NavbarLogout></NavbarLogout></header>
+        <header className="header"><NavbarLogout/></header>
         <div className="container">
-          <div className="sidebar"><LeftNavbar></LeftNavbar></div>
+          <div className="sidebar"><LeftNavbar state={{userid:userID, accountno:accountNo}}/></div>
           <main className="content">
             <div className='app-container'>
-              <h5>Welcome, {userID}</h5>
-              <table className='items-table'>
-                <thead>
-                  <tr>
-                    <th>Account Number</th>
-                    <th>Account Type</th>
-                    <th>Balance</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {accounts.map(account=>(
-                    <tr key={account.accountNo}>
-                      <td>{account.accountNo}</td>
-                      <td>{account.accounttype}</td>
-                      <td>{account.balance}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+             <h1>Account Details</h1>
+             <table>
+                <tr>
+                  <td>Account Number</td>
+                  <td>:</td>
+                  <td>{account.accountNo}</td>
+                </tr>
+                <tr>
+                  <td>Account Holder Name</td>
+                  <td>:</td>
+                  <td>{account.title} {account.firstname} {account.middlename} {account.lastname}</td>
+                </tr>
+                <tr>
+                  <td>Account Type</td>
+                  <td>:</td>
+                  <td>{account.accounttype}</td>
+                </tr>
+                <tr>
+                  <td>Balance</td>
+                  <td>:</td>
+                  <td>{account.balance}</td>
+                </tr>
+                <tr>
+                  <td>Aadhar card number</td>
+                  <td>:</td>
+                  <td>{account.aadharnumber}</td>
+                </tr>
+                <tr>
+                  <td>Date of Birth</td>
+                  <td>:</td>
+                  <td>{account.dob}</td>
+                </tr>
+                <tr>
+                  <td>Occupation Type</td>
+                  <td>:</td>
+                  <td>{account.occupationtype}</td>
+                </tr>
+                <tr>
+                  <td>Source of Income</td>
+                  <td>:</td>
+                  <td>{account.sourceofincome}</td>
+                </tr>
+                <tr>
+                  <td>Annual Income</td>
+                  <td>:</td>
+                  <td>{account.annualincome}</td>
+                </tr>
+                <tr>
+                  <td>Permanent Address</td>
+                  <td>:</td>
+                  <td>{account.permanentAddress}</td>
+                </tr>
+                <tr>
+                  <td>Residential Address</td>
+                  <td>:</td>
+                  <td>{account.residentialAddress}</td>
+                </tr>
+             </table> 
             </div>
           </main>
         </div>

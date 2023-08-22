@@ -10,16 +10,19 @@ export const CreateAccount = () => {
 
   const navigate = useNavigate()
 
+  const [showUserIdPopup, setShowUserIdPopup] = useState(true);
+
  
   const [isValidUserId, setIsValidUserId] = useState(false);
   const [userId, setUserId] = useState('');
   const [password,setPassword]=useState('');
-  // const [email,setEmail]=useState('');
-  
-  const [email, setEmail] = useState('');
+
+  const [email,setEmail]=useState('');
   const [popUpState, setPopUpState] = useState(0)
   const [status, setStatus] = useState('')
   const [navigatePage, setNavigatePage] = useState('')
+ 
+  
   const openPopUp = () => {
     setPopUpState(1);
   };
@@ -494,6 +497,30 @@ return (
               </PopUp>
             )}
           </section>
+          {/* {showUserIdPopup &&(
+            <div className="user-id-popup">
+              <h2>Enter Your User ID</h2>
+              <input
+                type="text"
+                placeholder="USER ID"
+                value={userId}
+                onChange={(e)=> setUserId(e.target.value)}
+              />
+              <button onClick={handleUserIdSubmit}>Submit</button>
+              {isValidUserId && <p className="error-message">Invalid User Id</p>}
+            </d
+          )} */}
+
+
+          {popUpState === 1 && (
+            <PopUp onClose={closePopUp}>
+              <div>
+                <h3>{status}</h3>
+              </div>
+            </PopUp>
+          )}
+
+
           </div>
 );
 }
