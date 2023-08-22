@@ -17,6 +17,7 @@ import {SessionExpired} from './components/SessionExpired'
 import './App.css';
 import React from 'react';
 import {DisplayAccount} from './components/DisplayAccounts'
+import {AdminLogin} from './admin/AdminLogin'
 
 
 
@@ -40,8 +41,9 @@ function App() {
       <Route exact path='/transferSuccess' element={<TransferSuccess/>}/>
       <Route exact path='/newUser' element={<NewUser/>}/>
       <Route exact path='/sessionExpired' element={<SessionExpired/>}/>
-      <Route exact path='/displayAccount' element={<DisplayAccount/>}
-/>    </Routes>
+      <Route exact path='/displayAccount' element={<DisplayAccount/>}/> 
+      <Route exact path='/adminLogin' element={<AdminLogin/>}/>
+    </Routes>
   
   
    </Router>

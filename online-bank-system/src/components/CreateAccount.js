@@ -169,7 +169,7 @@ export const CreateAccount = () => {
       }
 
       if(lastName===""){
-        alert("Please enter your first name!!");
+        alert("Please enter your last name!!");
         return;
       }
 

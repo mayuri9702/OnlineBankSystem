@@ -89,7 +89,7 @@ try {
           <div className="row d-flex justify-content-center align-items-center h-100">
             <div className="col-md-9 col-lg-6 col-xl-5">
               <img
-                src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.webp"
+                src="https://tutorgenix.com/static/images/my-password.png"
                 className="img-fluid"
                 style={imageStyle}
                 alt="Sample image"

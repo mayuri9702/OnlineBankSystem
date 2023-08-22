@@ -53,7 +53,6 @@ export const DisplayAccount = () => {
                   <tr>
                     <th>Account Number</th>
                     <th>Account Type</th>
-                    <th>Balance</th>
                     <th>Account Details</th>
                   </tr>
                 </thead>
@@ -62,7 +61,6 @@ export const DisplayAccount = () => {
                     <tr key={account.accountNo}>
                       <td>{account.accountNo}</td>
                       <td>{account.accounttype}</td>
-                      <td>{account.balance}</td>
                       <td><Link to="/accountSummary" state={{userid:userID,accountno:account.accountNo}}>View Account</Link></td>
                     </tr>
                   ))}
