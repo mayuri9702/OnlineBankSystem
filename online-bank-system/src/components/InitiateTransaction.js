@@ -106,8 +106,15 @@ export const InitiateTransaction=()=>{
         // console.log(response1)
         
         const transactionNo = generateTransactionNumber()
-        var today = new Date()
-        var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
+        const today = new Date()
+        var date ;
+        if(today.getMonth() + 1 <=9)
+        {
+          date = today.getFullYear() + '-0' + (today.getMonth() + 1) + '-' + today.getDate();
+        }
+        else{
+          date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
+        }
         const transactiondetails ={
           transactionid: transactionNo,
           toaccno :toAccount,

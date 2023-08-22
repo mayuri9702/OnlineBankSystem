@@ -12,6 +12,7 @@ export const FundTransfer = () => {
     const navigate = useNavigate()
     const [mode, setMode] = useState('')
     const [modeErr, setModeErr] = useState(false)
+    
 
     function radioValue(event){
         setMode(event.target.value)

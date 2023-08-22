@@ -5,6 +5,7 @@ import './NavbarLogout'
 
 export const Home = () => {
     const navigate = useNavigate();
+    
         return (
           <div>
           <nav class="navbar navbar-expand-sm">
