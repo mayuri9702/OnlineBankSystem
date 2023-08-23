@@ -18,6 +18,10 @@ import './App.css';
 import React from 'react';
 import {DisplayAccount} from './components/DisplayAccounts'
 import {AdminLogin} from './admin/AdminLogin'
+import { AdminDashboard } from './admin/AdminDashboard';
+import { AccountHolders } from './admin/AccountHolders';
+import { ViewAccounts } from './admin/ViewAccounts';
+import {ViewTransactions} from './admin/ViewTransactions'
 
 
 
@@ -43,6 +47,10 @@ function App() {
       <Route exact path='/sessionExpired' element={<SessionExpired/>}/>
       <Route exact path='/displayAccount' element={<DisplayAccount/>}/> 
       <Route exact path='/adminLogin' element={<AdminLogin/>}/>
+      <Route exact path='/adminDashboard' element={<AdminDashboard/>}/>
+      <Route exact path='/accountHolders' element={<AccountHolders/>}/>
+      <Route exact path='/viewAccounts' element={<ViewAccounts/>}/>
+      <Route exact path='/viewTransactions' element={<ViewTransactions/>}/>
     </Routes>
   
   
