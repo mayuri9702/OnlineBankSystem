@@ -252,7 +252,8 @@ export const CreateAccount = () => {
       sourceofincome:  sourceIncome,
       annualincome: Number(annualIncome),
       balance: Number(100000),
-      userid:userId
+      userid:userId,
+      suspend:Number(0)
       };
       console.log(accountNo);
 
@@ -284,7 +285,6 @@ return (
     <Navbar></Navbar>
     <section className="vh-100 bg-image"
    style={{backgroundColor: '#BBD2EC'}}>
-   
         <div className="row d-flex justify-content-center align-items-center h-100">
           <div className="col-12 col-md-9 col-lg-7 col-xl-6">
             <div className="card" style={{borderradius: 15+"px"}}>
@@ -292,7 +292,6 @@ return (
                 <h2 className="text-uppercase text-center mb-5">Open an Account</h2>
   {isValidUserId ?(
                 <form>
-
 
                 <div className="col-md-12">
                         <select className="form-select mt-3" required onChange={handleAccountType} name="accountType" value={accountType}>

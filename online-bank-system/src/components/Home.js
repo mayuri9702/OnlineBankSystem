@@ -1,7 +1,8 @@
 import React from 'react';
 import {useNavigate} from 'react-router-dom';
 import './Home.css'
-import './NavbarLogout'
+import adminIcon from '../images/adminIcon.png'
+import userIcon from '../images/user.webp'
 
 export const Home = () => {
     const navigate = useNavigate();
@@ -14,28 +15,32 @@ export const Home = () => {
               </img> <span className="s">Online Banking System</span>
             </a>
            </nav>
-            <div class="card-group">
-            <div class="card mb-2 border-0" style={{paddingRight: '50px'}} onClick={() => navigate('/adminLogin')}>
-              <img src="https://cdn-icons-png.flaticon.com/128/7952/7952741.png" class="card-img-top"
-                alt="Hollywood Sign on The Hill" />
-              <div class="card-body"> 
-                <h5 class="card-title">Admin</h5>
-                <p class="card-text">
-                  This is a wider card with supporting text below as a natural lead-in to
-                  additional content. This content is a little bit longer.
-                </p>
+            <div className="body" style={{backgroundImage:'url("https://www.wallpaperflare.com/static/674/247/756/abstract-shapes-minimalism-blue-background-wallpaper.jpg")'}}>
+              <div className="c"onClick={()=>navigate("/adminLogin")}>
+                <div class="image-content">
+                  <span class="overlay"></span>
+                  <div class="card-image">
+                    <img src={adminIcon} alt="Admin Icon Image" class="card-img"/>
+                  </div>
+                </div>
+                <div class="card-content">
+                  <h2 class="name">Admin</h2>
+                  <p class="description">Admin can suspend & delete the account, monitor transactions and search the account holders.</p>
+                </div>
+              </div>
+              <div className="c" onClick={()=>navigate("/login")}>
+                <div class="image-content">
+                  <span class="overlay"></span>
+                  <div class="card-image">
+                    <img src={userIcon} alt="User Icon Image" class="card-img"/>
+                  </div>
+                </div>
+                <div class="card-content">
+                  <h2 class="name">User</h2>
+                  <p class="description">User can create account, register for internet banking, add payee and transfer funds.</p>
+                </div>
               </div>
             </div>
-            <div class="card mb-2 border-0" style={{paddingLeft: '50px'}} onClick={() => navigate('/login')}>
-              <img src="https://icon-library.com/images/users-icon/users-icon-20.jpg" class="card-img-top"
-                alt="Palm Springs Road" />
-              <div class="card-body">
-                <h5 class="card-title">User</h5>
-                <p class="card-text">This card has supporting text below as a natural lead-in to additional content.
-                </p>
-              </div>
-            </div>
-          </div>
           </div>
         );
     }

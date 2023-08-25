@@ -40,6 +40,9 @@ export const DisplayAccount = () => {
     )
   }
 
+  const filteredAccounts = accounts.filter(account=>account.suspend==0)
+  const suspendedAccounts = accounts.filter(account=>account.suspend==1)
+
     return (
         <div className="app">
         <header className="header"><NavbarLogout/></header>
@@ -57,11 +60,18 @@ export const DisplayAccount = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {accounts.map(account=>(
+                  {filteredAccounts.map(account=>(
                     <tr key={account.accountNo}>
                       <td>{account.accountNo}</td>
                       <td>{account.accounttype}</td>
                       <td><Link to="/accountSummary" state={{userid:userID,accountno:account.accountNo}}>View Account</Link></td>
+                    </tr>
+                  ))}
+                  {suspendedAccounts.map(account=>(
+                    <tr key={account.accountNo} style={{backgroundColor:'#A9A9A9'}}>
+                      <td>{account.accountNo}</td>
+                      <td>{account.accounttype}</td>
+                      <td>Account deactivated</td>
                     </tr>
                   ))}
                 </tbody>

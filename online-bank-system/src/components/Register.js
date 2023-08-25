@@ -24,7 +24,7 @@ export const Register = () => {
   const [password,setPassword]=useState('');
   const imageStyle = {
     width:'500px',
-    height:'500px',
+    height:'500px'
   }
 
   const openPopUp = () => {
@@ -144,7 +144,7 @@ export const Register = () => {
    
         <div class="row d-flex justify-content-center align-items-center h-100">
             <div class="col-lg-12 col-xl-11">
-              <div class="card text-black" style={{ borderradius: 25 + "px" }}>
+              <div class="card text-black" style={{ width : 1300+'px' }}>
                 <div class="card-body p-md-5">
                   <div class="row justify-content-center">
                     <div class="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">

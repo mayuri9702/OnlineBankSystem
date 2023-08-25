@@ -1,9 +1,13 @@
 import React from 'react';
 import '../components/NavbarLogout.css'
-import {Link} from 'react-router-dom'
+import {Link, useNavigate} from 'react-router-dom'
 
 function Navbar() {
+
+  const navigate = useNavigate()
+
   return (
+  
     <nav class="navbar navbar-expand-sm">
 
   <a class="navbar-brand">
@@ -11,14 +15,8 @@ function Navbar() {
    </img> <span className="s">Online Banking System</span></a>
 
   <ul class="navbar-nav">
-  <li class="nav-item">
-      <Link className="item" to="/adminDashboard">Dashboard</Link>
-    </li>
     <li class="nav-item">
-      <Link className="item" to="/accountHolders">Account Holder</Link>
-    </li>
-    <li class="nav-item">
-      <Link className="item" to="#">Logout</Link>
+      <Link className="item" to="/adminLogin" style={{marginLeft:900+'px'}}>Logout</Link>
     </li>
   </ul>
 </nav>

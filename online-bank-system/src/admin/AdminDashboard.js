@@ -5,6 +5,10 @@ export const AdminDashboard = () =>{
     return(
         <div>
             <AdminNavbar></AdminNavbar>
+           
+            <div style={{backgroundImage:'url("")'}}>
+            </div>
+            
         </div>
     )
 }

@@ -3,7 +3,7 @@ import {useNavigate} from 'react-router-dom';
 import axios from 'axios';
 import PopUp from './PopUp';
 import Navbar from './Navbar';
-import "./Login.css"
+import "./Login.css";
 
 export const Login = () => {
 
@@ -106,17 +106,17 @@ export const Login = () => {
           </div>
 
           <div class="d-flex justify-content-between align-items-center">
-            <a href="/forgetPassword" class="text-decoration-none link-info">Forgot Password?</a>
+            <a href="/forgetPassword" class="text-decoration-none" style={{color:'#7CA1D9'}}>Forgot Password?</a>
           </div>
 
           <br></br>
 
           <div class="d-flex justify-content-between align-items-center">
-            <a href="/forgetUserID" class="text-decoration-none link-info">Forgot User ID?</a>
+            <a href="/forgetUserID" class="text-decoration-none" style={{color:'#7CA1D9'}}>Forgot User ID?</a>
           </div>
 
           <div class="text-center text-lg-start mt-4 pt-2">
-            <button type="button" class="btn btn-primary btn-lg"
+            <button type="button" class="btn btn-lg" style={{backgroundColor:'#7CA1D9'}}
               onClick={save}>Login</button>
           </div>
 

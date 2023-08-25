@@ -4,6 +4,7 @@ import axios from 'axios';
 import PopUp from '../components/PopUp';
 import '../components/Login.css'
 import '../components/NavbarLogout'
+import admin from '../images/adminLogin.png'
 
 export const AdminLogin = () => {
 
@@ -65,9 +66,9 @@ export const AdminLogin = () => {
         const response = await axios.get(`http://localhost:8081/logins/user/${userID}`);
 
      
-        if(response.data.userid===userID && response.data.password===password){
-            navigate('/displayAccount',{state:{userid:userID}})
-            
+        if(response.data.userid===userID && response.data.password===password && response.data.admin===1){
+            navigate('/accountHolders',{state:{userid:userID}})
+            alert("Admin login successfully!!")
         }
       }
         catch(error){
@@ -91,12 +92,12 @@ export const AdminLogin = () => {
   <div class="container-fluid h-custom">
     <div class="row d-flex justify-content-center align-items-center h-100">
       <div class="col-md-9 col-lg-6 col-xl-5">
-        <img style={imageStyle} src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.webp"
+        <img style={imageStyle} src={admin}
           class="img-fluid" alt="Sample image"/>
       </div>
       <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
-        <h1>Admin Login</h1>
-        <form>
+        <h1 style={{color:'#6082B6'}}>Admin Login</h1>
+        <form style={{marginTop:20+'px'}}>
           <div class="form-outline mb-4">
           <label class="form-label" for="userID">User ID</label>
             <input type="text" id="userID" class="form-control form-control-lg"
@@ -111,18 +112,8 @@ export const AdminLogin = () => {
             {passwordErr?<span>Password can't be empty!</span>:""}
           </div>
 
-          <div class="d-flex justify-content-between align-items-center">
-            <a href="/forgetPassword" class="text-decoration-none link-info">Forgot Password?</a>
-          </div>
-
-          <br></br>
-
-          <div class="d-flex justify-content-between align-items-center">
-            <a href="/forgetUserID" class="text-decoration-none link-info">Forgot User ID?</a>
-          </div>
-
           <div class="text-center text-lg-start mt-4 pt-2">
-            <button type="button" class="btn btn-primary btn-lg"
+            <button type="button" class="btn btn-lg" style={{backgroundColor:'#7CA1D9'}}
               onClick={save}>Login</button>
           </div>
 

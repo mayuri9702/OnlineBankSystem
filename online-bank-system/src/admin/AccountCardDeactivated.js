@@ -9,20 +9,18 @@ import number from '../images/number.png'
 import aadharCard from '../images/aadharCard.jpg'
 import axios from "axios";
 
-export const AccountCard = ({account}) =>{
+export const AccountCardDeactivated = ({account}) =>{
 
-    const [active, setActive] = useState()
-
-    async function handleDeactivate(event) {
+    async function handleActivate (event)  {
         event.preventDefault()
         try{
         const updatedAccount ={
-            suspend : 1
+            suspend : 0
         };
-        const response1 = await axios.put(`http://localhost:8081/accounts/updateSuspend/${account.accountNo}`,updatedAccount);
+        const response1 = await axios.put(`http://localhost:8081/accounts/updateSuspendDeactive/${account.accountNo}`,updatedAccount);
         console.log(response1)
             if(response1.status===200){
-                alert("Account deactivated successfully")
+                alert("Account activated successfully")
             }
         } catch(error)
             {
@@ -31,7 +29,7 @@ export const AccountCard = ({account}) =>{
     }
 
     return(
-       <div className="account-card">
+       <div className="account-card-deactive">
             <Link className="view" to="/viewTransactions" state={{accountno:account.accountNo}}><img src={open} alt=""/></Link>
             <center>
             <div style={{justifyContent:'center'}}>
@@ -40,7 +38,7 @@ export const AccountCard = ({account}) =>{
             <p><img src={aadharCard} alt="Aadhar Card Image" height="10px" width="10px"/> {account.aadharnumber}</p>
             <p><img src={mobile} alt="Mobile Image"/>{account.mobilenumber}</p>
             <p><img src={birthDate} alt="Birth Date Image"/>{account.dob}</p>
-            <button className="delete-button" onClick={handleDeactivate}>Deactivate</button>
+            <button className="deactivate-button" onClick={handleActivate}>Activate</button>
             </div>
             </center>
            
