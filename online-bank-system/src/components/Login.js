@@ -65,7 +65,7 @@ export const Login = () => {
         const response = await axios.get(`http://localhost:8081/logins/user/${userID}`);
 
      
-        if(response.data.userid===userID && response.data.password===password){
+        if(response.data.user.userid===userID && response.data.user.password===password && response.data.user.admin===0){
             navigate('/displayAccount',{state:{userid:userID}})
             
         }
