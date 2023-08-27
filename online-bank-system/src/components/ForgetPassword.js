@@ -1,9 +1,13 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Navbar from './Navbar';
+import PopUp from './PopUp'
 
 export const ForgetPassword = () => {
+    const navigate = useNavigate()
     const [email, setEmail] = useState('');
+    const [popUpState, setPopUpState] = useState(false)
     const [otp, setOtp] = useState('');
     const [newPassword, setNewPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
@@ -11,6 +15,15 @@ export const ForgetPassword = () => {
     const [showPasswordReset, setShowPasswordReset] = useState(false);
     const [verificationResult, setVerificationResult] = useState('');
     const [passwordResetResult, setPasswordResetResult] = useState('');
+    const [otpVerificationResult, setOtpVerificationResult] = useState('');
+    
+    const openPopUp = () => {
+        setPopUpState(1);
+      };
+      const closePopUp = () => {
+        setPopUpState(0);
+        navigate('/login')
+      };
 
     const containerStyle={
         display: 'flex',
@@ -74,14 +87,14 @@ export const ForgetPassword = () => {
                 emailid: email
             });
 
-            if (response.data.message === 'OTP sent successfully') {
+            if (response.status === 200) {
                 setShowOtpModal(true);
             } else {
                 setVerificationResult('Invalid email ID');
             }
         } catch (error) {
             if (error.response && error.response.status === 400) {
-                setVerificationResult('Incorrect OTP, please try again.');
+                setVerificationResult('Invalid email id, please try again.');
             } else {
                 console.error(error);
                 // Handle error or show error message
@@ -95,16 +108,21 @@ export const ForgetPassword = () => {
                 emailid: email,
                 otp: otp
             });
-
-            if (response.data.message === 'OTP verified successfully') {
+            console.log(response)
+            if (response.status === 200) {
                 setShowOtpModal(false);
                 setShowPasswordReset(true);
-                setVerificationResult('');
+                // setVerificationResult('');
+                setOtpVerificationResult('OTP verified successfully')
             } else {
-                setVerificationResult('Incorrect OTP, please try again.');
+                // setVerificationResult('Incorrect OTP, please try again.');
+                setOtpVerificationResult('Incorrect OTP!!!')
+                // setPopUpState(1)
             }
         } catch (error) {
+            setOtpVerificationResult('Incorrect OTP, please try again.');
             console.error(error);
+            // setPopUpState(1)
             // Handle error or show error message
         }
     };
@@ -115,11 +133,13 @@ export const ForgetPassword = () => {
                 const response = await axios.put(`http://localhost:8081/logins/${email}`, {
                     newPassword: newPassword
                 });
-
-                if (response.data.message === 'Password reset successful') {
+                console.log(response)
+                if (response.status === 200) {
                     setPasswordResetResult('Password has been reset successfully.');
-                    setNewPassword('');
-                    setConfirmPassword('');
+                    console.log("password reset successfully", newPassword)
+                    setPopUpState(1)
+                    // setNewPassword('');
+                    // setConfirmPassword('');
                 }
             } else {
                 setPasswordResetResult('Passwords do not match.');
@@ -159,7 +179,7 @@ export const ForgetPassword = () => {
                                 />
                             </div>
                             <button className="btn btn-primary" style={btnStyle} onClick={handlePasswordReset}>Reset Password</button>
-                            {passwordResetResult && <p className="success-message" style={successStyle}>{passwordResetResult}</p>}
+                            {passwordResetResult && <p className="error-message" style={errMessageStyle}>{passwordResetResult}</p>}
                         </div>
                     ) : (
                         <div>
@@ -191,12 +211,18 @@ export const ForgetPassword = () => {
                                     onChange={e => setOtp(e.target.value)}
                                 />
                                 <button className="btn btn-primary" style={btnStyle} onClick={handleVerifyOTP}>Submit</button>
+                                {otpVerificationResult && <p className="error-message" style={errMessageStyle}>{otpVerificationResult}</p>}
                             </div>
                         </div>
                     )}
                 </div>
             </div>
         </div>
+        {popUpState === 1 && (
+        <PopUp onClose={closePopUp}>
+          <p>{passwordResetResult}</p>
+        </PopUp>
+      )}
         </div>
     );
 };

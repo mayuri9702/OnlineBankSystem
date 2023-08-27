@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import {useNavigate} from 'react-router-dom';
+import {useNavigate, Link} from 'react-router-dom';
 import axios from 'axios';
 import PopUp from '../components/PopUp';
 import '../components/Login.css'
@@ -22,13 +22,14 @@ export const AdminLogin = () => {
         height:'500px',
       }
      
-
+ 
       const openPopUp = () => {
         setPopUpState(1);
       };
       const closePopUp = () => {
         setPopUpState(0);
       };
+     
 
       function userIDHandler(e){
         let item=e.target.value
@@ -70,8 +71,13 @@ export const AdminLogin = () => {
             navigate('/accountHolders',{state:{adminUserId:userID}})
             alert("Admin login successfully!!")
         }
-        else {
-
+        else if(response.data.user.admin === 0){
+          setLoginStatus("You are not an admin")
+          setPopUpState(1)
+        }
+        else{
+          setLoginStatus("Incorrect Password!!")
+          setPopUpState(1)
         }
       }
         catch(error){
@@ -87,7 +93,9 @@ export const AdminLogin = () => {
             <a class="navbar-brand">
               <img src="https://cdn2.iconfinder.com/data/icons/buildings-56/48/12-512.png" alt="Application image">
               </img> <span className="s">Online Banking System</span>
+              <Link className="item" to="/">User Login</Link>
             </a>
+            
            </nav>
                 <section class="vh-100">
   <div class="container-fluid h-custom">

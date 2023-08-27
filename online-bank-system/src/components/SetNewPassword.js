@@ -4,6 +4,7 @@ import { NavbarLogout } from './NavbarLogout';
 import { LeftNavbar } from './LeftNavbar';
 import axios from 'axios';
 import { useLocation } from 'react-router-dom';
+import { ForbiddenPage } from './ForbiddenPage';
 
 export const SetNewPassword = () => {
     const location = useLocation()
@@ -14,6 +15,11 @@ export const SetNewPassword = () => {
     const [newPasswordErr, setNewPasswordErr] = useState(false)
     const [newPassword1Err, setNewPassword1Err] = useState(false)
     const [message, setMessage] = useState('')
+    const token = localStorage.getItem('jwtToken');
+    if(token === "null")
+    {
+        return(<ForbiddenPage />)
+    }
 
     const handleP = (e) =>{
         let item = e.target.value

@@ -40,6 +40,8 @@ export const ViewAccounts=()=>{
       
     const filteredAccounts = accounts.filter(account=>account.suspend==0)
     const suspendedAccounts = accounts.filter(account=>account.suspend==1)
+    console.log(filteredAccounts.length)
+    console.log(suspendedAccounts.length)
       
 
     return(

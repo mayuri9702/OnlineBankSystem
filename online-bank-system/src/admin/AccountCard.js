@@ -25,7 +25,7 @@ export const AccountCard = ({account}) =>{
     }   
     if(token === "null")
     {
-    return(<ForbiddenPage />)
+        return(<ForbiddenPage />)
     }
 
     async function handleDeactivate(event) {
@@ -41,7 +41,7 @@ export const AccountCard = ({account}) =>{
             }
         } catch(error)
             {
-            console.log('Error:', error.message);
+                console.log('Error:', error.message);
             }
     }
 
@@ -49,7 +49,7 @@ export const AccountCard = ({account}) =>{
        <div className="account-card">
             <Link className="view" to="/viewTransactions" state={{adminUserId:adminUserId,accountno:account.accountNo}}><img src={open} alt=""/></Link>
             <center>
-            <div style={{justifyContent:'center'}}>
+            <div style={{justifyContent:'center'}}> 
             <p><img src={number} alt="Account Number Image"/> {account.accountNo}</p>
             <p><img src={name} alt="Name Image"/> {account.title} {account.firstname} {account.middlename} {account.lastname}</p>
             <p><img src={aadharCard} alt="Aadhar Card Image" height="10px" width="10px"/> {account.aadharnumber}</p>
@@ -58,8 +58,6 @@ export const AccountCard = ({account}) =>{
             <button className="delete-button" onClick={handleDeactivate}>Deactivate</button>
             </div>
             </center>
-           
-                
             
        </div>
     )
