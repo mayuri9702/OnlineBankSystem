@@ -22,7 +22,7 @@ import { AdminDashboard } from './admin/AdminDashboard';
 import { AccountHolders } from './admin/AccountHolders';
 import { ViewAccounts } from './admin/ViewAccounts';
 import {ViewTransactions} from './admin/ViewTransactions'
-
+import { ForbiddenPage } from './components/ForbiddenPage';
 
 
 function App() {
@@ -51,6 +51,7 @@ function App() {
       <Route exact path='/accountHolders' element={<AccountHolders/>}/>
       <Route exact path='/viewAccounts' element={<ViewAccounts/>}/>
       <Route exact path='/viewTransactions' element={<ViewTransactions/>}/>
+      <Route exact path='*' element={<ForbiddenPage/>}/>
     </Routes>
   
   

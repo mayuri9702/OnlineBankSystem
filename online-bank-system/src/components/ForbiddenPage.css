@@ -1,0 +1,35 @@
+.err{
+    font-size: 100px;
+    font-style: bold;
+    color: #B9BFFF;
+}
+
+.page h2{
+    font-style: bold;
+}
+
+.page button{
+    border-radius: 12px;
+    background-color: #73B9EE;
+    color: white;
+    width: 200px;
+    margin-top:50px;
+}
+
+.page{
+   
+    background-color: white;
+    height: 400px;
+    width: 800px;
+   
+    
+}
+
+.page1{
+    display: flex;
+    background-color: #B9BFFF;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    width: 100vw;
+}
