@@ -63,9 +63,10 @@ export const Login = () => {
         }
         try{
         const response = await axios.get(`http://localhost:8081/logins/user/${userID}`);
-
+        console.log(response)
+        localStorage.setItem('jwtToken', response.data.token);
      
-        if(response.data.userid===userID && response.data.password===password){
+        if(response.data.user.userid===userID && response.data.user.password===password){
             navigate('/displayAccount',{state:{userid:userID}})
             
         }

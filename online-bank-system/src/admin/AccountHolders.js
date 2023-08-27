@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import AdminNavbar from './AdminNavbar'
+import {AdminNavbar} from './AdminNavbar'
 import './AccountHolders.css'
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useEffect } from "react";
 import axio from 'axios';
 import moreDetails from '../images/moreDetails.png';
@@ -11,10 +11,22 @@ import InputGroup from 'react-bootstrap/InputGroup';
 export const AccountHolders = () =>{
     const [users, setUsers] = useState([])
     const [search, setSearch] = useState('')
+    const location = useLocation()
+  const adminUserId = location.state.adminUserId
+    const token = localStorage.getItem('jwtToken')
+    const headers = {
+      'Authorization': `Bearer ${token}`
+    }
+  
+    const requestOptionsGet = {
+      method: 'GET',
+      headers: headers,
+    }
+
     console.log(search)
     
   useEffect(()=>{
-    axio.get(`http://localhost:8081/logins/users`)
+    axio.get(`http://localhost:8081/logins/admin/${adminUserId}/users`,requestOptionsGet)
     .then(response=>{
       setUsers(response.data)
       console.log(response.data)
@@ -76,7 +88,7 @@ export const AccountHolders = () =>{
                         <td>{user.userid}</td>
                       <td>{user.emailid}</td>
                       {/* <td>{user.account[0]}</td> */}
-                      <td><Link to="/viewAccounts" state={{userid:user.userid}}><img src={moreDetails} alt="view image"/></Link></td>
+                      <td><Link to="/viewAccounts" state={{userid:user.userid, adminUserId:adminUserId}}><img src={moreDetails} alt="view image"/></Link></td>
                     </tr>
                   ))}
                     </tbody>

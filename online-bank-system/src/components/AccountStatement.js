@@ -16,6 +16,18 @@ export const AccountStatement = () => {
   const [transactions, setTransactions] = useState([])
   const [transactionCount, setTransactionCount] = useState(5)
   const [totalNoOfTransactions, setTotalNoOfTransactions] = useState(0)
+  const token = localStorage.getItem('jwtToken')
+  const headers = {
+    'Authorization': `Bearer ${token}`
+  }
+
+  const requestOptionsGet = {
+    method: 'GET',
+    headers: headers,
+  }
+  
+
+
   const today = new Date()
   var date ;
   if(today.getMonth() + 1 <=9)
@@ -27,7 +39,7 @@ export const AccountStatement = () => {
   }
   
   useEffect(()=>{
-    axios.get(`http://localhost:8081/transactions/${accountNo}/totalcount`).then(response=>{
+    axios.get(`http://localhost:8081/transactions/${accountNo}/totalcount`,requestOptionsGet).then(response=>{
     setTotalNoOfTransactions(response.data)
     })
     .catch(error=>{
@@ -36,7 +48,7 @@ export const AccountStatement = () => {
   },[])
 
   useEffect(()=>{
-    axios.get(`http://localhost:8081/transactions/${accountNo}/between-dates?from_date=${fromDate}&to_date=${toDate}`)
+    axios.get(`http://localhost:8081/transactions/${accountNo}/between-dates?from_date=${fromDate}&to_date=${toDate}`,requestOptionsGet)
     .then(response=>{
       setTransactions(response.data)
     })
@@ -46,7 +58,7 @@ export const AccountStatement = () => {
   },[fromDate,toDate])
 
   useEffect(()=>{
-    axios.get(`http://localhost:8081/transactions/${accountNo}?n=${transactionCount}`)
+    axios.get(`http://localhost:8081/transactions/${accountNo}?n=${transactionCount}`,requestOptionsGet)
     .then(response=>{
       // console.log('hello')
       setTransactions(response.data)

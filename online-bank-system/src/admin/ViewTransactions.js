@@ -1,18 +1,28 @@
 import React, { useEffect,useState } from 'react'
 import { useLocation } from 'react-router-dom';
 import axios from 'axios';
-import AdminNavbar from './AdminNavbar'
+import {AdminNavbar} from './AdminNavbar'
 import '../components/AccountStatement.css'
 
 
 export const ViewTransactions = () => {
   const location = useLocation()
   const accountNo = location.state.accountno
+  const adminUserId = location.state.adminUserId
+  const token = localStorage.getItem('jwtToken')
+  const headers = {
+    'Authorization': `Bearer ${token}`
+  }
+
+  const requestOptionsGet = {
+    method: 'GET',
+    headers: headers,
+  }   
   const [transactions, setTransactions] = useState([])
 
   
   useEffect(()=>{
-    axios.get(`http://localhost:8081/transactions/${accountNo}`).then(response=>{
+    axios.get(`http://localhost:8081/transactions/admin/${adminUserId}/user/${accountNo}`,requestOptionsGet).then(response=>{
         setTransactions(response.data)
     })
     .catch(error=>{

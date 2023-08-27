@@ -12,14 +12,22 @@ export const AccountSummary = () => {
   const location = useLocation()
   const userID = location.state.userid
   const accountNo = location.state.accountno
-  
+  const token = localStorage.getItem('jwtToken')
+  const headers = {
+    'Authorization': `Bearer ${token}`
+  }
+
+  const requestOptions = {
+    method: 'GET',
+    headers: headers,
+  }
 
   useEffect(()=>{
    fetchData()
   },[account])
 
   const fetchData = () =>{
-    axio.get(`http://localhost:8081/accounts/${accountNo}`)
+    axio.get(`http://localhost:8081/accounts/${accountNo}`,requestOptions)
     .then(response=>{ 
       setAccount(response.data) 
     })
