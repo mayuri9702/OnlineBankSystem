@@ -63,12 +63,15 @@ export const AdminLogin = () => {
           setPasswordErr(false)
         }
         try{
-        const response = await axios.get(`http://localhost:8081/logins/user/${userID}`);
-
-     
-        if(response.data.userid===userID && response.data.password===password && response.data.admin===1){
-            navigate('/accountHolders',{state:{userid:userID}})
+        const response = await axios.get(`http://localhost:8081/logins/admin/${userID}`);
+        localStorage.setItem('jwtToken', response.data.token);
+        console.log(response)
+        if(response.data.user.userid===userID && response.data.user.password===password && response.data.user.admin===1){
+            navigate('/accountHolders',{state:{adminUserId:userID}})
             alert("Admin login successfully!!")
+        }
+        else {
+
         }
       }
         catch(error){
@@ -79,8 +82,6 @@ export const AdminLogin = () => {
       }
 
         return (
-          
-         
             <div>
                 <nav class="navbar navbar-expand-sm">
             <a class="navbar-brand">

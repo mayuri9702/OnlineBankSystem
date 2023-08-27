@@ -1,10 +1,14 @@
 import React from 'react';
 import '../components/NavbarLogout.css'
-import {Link, useNavigate} from 'react-router-dom'
+import {useNavigate} from 'react-router-dom'
 
-function Navbar() {
+export const AdminNavbar = () => {
 
   const navigate = useNavigate()
+  async function handleLogout() {
+    localStorage.setItem('jwtToken', null);
+    navigate('/adminLogin')
+  }
 
   return (
   
@@ -14,13 +18,14 @@ function Navbar() {
   <img src="https://cdn2.iconfinder.com/data/icons/buildings-56/48/12-512.png" alt="Application image">
    </img> <span className="s">Online Banking System</span></a>
 
-  <ul class="navbar-nav">
+  <ul class="navbar-nav ms-auto">
     <li class="nav-item">
-      <Link className="item" to="/adminLogin" style={{marginLeft:900+'px'}}>Logout</Link>
+      {/* <Link className="item" to="/adminLogin" style={{marginLeft:900+'px'}}>Logout</Link> */}
+      <button onClick={handleLogout}>Logout</button>
     </li>
   </ul>
 </nav>
   );
 }
 
-export default Navbar;
+// export default Navbar;

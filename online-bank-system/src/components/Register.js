@@ -39,7 +39,8 @@ export const Register = () => {
       const response = await axios.get(`http://localhost:8081/logins/user/${userId}`);
       
       console.log(response);
-      if (response.status === 200 && response.data.password === password) {
+      if (response.status === 200 && response.data.user.userid === userId && response.data.user.password === password) {
+        localStorage.setItem('jwtToken', response.data.token);
         setIsValidUserId(true);
         
         // setUserId(response.data.userId);
@@ -72,7 +73,19 @@ export const Register = () => {
     } else {
       setTransPass2EmptyErr(false);
     }
-
+    const token = localStorage.getItem('jwtToken')
+    const headers = {
+      'Authorization': `Bearer ${token}`
+    }
+  
+    const requestOptionsGet = {
+      method: 'GET',
+      headers: headers,
+    }
+    const requestOptionsPut = {
+      method: 'PUT',
+      headers: headers,
+    }
     if (
       accountNo !== "" &&
       transPassword !== "" &&
@@ -80,8 +93,9 @@ export const Register = () => {
       transPassword === transPassword2
     ) {
       try {
+        console.log(accountNo, transPassword, transPassword2)
         const response = await axios.get(
-          `http://localhost:8081/accounts/${accountNo}`
+          `http://localhost:8081/accounts/${accountNo}`,requestOptionsGet
         );
 
         console.log(response);
@@ -89,11 +103,11 @@ export const Register = () => {
           transactionpin: transPassword
         };
         const response1 = await axios.put(
-          `http://localhost:8081/accounts/${accountNo}`,
-          updatedAccount
+          `http://localhost:8081/accounts/transpin/${accountNo}`,updatedAccount,requestOptionsPut
         );
         // console.log(response1.status)
         console.log(response1);
+        localStorage.setItem('jwtToken',null);
         alert("Successfully registered for internet banking!!");
         navigate("/login");
         console.log("registration done");

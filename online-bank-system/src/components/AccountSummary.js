@@ -5,6 +5,7 @@ import './dashboard.css'
 import axio from 'axios';
 import './AccountSummary.css'
 import { useLocation } from 'react-router-dom';
+import { ForbiddenPage } from './ForbiddenPage';
 
 export const AccountSummary = () => {
  
@@ -12,14 +13,26 @@ export const AccountSummary = () => {
   const location = useLocation()
   const userID = location.state.userid
   const accountNo = location.state.accountno
-  
+  const token = localStorage.getItem('jwtToken')
+  const headers = {
+    'Authorization': `Bearer ${token}`
+  }
+
+  const requestOptions = {
+    method: 'GET',
+    headers: headers,
+  }
+  if(token === "null")
+    {
+    return(<ForbiddenPage />)
+    }
 
   useEffect(()=>{
    fetchData()
   },[account])
 
   const fetchData = () =>{
-    axio.get(`http://localhost:8081/accounts/${accountNo}`)
+    axio.get(`http://localhost:8081/accounts/${accountNo}`,requestOptions)
     .then(response=>{ 
       setAccount(response.data) 
     })

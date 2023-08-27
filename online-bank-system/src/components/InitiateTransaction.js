@@ -6,6 +6,7 @@ import './dashboard.css';
 import axios from 'axios';
 import PopUp from './PopUp';
 import { useLocation, useNavigate } from 'react-router-dom'
+import { ForbiddenPage } from './ForbiddenPage';
 
 
 export const InitiateTransaction=()=>{
@@ -26,11 +27,31 @@ export const InitiateTransaction=()=>{
       const [allPayee, setAllPayee] = useState([])
       const [popUpState, setPopUpState] = useState(0);
       const [displayMessage, setDisplayMessage] = useState('')
+      const token = localStorage.getItem('jwtToken')
+    const headers = {
+      'Authorization': `Bearer ${token}`
+    }
+    const requestOptionsGet = {
+      method: 'GET',
+      headers: headers,
+    }
+    const requestOptionsPost = {
+      method: 'POST',
+      headers: headers,
+    }
+    const requestOptionsPut = {
+      method: 'PUT',
+      headers: headers,
+    }
 
-      // const responsepayee = axios.get(`http://localhost:8081/payees/${accountNo}`);
+    if(token === "null")
+    {
+    return(<ForbiddenPage />)
+    }
+    // const responsepayee = axios.get(`http://localhost:8081/payees/${accountNo}`);
       // console.log(responsepayee)
       useEffect(()=>{
-        axios.get(`http://localhost:8081/payees/${accountNo}`)
+        axios.get(`http://localhost:8081/payees/${accountNo}`,requestOptionsGet)
         .then(response=>{
           setAllPayee(response.data)
           console.log(response.data)
@@ -70,7 +91,7 @@ export const InitiateTransaction=()=>{
       async function continueTransaction (event){
         event.preventDefault();
         try{
-        const responseaccount = await axios.get(`http://localhost:8081/accounts/${accountNo}`);
+        const responseaccount = await axios.get(`http://localhost:8081/accounts/${accountNo}`,requestOptionsGet);
         console.log('get by account number')
         console.log(responseaccount)
         if(fromAccount===''){
@@ -102,7 +123,7 @@ export const InitiateTransaction=()=>{
             balance: updatedBalance
         };
         console.log(updatedBalance)
-        const response1 = await axios.put(`http://localhost:8081/accounts/accbalance/${accountNo}`,updatedAccount);
+        const response1 = await axios.put(`http://localhost:8081/accounts/accbalance/${accountNo}`,updatedAccount,requestOptionsPut);
         // console.log(response1)
         
         const transactionNo = generateTransactionNumber()
@@ -124,7 +145,7 @@ export const InitiateTransaction=()=>{
           mode:mode
         };
         console.log(transactiondetails)
-        const responsepost = await axios.post(`http://localhost:8081/transactions/${accountNo}`,transactiondetails);
+        const responsepost = await axios.post(`http://localhost:8081/transactions/${accountNo}`,transactiondetails,requestOptionsPost);
       
           // openPopUp()
           // console.log(responsepost)

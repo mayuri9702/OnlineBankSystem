@@ -4,6 +4,7 @@ import { useLocation,useNavigate } from "react-router-dom";
 import { LeftNavbar } from "./LeftNavbar";
 import './dashboard.css'
 import axios from 'axios';
+import { ForbiddenPage } from "./ForbiddenPage";
 
 
 export const AddPayee = () =>{
@@ -18,7 +19,18 @@ export const AddPayee = () =>{
     const [accNoErr, setAccNoErr] = useState(false)
     const [reAccNoErr, setReAccNoErr] = useState(false)
     const navigate = useNavigate()
- 
+    const token = localStorage.getItem('jwtToken')
+    const headers = {
+      'Authorization': `Bearer ${token}`
+    }
+    const requestOptionsPost = {
+        method: 'POST',
+        headers: headers,
+      }
+    if(token === "null")
+    {
+    return(<ForbiddenPage />)
+    }
     async function save(e){
         e.preventDefault()
         if(name===''){
@@ -44,10 +56,9 @@ export const AddPayee = () =>{
                     nickname: nick
                     // accountNo: accountNo
                 };
-                const response = await axios.post(`http://localhost:8081/payees/${accountNo}`, payeedetails);
+                const response = await axios.post(`http://localhost:8081/payees/${accountNo}`, payeedetails,requestOptionsPost);
                 if(response.status === 200)
                 {
-
                     navigate('/fundTransfer',{state:{userid:userID,accountno:accountNo}})
                     // console.log(response)
                 }

@@ -36,9 +36,9 @@
 }
 
 .deactivate-button{
-    background-color: white;
+    background-color: green;
     color: black;
-    border: 1px solid #DC143C;
+    border: 1px solid black;
     border-radius: 4px;
     padding: 5px 10px;
     cursor: pointer;

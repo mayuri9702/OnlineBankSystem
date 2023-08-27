@@ -7,6 +7,7 @@ export const NavbarLogout = () =>{
 
     const navigate = useNavigate()
     async function handleLogout() {
+        localStorage.setItem('jwtToken', null);
         navigate('/login')
       } 
 

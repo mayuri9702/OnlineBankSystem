@@ -6,15 +6,29 @@ import axio from 'axios';
 import './AccountSummary.css'
 import { useLocation } from 'react-router-dom';
 import { Link } from 'react-router-dom';
+import { ForbiddenPage } from './ForbiddenPage';
 
 export const DisplayAccount = () => {
   const [accounts, setAccounts] = useState([])
   
   const location = useLocation()
   const userID = location.state.userid
+  const token = localStorage.getItem('jwtToken')
+  const headers = {
+    'Authorization': `Bearer ${token}`
+  }
+
+  const requestOptions = {
+    method: 'GET',
+    headers: headers,
+  }
+  if(token === "null")
+    {
+    return(<ForbiddenPage />)
+    }
 
   useEffect(()=>{
-    axio.get(`http://localhost:8081/accounts/user/${userID}`)
+    axio.get(`http://localhost:8081/accounts/user/${userID}`,requestOptions)
     .then(response=>{
       setAccounts(response.data)
       console.log(response.data)
@@ -32,7 +46,7 @@ export const DisplayAccount = () => {
           <main className="content">
             <div className='app-container'>
       <h5>Welcome, {userID}</h5>
-      <p>You don't have any account yet!</p>
+      <p>You don't have any ccount yet!</p>
     </div>
     </main>
     </div>

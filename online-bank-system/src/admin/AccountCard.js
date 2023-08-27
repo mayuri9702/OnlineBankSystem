@@ -1,17 +1,32 @@
 import React, { useState } from "react";
 import './AccountCard.css'
 import open from '../images/open.png'
-import { Link } from "react-router-dom";
+import { Link,useLocation } from "react-router-dom";
 import name from '../images/name.png';
 import birthDate from '../images/birthDate.png'
 import mobile from '../images/mobile.png'
 import number from '../images/number.png'
 import aadharCard from '../images/aadharCard.jpg'
 import axios from "axios";
+import { ForbiddenPage } from "../components/ForbiddenPage";
 
 export const AccountCard = ({account}) =>{
-
+    const location = useLocation()
+    const adminUserId = location.state.adminUserId
     const [active, setActive] = useState()
+    const token = localStorage.getItem('jwtToken')
+    const headers = {
+      'Authorization': `Bearer ${token}`
+    }
+  
+    const requestOptionsPut = {
+      method: 'PUT',
+      headers: headers,
+    }   
+    if(token === "null")
+    {
+    return(<ForbiddenPage />)
+    }
 
     async function handleDeactivate(event) {
         event.preventDefault()
@@ -19,7 +34,7 @@ export const AccountCard = ({account}) =>{
         const updatedAccount ={
             suspend : 1
         };
-        const response1 = await axios.put(`http://localhost:8081/accounts/updateSuspend/${account.accountNo}`,updatedAccount);
+        const response1 = await axios.put(`http://localhost:8081/accounts/admin/${adminUserId}/updateSuspend/${account.accountNo}`,updatedAccount,requestOptionsPut);
         console.log(response1)
             if(response1.status===200){
                 alert("Account deactivated successfully")
@@ -32,7 +47,7 @@ export const AccountCard = ({account}) =>{
 
     return(
        <div className="account-card">
-            <Link className="view" to="/viewTransactions" state={{accountno:account.accountNo}}><img src={open} alt=""/></Link>
+            <Link className="view" to="/viewTransactions" state={{adminUserId:adminUserId,accountno:account.accountNo}}><img src={open} alt=""/></Link>
             <center>
             <div style={{justifyContent:'center'}}>
             <p><img src={number} alt="Account Number Image"/> {account.accountNo}</p>
