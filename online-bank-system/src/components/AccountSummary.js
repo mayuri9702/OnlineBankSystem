@@ -5,6 +5,7 @@ import './dashboard.css'
 import axio from 'axios';
 import './AccountSummary.css'
 import { useLocation } from 'react-router-dom';
+import { ForbiddenPage } from './ForbiddenPage';
 
 export const AccountSummary = () => {
  
@@ -21,6 +22,10 @@ export const AccountSummary = () => {
     method: 'GET',
     headers: headers,
   }
+  if(token === "null")
+    {
+    return(<ForbiddenPage />)
+    }
 
   useEffect(()=>{
    fetchData()

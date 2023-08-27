@@ -5,6 +5,7 @@ import './dashboard.css'
 import './AccountStatement.css'
 import { useLocation } from 'react-router-dom';
 import axios from 'axios';
+import { ForbiddenPage } from './ForbiddenPage'
 
 
 export const AccountStatement = () => {
@@ -25,8 +26,10 @@ export const AccountStatement = () => {
     method: 'GET',
     headers: headers,
   }
-  
-
+  if(token === "null")
+    {
+    return(<ForbiddenPage />)
+    }
 
   const today = new Date()
   var date ;

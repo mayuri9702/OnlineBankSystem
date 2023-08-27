@@ -6,6 +6,7 @@ import './dashboard.css';
 import axios from 'axios';
 import PopUp from './PopUp';
 import { useLocation, useNavigate } from 'react-router-dom'
+import { ForbiddenPage } from './ForbiddenPage';
 
 
 export const InitiateTransaction=()=>{
@@ -30,7 +31,6 @@ export const InitiateTransaction=()=>{
     const headers = {
       'Authorization': `Bearer ${token}`
     }
-  
     const requestOptionsGet = {
       method: 'GET',
       headers: headers,
@@ -44,7 +44,11 @@ export const InitiateTransaction=()=>{
       headers: headers,
     }
 
-      // const responsepayee = axios.get(`http://localhost:8081/payees/${accountNo}`);
+    if(token === "null")
+    {
+    return(<ForbiddenPage />)
+    }
+    // const responsepayee = axios.get(`http://localhost:8081/payees/${accountNo}`);
       // console.log(responsepayee)
       useEffect(()=>{
         axios.get(`http://localhost:8081/payees/${accountNo}`,requestOptionsGet)

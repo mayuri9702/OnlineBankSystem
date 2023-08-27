@@ -5,6 +5,7 @@ import { AccountCard } from "./AccountCard";
 import { AccountCardDeactivated } from "./AccountCardDeactivated";
 import axio from 'axios';
 import { useEffect } from "react";
+import { ForbiddenPage } from "../components/ForbiddenPage";
 
 export const ViewAccounts=()=>{
 
@@ -22,7 +23,10 @@ export const ViewAccounts=()=>{
       method: 'GET',
       headers: headers,
     }
-
+    if(token === "null")
+    {
+    return(<ForbiddenPage />)
+    }
     useEffect(()=>{
         axio.get(`http://localhost:8081/accounts/admin/${adminUserId}/user/${userID}`,requestOptionsGet)
         .then(response=>{

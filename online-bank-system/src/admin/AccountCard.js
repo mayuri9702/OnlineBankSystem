@@ -8,6 +8,7 @@ import mobile from '../images/mobile.png'
 import number from '../images/number.png'
 import aadharCard from '../images/aadharCard.jpg'
 import axios from "axios";
+import { ForbiddenPage } from "../components/ForbiddenPage";
 
 export const AccountCard = ({account}) =>{
     const location = useLocation()
@@ -22,7 +23,10 @@ export const AccountCard = ({account}) =>{
       method: 'PUT',
       headers: headers,
     }   
-    
+    if(token === "null")
+    {
+    return(<ForbiddenPage />)
+    }
 
     async function handleDeactivate(event) {
         event.preventDefault()

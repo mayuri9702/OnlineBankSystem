@@ -61,21 +61,14 @@ export const CreateAccount = () => {
   
  
   const handleUserIdSubmit = async () => {
-        
-    
-
-     
 
     try {
       const response = await axios.get(`http://localhost:8081/logins/user/${userId}`);
 
       console.log(response);
-      if (response.status === 200 && response.data.password === password) {
+      if (response.status === 200 && response.data.user.userid===userId && response.data.user.password === password) {
+        localStorage.setItem('jwtToken', response.data.token);
         setIsValidUserId(true);
-        
-        // setUserId(response.data.userId);
-        // setPassword(response.data.password);
-        // setEmail(response.data.email);
         
       } else {
         setIsValidUserId(false);
@@ -160,7 +153,7 @@ export const CreateAccount = () => {
 
       if(title==='defalut'){
         alert("Please select a valid title!!");
-        return
+        return;
       }
 
       if(firstName===""){
@@ -258,10 +251,19 @@ export const CreateAccount = () => {
       console.log(accountNo);
 
       console.log(formData);
+      const token = localStorage.getItem('jwtToken')
+      const headers = {
+        'Authorization': `Bearer ${token}`
+      }
     
-      const response = await axios.post(`http://localhost:8081/accounts/${userId}`, formData);
+      const requestOptionsPost = {
+        method: 'POST',
+        headers: headers,
+      }
+      const response = await axios.post(`http://localhost:8081/accounts/${userId}`, formData, requestOptionsPost);
       if (response.status === 200) {
         // Account created successfully
+        localStorage.setItem('jwtToken',null);
         setPopUpState(1)
         setStatus('Account created successfully!! \n Your account number is :'.concat(formData['accountNo']))
         setNavigatePage('success')

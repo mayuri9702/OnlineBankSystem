@@ -6,6 +6,7 @@ import axio from 'axios';
 import './AccountSummary.css'
 import { useLocation } from 'react-router-dom';
 import { Link } from 'react-router-dom';
+import { ForbiddenPage } from './ForbiddenPage';
 
 export const DisplayAccount = () => {
   const [accounts, setAccounts] = useState([])
@@ -21,6 +22,10 @@ export const DisplayAccount = () => {
     method: 'GET',
     headers: headers,
   }
+  if(token === "null")
+    {
+    return(<ForbiddenPage />)
+    }
 
   useEffect(()=>{
     axio.get(`http://localhost:8081/accounts/user/${userID}`,requestOptions)

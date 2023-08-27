@@ -3,6 +3,7 @@ import { useLocation } from 'react-router-dom';
 import axios from 'axios';
 import {AdminNavbar} from './AdminNavbar'
 import '../components/AccountStatement.css'
+import { ForbiddenPage } from '../components/ForbiddenPage';
 
 
 export const ViewTransactions = () => {
@@ -19,7 +20,10 @@ export const ViewTransactions = () => {
     headers: headers,
   }   
   const [transactions, setTransactions] = useState([])
-
+  if(token === "null")
+  {
+    return(<ForbiddenPage />)
+  }
   
   useEffect(()=>{
     axios.get(`http://localhost:8081/transactions/admin/${adminUserId}/user/${accountNo}`,requestOptionsGet).then(response=>{

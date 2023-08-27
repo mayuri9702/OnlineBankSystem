@@ -68,7 +68,6 @@ export const Login = () => {
      
         if(response.data.user.userid===userID && response.data.user.password===password){
             navigate('/displayAccount',{state:{userid:userID}})
-            
         }
       }
         catch(error){

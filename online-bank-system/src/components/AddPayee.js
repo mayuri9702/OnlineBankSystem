@@ -4,6 +4,7 @@ import { useLocation,useNavigate } from "react-router-dom";
 import { LeftNavbar } from "./LeftNavbar";
 import './dashboard.css'
 import axios from 'axios';
+import { ForbiddenPage } from "./ForbiddenPage";
 
 
 export const AddPayee = () =>{
@@ -26,6 +27,10 @@ export const AddPayee = () =>{
         method: 'POST',
         headers: headers,
       }
+    if(token === "null")
+    {
+    return(<ForbiddenPage />)
+    }
     async function save(e){
         e.preventDefault()
         if(name===''){

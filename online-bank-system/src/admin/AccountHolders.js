@@ -5,6 +5,7 @@ import { Link, useLocation } from "react-router-dom";
 import { useEffect } from "react";
 import axio from 'axios';
 import moreDetails from '../images/moreDetails.png';
+import { ForbiddenPage } from "../components/ForbiddenPage";
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 
@@ -24,6 +25,10 @@ export const AccountHolders = () =>{
     }
 
     console.log(search)
+    if(token === "null")
+    {
+    return(<ForbiddenPage />)
+    }
     
   useEffect(()=>{
     axio.get(`http://localhost:8081/logins/admin/${adminUserId}/users`,requestOptionsGet)
@@ -36,6 +41,15 @@ export const AccountHolders = () =>{
       console.error('Error fetching data: ',error)
     })
   },[])
+  // console.log("----------------------------------------")
+  // console.log(token)
+  // console.log("-----------------------------------------")
+  if(token === "null")
+  {
+    return(
+        <ForbiddenPage />
+    )
+  }
 
   if(users.length===0){
     return(
@@ -55,46 +69,46 @@ export const AccountHolders = () =>{
   const filteredUsers = users.filter(user=>user.admin==0)
 
     return(
-        <div>
-            <AdminNavbar></AdminNavbar>
-        <center>
-            <div>
-                <h3 style={{marginTop:10+'px'}}>Account Holders Details</h3>
-                <div className="search-input">
-                  <Form>
-                      <InputGroup>
-                        <Form.Control 
-                        onChange={(e)=>setSearch(e.target.value)}
-                        placeholder='Search an account holder by User ID'/>
-                      </InputGroup>
-                  </Form>
-                </div>
-                <table className="bordered-table" striped bordered hover>
-                    <thead>
-                    <tr>
-                        <th>User ID</th>
-                        <th>Email ID</th>
-                        {/* <th>Name</th> */}
-                        <th>View Accounts</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {filteredUsers.filter((user)=>{
-                      return search.toLowerCase()===''
-                      ? user
-                      : user.userid.toLowerCase().includes(search.toLowerCase());
-                    }).map(user=>(
-                    <tr key={user.userid}>
-                        <td>{user.userid}</td>
-                      <td>{user.emailid}</td>
-                      {/* <td>{user.account[0]}</td> */}
-                      <td><Link to="/viewAccounts" state={{userid:user.userid, adminUserId:adminUserId}}><img src={moreDetails} alt="view image"/></Link></td>
-                    </tr>
-                  ))}
-                    </tbody>
-                </table>
-              </div>
-              </center>
+  <div>
+      <AdminNavbar></AdminNavbar>
+  <center>
+      <div>
+          <h3 style={{marginTop:10+'px'}}>Account Holders Details</h3>
+          <div className="search-input">
+            <Form>
+                <InputGroup>
+                  <Form.Control 
+                  onChange={(e)=>setSearch(e.target.value)}
+                  placeholder='Search an account holder by User ID'/>
+                </InputGroup>
+            </Form>
+          </div>
+          <table className="bordered-table" striped bordered hover>
+              <thead>
+              <tr>
+                  <th>User ID</th>
+                  <th>Email ID</th>
+                  {/* <th>Name</th> */}
+                  <th>View Accounts</th>
+              </tr>
+              </thead>
+              <tbody>
+              {filteredUsers.filter((user)=>{
+                return search.toLowerCase()===''
+                ? user
+                : user.userid.toLowerCase().includes(search.toLowerCase());
+              }).map(user=>(
+              <tr key={user.userid}>
+                  <td>{user.userid}</td>
+                <td>{user.emailid}</td>
+                {/* <td>{user.account[0]}</td> */}
+                <td><Link to="/viewAccounts" state={{userid:user.userid, adminUserId:adminUserId}}><img src={moreDetails} alt="view image"/></Link></td>
+              </tr>
+            ))}
+              </tbody>
+          </table>
         </div>
+        </center>
+  </div>
     )
 }
