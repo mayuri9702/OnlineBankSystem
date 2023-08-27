@@ -10,7 +10,7 @@ import aadharCard from '../images/aadharCard.jpg'
 import axios from "axios";
 import { ForbiddenPage } from "../components/ForbiddenPage";
 
-export const AccountCard = ({account}) =>{
+export const AccountCard = ({account, currentStatus, receiveStatus}) =>{
     const location = useLocation()
     const adminUserId = location.state.adminUserId
     const [active, setActive] = useState()
@@ -38,6 +38,14 @@ export const AccountCard = ({account}) =>{
         console.log(response1)
             if(response1.status===200){
                 alert("Account deactivated successfully")
+                if(currentStatus === 0)
+                {
+                    receiveStatus(1)
+                }
+                else if(currentStatus === 1)
+                {
+                    receiveStatus(0)
+                }
             }
         } catch(error)
             {
