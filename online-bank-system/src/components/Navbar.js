@@ -4,7 +4,7 @@ import {Link} from 'react-router-dom'
 
 function Navbar() {
   return (
-    <nav class="navbar navbar-expand-sm">
+    <nav class="navbar navbar-expand-sm fixed-top" >
 
   <a class="navbar-brand">
   <img src="https://cdn2.iconfinder.com/data/icons/buildings-56/48/12-512.png" alt="Application image">
