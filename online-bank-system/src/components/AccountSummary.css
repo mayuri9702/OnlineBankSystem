@@ -7,15 +7,15 @@
 .items-table{
     width: 100%;
     border-collapse: collapse;
-    border: 1px solid black;
+  
 }
 
 .items-table th, .items-table td{
-    border: 1px solid black;
+    font-size: 20px;
     padding: 8px;
     text-align: left;
 }
 
-.items-table th{
+.items-table td{
     background-color: aliceblue;
 }

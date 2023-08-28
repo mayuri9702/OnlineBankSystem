@@ -68,8 +68,9 @@ export const AdminLogin = () => {
         localStorage.setItem('jwtToken', response.data.token);
         console.log(response)
         if(response.data.user.userid===userID && response.data.user.password===password && response.data.user.admin===1){
+            setLoginStatus("Admin login successfully!!")
+            setPopUpState(1)
             navigate('/accountHolders',{state:{adminUserId:userID}})
-            alert("Admin login successfully!!")
         }
         else if(response.data.user.admin === 0){
           setLoginStatus("You are not an admin")
