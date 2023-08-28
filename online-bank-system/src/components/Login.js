@@ -69,10 +69,15 @@ export const Login = () => {
         if(response.data.user.userid===userID && response.data.user.password===password){
             navigate('/displayAccount',{state:{userid:userID}})
         }
+        else {
+          console.log('invalid password')
+          setLoginStatus("Incorrect Password!!!")
+          setPopUpState(1)
+        }
       }
         catch(error){
-          console.log('invalid username/password')
-          setLoginStatus("Invalid username or password")
+          console.log('Invalid Username')
+          setLoginStatus("Invalid username!!!")
           setPopUpState(1)
         }
       }

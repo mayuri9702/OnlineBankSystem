@@ -4,6 +4,7 @@ import { LeftNavbar } from './LeftNavbar'
 import './dashboard.css'
 import { useNavigate } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
+import { ForbiddenPage } from './ForbiddenPage';
 
 export const FundTransfer = () => {
     const location = useLocation()
@@ -12,7 +13,11 @@ export const FundTransfer = () => {
     const navigate = useNavigate()
     const [mode, setMode] = useState('')
     const [modeErr, setModeErr] = useState(false)
-    
+    const token = localStorage.getItem('jwtToken')
+  if(token === "null")
+    {
+    return(<ForbiddenPage />)
+    }
 
     function radioValue(event){
         setMode(event.target.value)

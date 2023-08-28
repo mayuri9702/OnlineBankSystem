@@ -13,7 +13,7 @@ export const ViewAccounts=()=>{
     const userID = location.state.userid
     const adminUserId = location.state.adminUserId
     const [accounts, setAccounts] = useState([])
-    const [showAccounts, setShowAccounts] = useState('')
+    const [activateOrDeactivate, setActivateOrDeactivate] = useState(0)
     const token = localStorage.getItem('jwtToken')
     const headers = {
       'Authorization': `Bearer ${token}`
@@ -36,10 +36,12 @@ export const ViewAccounts=()=>{
         .catch(error=>{
           console.error('Error fetching data: ',error)
         })
-      },[])
+      },[activateOrDeactivate])
       
     const filteredAccounts = accounts.filter(account=>account.suspend==0)
     const suspendedAccounts = accounts.filter(account=>account.suspend==1)
+    console.log(filteredAccounts.length)
+    console.log(suspendedAccounts.length)
       
 
     return(
@@ -50,10 +52,10 @@ export const ViewAccounts=()=>{
                 <h3>You are viewing {userID} accounts</h3>
                 <div class="card-container">
                 {filteredAccounts.map((account,index)=>(
-                    <AccountCard key={index} account={account} state={{adminUserId:adminUserId}}/>
+                    <AccountCard key={index} account={account} currentStatus={activateOrDeactivate} receiveStatus ={setActivateOrDeactivate} state={{adminUserId:adminUserId}}/>
                 ))}
                  {suspendedAccounts.map((account,index)=>(
-                    <AccountCardDeactivated key={index} account={account} state={{adminUserId:adminUserId}}/>
+                    <AccountCardDeactivated key={index} account={account} currentStatus={activateOrDeactivate} receiveStatus ={setActivateOrDeactivate} state={{adminUserId:adminUserId}}/>
                 ))}
             </div>
                 </div>

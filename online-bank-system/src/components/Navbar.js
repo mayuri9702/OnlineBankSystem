@@ -18,10 +18,13 @@ function Navbar() {
       <Link className="item" to="/newUser">Register/New User</Link>
     </li>
     <li class="nav-item">
+      <Link className="item" to="/createAccount">Open a new bank account</Link>
+    </li>
+    <li class="nav-item">
       <Link className="item" to="/register">Register for Internet Banking</Link>
     </li>
     <li class="nav-item">
-      <Link className="item" to="/createAccount">Open a new bank account</Link>
+    <Link className="item" to="/">Login As Admin</Link>
     </li>
   </ul>
 </nav>
