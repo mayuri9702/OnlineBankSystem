@@ -5,6 +5,7 @@ import { LeftNavbar } from "./LeftNavbar";
 import './dashboard.css'
 import axios from 'axios';
 import { ForbiddenPage } from "./ForbiddenPage";
+import PopUp from "./PopUp";
 
 
 export const AddPayee = () =>{
@@ -18,6 +19,8 @@ export const AddPayee = () =>{
     const [nameErr, setNameErr] = useState(false)
     const [accNoErr, setAccNoErr] = useState(false)
     const [reAccNoErr, setReAccNoErr] = useState(false)
+    const [popUpState, setPopUpState] = useState(0);
+    const [popUpMsg, setPopUpMsg] = useState(0)
     const navigate = useNavigate()
     const token = localStorage.getItem('jwtToken')
     const headers = {
@@ -31,6 +34,15 @@ export const AddPayee = () =>{
     {
     return(<ForbiddenPage />)
     }
+    const openPopUp = () => {
+        setPopUpState(1);
+      };
+
+    const closePopUp = () => {
+        setPopUpState(0);
+        navigate('/fundTransfer',{state:{userid:userID, accountno:accountNo}})
+        
+      };
     async function save(e){
         e.preventDefault()
         if(name===''){
@@ -59,16 +71,21 @@ export const AddPayee = () =>{
                 const response = await axios.post(`http://localhost:8081/payees/${accountNo}`, payeedetails,requestOptionsPost);
                 if(response.status === 200)
                 {
-                    navigate('/fundTransfer',{state:{userid:userID,accountno:accountNo}})
+                    setPopUpState(1)
+                    setPopUpMsg("Payee added successfully")
                     // console.log(response)
                 }
+                console.log(response)
             //    setName('')
             //    setAccNo('')      
             //    setReAccNo('')      
             }
             catch(err){
-              alert('Login failed.')
+              alert('Payee can not be added')
             }
+        }
+        else {
+            alert("account number should be same")
         }
     }
 
@@ -147,6 +164,11 @@ export const AddPayee = () =>{
 
           </main>
         </div>
+        {popUpState === 1 && (
+        <PopUp onClose={closePopUp}>
+          {popUpMsg}
+        </PopUp>
+      )}
       </div>
     )
 }

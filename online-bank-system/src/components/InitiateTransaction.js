@@ -76,7 +76,7 @@ export const InitiateTransaction=()=>{
       }
 
       function reset(event){
-        event.preventDefault();
+       event.preventDefault();
         setFromAccount("");
         setToAccount("");
         setAmount("");
@@ -240,7 +240,7 @@ export const InitiateTransaction=()=>{
 
                             <div class="form-outline mb-4">
                                 <label class="form-label" for="pin">Enter Transaction Pin</label>
-                                <input type="number" id = "pin" class="form-control form-control-lg" 
+                                <input type="password" id = "pin" class="form-control form-control-lg"
                                 value={pin} onChange={(e)=>setPin(e.target.value)} maxLength={6} required={true}/>
                                 {pinErr?<span>Transaction Pin can't be empty!</span>:null}
                             </div>
@@ -265,7 +265,7 @@ export const InitiateTransaction=()=>{
 
                     </div>
                 </div>
- {popUpState === 1 && (
+      {popUpState === 1 && (
         <PopUp onClose={closePopUp}>
           {displayMessage}
         </PopUp>
