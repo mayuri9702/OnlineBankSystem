@@ -60,57 +60,57 @@ export const AccountSummary = () => {
             <div className='app-container'>
              <h1>Account Details</h1>
              <table className='items-table'>
-                <tr>
+                <tr style={{backgroundColor:'aliceblue'}}>
                   <td style={{fontWeight:'bold'}}>Account Number</td>
                   <td style={{fontWeight:'bold'}}>:</td>
                   <td>{account.accountNo}</td>
                 </tr>
-                <tr>
+                <tr style={{backgroundColor:'aliceblue'}}>
                   <td style={{fontWeight:'bold'}}>Account Holder Name</td>
                   <td style={{fontWeight:'bold'}}>:</td>
                   <td>{account.title} {account.firstname} {account.middlename} {account.lastname}</td>
                 </tr>
-                <tr>
+                <tr style={{backgroundColor:'aliceblue'}}>
                   <td style={{fontWeight:'bold'}}>Account Type</td>
                   <td style={{fontWeight:'bold'}}>:</td>
                   <td>{account.accounttype}</td>
                 </tr>
-                <tr>
+                <tr style={{backgroundColor:'aliceblue'}}>
                   <td style={{fontWeight:'bold'}}>Balance</td>
                   <td style={{fontWeight:'bold'}}>:</td>
                   <td>{account.balance}</td>
                 </tr>
-                <tr>
+                <tr style={{backgroundColor:'aliceblue'}}>
                   <td style={{fontWeight:'bold'}}>Aadhar card number</td>
                   <td style={{fontWeight:'bold'}}>:</td>
                   <td>{account.aadharnumber}</td>
                 </tr>
-                <tr>
+                <tr style={{backgroundColor:'aliceblue'}}>
                   <td style={{fontWeight:'bold'}}>Date of Birth</td>
                   <td style={{fontWeight:'bold'}}>:</td>
                   <td>{account.dob}</td>
                 </tr>
-                <tr>
+                <tr style={{backgroundColor:'aliceblue'}}>
                   <td style={{fontWeight:'bold'}}>Occupation Type</td>
                   <td style={{fontWeight:'bold'}}>:</td>
                   <td>{account.occupationtype}</td>
                 </tr>
-                <tr>
+                <tr style={{backgroundColor:'aliceblue'}}>
                   <td style={{fontWeight:'bold'}}>Source of Income</td>
                   <td style={{fontWeight:'bold'}}>:</td>
                   <td>{account.sourceofincome}</td>
                 </tr>
-                <tr>
+                <tr style={{backgroundColor:'aliceblue'}}>
                   <td style={{fontWeight:'bold'}}>Annual Income</td>
                   <td style={{fontWeight:'bold'}}>:</td>
                   <td>{account.annualincome}</td>
                 </tr>
-                <tr>
+                <tr style={{backgroundColor:'aliceblue'}}>
                   <td style={{fontWeight:'bold'}}>Permanent Address</td>
                   <td style={{fontWeight:'bold'}}>:</td>
                   <td>{perAddr.perAddr}, {perAddr.perCity}, {perAddr.perState}, {perAddr.perPincode} </td>
                 </tr>
-                <tr>
+                <tr style={{backgroundColor:'aliceblue'}}>
                   <td style={{fontWeight:'bold'}}>Residential Address</td>
                   <td style={{fontWeight:'bold'}}>:</td>
                   <td>{resAddr.resAddr}, {resAddr.resCity}, {resAddr.resState}, {resAddr.resPincode}</td>

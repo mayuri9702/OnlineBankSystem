@@ -20,7 +20,7 @@
   }
 
   table{
-    margin-top: 50px;
+    margin-top: 100px;
     width: 100%;
     margin-bottom: 50px;
   }
@@ -33,7 +33,7 @@
 
   .bordered-table th, .bordered-table td{
     border: 1px solid black;
-    padding: 8px;
+    padding: 300px;
     text-align: center;
   }
 

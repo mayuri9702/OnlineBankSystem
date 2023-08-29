@@ -12,10 +12,6 @@
 
 .items-table th, .items-table td{
     font-size: 20px;
-    padding: 8px;
+    padding: 20px;
     text-align: left;
-}
-
-.items-table td{
-    background-color: aliceblue;
 }

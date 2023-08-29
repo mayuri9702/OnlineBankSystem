@@ -258,8 +258,8 @@ export const InitiateTransaction=()=>{
                             </div>
 
                             <div class="d-flex justify-content-around align-items-center mb-4">
-                                <button type="submit" class="btn btn-primary btn-lg btn-block" onClick={reset}>Reset</button>
-                                <button type="submit" class="btn btn-primary btn-lg btn-block" onClick={continueTransaction}>Continue</button>
+                                <button type="submit" style={{marginRight:10+'px'}} class="btn btn-primary btn-lg btn-block" onClick={reset}>Reset</button>
+                                <button type="submit" style={{marginLeft:10+'px'}} class="btn btn-primary btn-lg btn-block" onClick={continueTransaction}>Continue</button>
                             </div>
                         </form>
 

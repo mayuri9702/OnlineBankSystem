@@ -27,6 +27,10 @@ export const LeftNavbar = () =>{
             <Link to="/setNewPassword" className={location.pathname === '/setNewPassword' ? 'active-link' : 'navbar-link'}
         style={location.pathname === '/setNewPassword' ? activeLinkStyle : {}} state={{userid:userID, accountno:accountNo}}>Change Login Password</Link>
 
+            <Link to="/displayAccount" className={location.pathname === '/displayAccount' ? 'active-link' : 'navbar-link'}
+        style={location.pathname === '/displayAccount' ? activeLinkStyle : {}} state={{userid:userID, accountno:accountNo}}>Go back to accounts</Link>
+
+
         </div>
     )
 }

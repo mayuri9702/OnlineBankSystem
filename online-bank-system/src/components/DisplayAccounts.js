@@ -1,9 +1,7 @@
 import React, {  useEffect, useState } from 'react';
 import { NavbarLogout } from './NavbarLogout'
-import { LeftNavbar } from './LeftNavbar'
 import './dashboard.css'
 import axio from 'axios';
-import './AccountSummary.css'
 import { useLocation } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { ForbiddenPage } from './ForbiddenPage';
@@ -65,27 +63,27 @@ export const DisplayAccount = () => {
             <div className='app-container'>
               <h5>Welcome, {userID}</h5>
               
-              <table className='items-table'>
+              <table className='items-table' style={{border:"1px solid black"}}>
                 <thead>
                   <tr>
-                    <th>Account Number</th>
-                    <th>Account Type</th>
-                    <th>Account Details</th>
+                    <th style={{border:"1px solid black"}}>Account Number</th>
+                    <th style={{border:"1px solid black"}}>Account Type</th>
+                    <th style={{border:"1px solid black"}}>Account Details</th>
                   </tr>
                 </thead>
-                <tbody>
+                <tbody  style={{border:"1px solid black"}}>
                   {filteredAccounts.map(account=>(
-                    <tr key={account.accountNo}>
-                      <td>{account.accountNo}</td>
-                      <td>{account.accounttype}</td>
-                      <td><Link to="/accountSummary" state={{userid:userID,accountno:account.accountNo}}>View Account</Link></td>
+                    <tr key={account.accountNo} style={{backgroundColor:'aliceblue'}}>
+                      <td style={{border:"1px solid black"}}>{account.accountNo}</td>
+                      <td style={{border:"1px solid black"}}>{account.accounttype}</td>
+                      <td style={{border:"1px solid black"}}><Link to="/accountSummary" state={{userid:userID,accountno:account.accountNo}}>View Account</Link></td>
                     </tr>
                   ))}
                   {suspendedAccounts.map(account=>(
-                    <tr key={account.accountNo} style={{backgroundColor:'#A9A9A9'}}>
-                      <td>{account.accountNo}</td>
-                      <td>{account.accounttype}</td>
-                      <td>Account deactivated</td>
+                    <tr key={account.accountNo} style={{border:"1px solid black", backgroundColor:'#969892'}}>
+                      <td style={{border:"1px solid black"}}>{account.accountNo}</td>
+                      <td style={{border:"1px solid black"}}>{account.accounttype}</td>
+                      <td style={{border:"1px solid black"}}>Account deactivated</td>
                     </tr>
                   ))}
                 </tbody>

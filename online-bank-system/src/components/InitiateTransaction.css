@@ -6,7 +6,8 @@
 .button-form{
     display:flex;
     justify-content: center;
-    margin-top:2em;
+    margin: 2em;
+
 }
 
 .neft-transaction{
@@ -17,4 +18,8 @@
     margin-top: 20dp;
     margin-bottom: 20dp;
     align-items: center;
+}
+
+button{
+    margin: 2em;
 }

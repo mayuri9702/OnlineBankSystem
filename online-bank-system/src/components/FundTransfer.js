@@ -14,6 +14,13 @@ export const FundTransfer = () => {
     const [mode, setMode] = useState('')
     const [modeErr, setModeErr] = useState(false)
     const token = localStorage.getItem('jwtToken')
+    const hr={
+        border:'none',
+        height:'10px',
+        backgroundColor:'#000036',
+        margin:'50px 0'
+    }
+    
   if(token === "null")
     {
     return(<ForbiddenPage />)
@@ -48,7 +55,7 @@ export const FundTransfer = () => {
                 <button type="button" class="btn btn-primary btn-lg"
                 onClick={()=>navigate("/fundTransfer/addPayee", {state:{userid:userID, accountno:accountNo}})}>Add Payee</button>
                 </div>
-                <hr></hr>
+                <hr style={hr}></hr>
                 <div class="text-center text-lg-start mt-4 pt-2">
                     <div>
                         <h5 style={{color:"#6082B6"}}>Select Payment Option</h5>
